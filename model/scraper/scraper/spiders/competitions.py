@@ -21,13 +21,6 @@ class CompetitionSpider(scrapy.Spider):
         # dict to store country-wise competition info
         competitions: list[dict] = []
         for row in table_rows:
-            print(
-                "**************************************************************************************************"
-            )
-            print(row)
-            print(
-                "**************************************************************************************************"
-            )
             # country name
             country = row.xpath("td[2]/img/@alt").getall()[0]
             # country code for URL to further parse
@@ -68,11 +61,4 @@ class CompetitionSpider(scrapy.Spider):
         for country in countries:
             xpath += f'contains(@alt, "{country}") or '
         xpath = xpath[:-4] + "]/../.."
-        print(
-            "**************************************************************************************************"
-        )
-        print(f"XPATH: {xpath}")
-        print(
-            "**************************************************************************************************"
-        )
         return xpath
