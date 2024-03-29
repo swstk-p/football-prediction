@@ -68,8 +68,6 @@ class CountryCodes(BaseClass):
             )
             # write code info to dict
             competitions[country] = {"country_code": country_code}
-        # convert to json
-        competitions = json.dumps(competitions)
         return competitions
 
     def have_all_country_codes(self) -> bool:
@@ -85,10 +83,91 @@ class CountryCodes(BaseClass):
         if is_competitions_file:
             with open(self.FILE, "r", encoding="utf-8") as file:
                 comps = json.load(file)
-                all_country_code_parsed = False not in [
-                    country in comps.keys() for country in self.countries
-                ]
+                all_country_code_parsed = all(
+                    [
+                        country in comps.keys()
+                        and "country codes" in comps[country].keys()
+                        for country in self.countries
+                    ]
+                )
         return all_country_code_parsed
 
     def write_to_json_file(self, json_content):
+        """Writes to json in its own filepath (use case specific)
+
+        Args:
+            json_content (_type_): json content to write
+        """
         super().write_to_json_file(self.FILE, json_content)
+
+    def get_country_url(self, country_code) -> str:
+        """Forms a country URL by appending country code
+
+        Args:
+            country_code (_type_): country code
+
+        Returns:
+            str: _description_
+        """
+        url: str = f"https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/{country_code}"
+        return url
+
+    def get_all_country_urls(self) -> list[str]:
+        """returns a list of all countries URLs
+
+        Returns:
+            list[str]: _description_
+        """
+        with open(self.FILE, "r", encoding="utf-8") as file:
+            comp_json = json.load(file)
+            all_country_codes = [
+                comp_json[country]["country_code"] for country in self.countries
+            ]
+            all_country_urls = [
+                self.get_country_url(code) for code in all_country_codes
+            ]
+        return all_country_urls
+
+
+class CompetitionNames(BaseClass):
+    def __init__(self):
+        super().__init__()
+        self.FILE = os.path.join(self.DATA_DIR, "competitions.json")
+        self.competitions = [
+            "First Tier",
+            "Domestic Cup",
+            "Domestic Super Cup",
+            "League Cup",
+        ]
+
+    def parse_domestic_comp_names(self, response):
+        """parses competition titles for different tiers
+
+        Args:
+            response (_type_): response obj from spider
+        """
+        row_xpaths = self.get_domestic_comps_xpaths()
+        rows = [
+            {tier: response.xpath(row).getall()} for tier, row in row_xpaths.items()
+        ]
+        print("***********************************************************************")
+        print(rows)
+        print("***********************************************************************")
+
+    def get_domestic_comps_xpaths(self) -> dict:
+        """Get xpaths for table rows containing competition titles
+
+        Returns:
+            dict: {comp_tier:xpath to comp title}
+        """
+        xpaths = {}
+        for comp in self.competitions:
+            xpath_tier = '(//table[@class="items"])[1]/tbody/tr/td['
+            xpath_tier += f'contains(text(), "{comp}") or '
+            xpath_tier = xpath_tier[:-4] + "]/.."  # gives tr of comp hierarchy
+            xpath_title = (
+                xpath_tier
+                + "//following-sibling::tr[1]/td[1]/table/tr/td[2]/a[1]/text()"
+            )
+            xpaths[comp] = xpath_title
+        return xpaths
