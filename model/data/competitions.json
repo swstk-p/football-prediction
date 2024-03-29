@@ -1,26 +1,17 @@
-[{
-        "England": {
-            "country_code": "189"
-        }
+{
+    "England": {
+        "country_code": "189"
     },
-    {
-        "Spain": {
-            "country_code": "157"
-        }
+    "Spain": {
+        "country_code": "157"
     },
-    {
-        "Italy": {
-            "country_code": "75"
-        }
+    "Italy": {
+        "country_code": "75"
     },
-    {
-        "Germany": {
-            "country_code": "40"
-        }
+    "Germany": {
+        "country_code": "40"
     },
-    {
-        "France": {
-            "country_code": "50"
-        }
+    "France": {
+        "country_code": "50"
     }
-]
+}
