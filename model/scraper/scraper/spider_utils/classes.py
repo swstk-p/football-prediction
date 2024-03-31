@@ -1,12 +1,22 @@
 import json
 import os
 
+# TODO: parse comp URL along with their names, and test it by turning off the competition check mechanism in comp callback function
+# TODO: move the competition check mechanism from callback function to spider parses function
+
 
 class BaseClass:
     def __init__(self):
         self.DATA_DIR = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "../../../data")
         )
+        self.countries = ["England", "Spain", "Italy", "Germany", "France"]
+        self.competitions = [
+            "First Tier",
+            "Domestic Cup",
+            "Domestic Super Cup",
+            "League Cup",
+        ]
 
     def write_to_json_file(self, file, json_content):
         """Writes json data on to json file
@@ -24,7 +34,6 @@ class CountryCodes(BaseClass):
     def __init__(self):
         super().__init__()
         self.FILE = os.path.join(self.DATA_DIR, "competitions.json")
-        self.countries = ["England", "Spain", "Italy", "Germany", "France"]
 
     def get_req_table_rows_xpath(self) -> str:
         """Gives xpath for our country rows in the table
@@ -112,20 +121,22 @@ class CountryCodes(BaseClass):
         url: str = f"https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/{country_code}"
         return url
 
-    def get_all_country_urls(self) -> list[str]:
+    def get_all_country_urls(self) -> dict:
         """returns a list of all countries URLs
 
         Returns:
-            list[str]: _description_
+            dict: {country: country_url}
         """
         with open(self.FILE, "r", encoding="utf-8") as file:
             comp_json = json.load(file)
-            all_country_codes = [
-                comp_json[country]["country_code"] for country in self.countries
-            ]
-            all_country_urls = [
-                self.get_country_url(code) for code in all_country_codes
-            ]
+            all_country_codes = {
+                country: comp_json[country]["country_code"]
+                for country in self.countries
+            }
+            all_country_urls = {
+                country: self.get_country_url(code)
+                for country, code in all_country_codes.items()
+            }
         return all_country_urls
 
 
@@ -133,26 +144,49 @@ class CompetitionNames(BaseClass):
     def __init__(self):
         super().__init__()
         self.FILE = os.path.join(self.DATA_DIR, "competitions.json")
-        self.competitions = [
-            "First Tier",
-            "Domestic Cup",
-            "Domestic Super Cup",
-            "League Cup",
-        ]
 
-    def parse_domestic_comp_names(self, response):
-        """parses competition titles for different tiers
+    def domestic_comp_callback(self, response, country):
+        """callback func that handles parsing of competition names if needed
 
         Args:
-            response (_type_): response obj from spider
+            response (_type_): spider response obj
+            country (_type_): country for which comps are being parsed
+        """
+        have_all_domestic_comps: bool = self.have_all_domestic_comps()
+        if not have_all_domestic_comps:
+            comps = self.parse_domestic_comp_names(response, country)
+            self.write_to_json_file(comps)
+
+    def write_to_json_file(self, json_content):
+        """Use case specific write to json file method
+
+        Args:
+            json_content (_type_): json to write
+
+        """
+        super().write_to_json_file(self.FILE, json_content)
+
+    def parse_domestic_comp_names(self, response, country):
+        """Parsed comp names for the country
+
+        Args:
+            response (_type_): spider response obj
+            country (_type_): country name
+
+        Returns:
+            _type_: updated data containing comps info for a country to overwrite the file with
         """
         row_xpaths = self.get_domestic_comps_xpaths()
-        rows = [
-            {tier: response.xpath(row).getall()} for tier, row in row_xpaths.items()
-        ]
-        print("***********************************************************************")
-        print(rows)
-        print("***********************************************************************")
+        rows = {
+            country: {
+                tier: response.xpath(row).get() for tier, row in row_xpaths.items()
+            }
+        }
+
+        with open(self.FILE, "r", encoding="utf-8") as file:
+            comps = json.load(file)
+        comps[country]["competitions"] = rows[country]
+        return comps
 
     def get_domestic_comps_xpaths(self) -> dict:
         """Get xpaths for table rows containing competition titles
@@ -171,3 +205,27 @@ class CompetitionNames(BaseClass):
             )
             xpaths[comp] = xpath_title
         return xpaths
+
+    def have_all_domestic_comps(self) -> bool:
+        """Checks if all domestic comps are parsed in the file
+
+        Returns:
+            bool: True if parsed else False
+        """
+        # check if req file exists
+        is_competitions_file: bool = os.path.isfile(self.FILE)
+        # to check if all country codes are parsed
+        all_domestic_comps_parsed: bool = is_competitions_file
+        if is_competitions_file:
+            with open(self.FILE, "r", encoding="utf-8") as file:
+                comps = json.load(file)
+                all_domestic_comps_parsed = all(
+                    [
+                        "competitions"
+                        in comps[country].keys()  # competition info exists
+                        and sorted(comps[country]["competitions"].keys())
+                        == sorted(self.competitions)  # every competition info exists
+                        for country in self.countries
+                    ]
+                )
+        return all_domestic_comps_parsed

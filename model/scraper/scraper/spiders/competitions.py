@@ -25,7 +25,9 @@ class CompetitionSpider(scrapy.Spider):
         # get urls for each country pages
         all_country_urls = self.country_codes.get_all_country_urls()
         # follow each country urls
-        for url in all_country_urls:
+        for country, url in all_country_urls.items():
             yield scrapy.Request(
-                url=url, callback=self.comp_names.parse_domestic_comp_names
+                url=url,
+                callback=self.comp_names.domestic_comp_callback,
+                cb_kwargs={"country": country},
             )

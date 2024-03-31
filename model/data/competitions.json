@@ -1,17 +1,47 @@
 {
     "England": {
-        "country_code": "189"
+        "country_code": "189",
+        "competitions": {
+            "First Tier": "Premier League",
+            "Domestic Cup": "FA Cup",
+            "Domestic Super Cup": "Community Shield",
+            "League Cup": "EFL Cup"
+        }
     },
     "Spain": {
-        "country_code": "157"
+        "country_code": "157",
+        "competitions": {
+            "First Tier": "LaLiga",
+            "Domestic Cup": "Copa del Rey",
+            "Domestic Super Cup": "Supercopa",
+            "League Cup": null
+        }
     },
     "Italy": {
-        "country_code": "75"
+        "country_code": "75",
+        "competitions": {
+            "First Tier": "Serie A",
+            "Domestic Cup": "Italy Cup",
+            "Domestic Super Cup": "Supercoppa Italiana",
+            "League Cup": null
+        }
     },
     "Germany": {
-        "country_code": "40"
+        "country_code": "40",
+        "competitions": {
+            "First Tier": "Bundesliga",
+            "Domestic Cup": "DFB-Pokal",
+            "Domestic Super Cup": "DFL-Supercup",
+            "League Cup": null
+        }
     },
     "France": {
-        "country_code": "50"
+        "country_code": "50",
+        "competitions": {
+            "First Tier": "Ligue 1",
+            "Domestic Cup": "Coupe de France",
+            "Domestic Super Cup": "Troph\u00e9e des Champions",
+            "League Cup": null
+        }
     }
 }
