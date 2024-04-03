@@ -2,46 +2,106 @@
     "England": {
         "country_code": "189",
         "competitions": {
-            "First Tier": "Premier League",
-            "Domestic Cup": "FA Cup",
-            "Domestic Super Cup": "Community Shield",
-            "League Cup": "EFL Cup"
+            "First Tier": [
+                "Premier League",
+                "/premier-league/startseite/wettbewerb/GB1"
+            ],
+            "Domestic Cup": [
+                "FA Cup",
+                "/fa-cup/startseite/wettbewerb/FAC"
+            ],
+            "Domestic Super Cup": [
+                "Community Shield",
+                "/community-shield/startseite/wettbewerb/GBCS"
+            ],
+            "League Cup": [
+                "EFL Cup",
+                "/efl-cup/startseite/wettbewerb/CGB"
+            ]
         }
     },
     "Spain": {
         "country_code": "157",
         "competitions": {
-            "First Tier": "LaLiga",
-            "Domestic Cup": "Copa del Rey",
-            "Domestic Super Cup": "Supercopa",
-            "League Cup": null
+            "First Tier": [
+                "LaLiga",
+                "/laliga/startseite/wettbewerb/ES1"
+            ],
+            "Domestic Cup": [
+                "Copa del Rey",
+                "/copa-del-rey/startseite/wettbewerb/CDR"
+            ],
+            "Domestic Super Cup": [
+                "Supercopa",
+                "/supercopa/startseite/wettbewerb/SUC"
+            ],
+            "League Cup": [
+                null,
+                null
+            ]
         }
     },
     "Italy": {
         "country_code": "75",
         "competitions": {
-            "First Tier": "Serie A",
-            "Domestic Cup": "Italy Cup",
-            "Domestic Super Cup": "Supercoppa Italiana",
-            "League Cup": null
+            "First Tier": [
+                "Serie A",
+                "/serie-a/startseite/wettbewerb/IT1"
+            ],
+            "Domestic Cup": [
+                "Italy Cup",
+                "/italy-cup/startseite/wettbewerb/CIT"
+            ],
+            "Domestic Super Cup": [
+                "Supercoppa Italiana",
+                "/supercoppa-italiana/startseite/wettbewerb/SCI"
+            ],
+            "League Cup": [
+                null,
+                null
+            ]
         }
     },
     "Germany": {
         "country_code": "40",
         "competitions": {
-            "First Tier": "Bundesliga",
-            "Domestic Cup": "DFB-Pokal",
-            "Domestic Super Cup": "DFL-Supercup",
-            "League Cup": null
+            "First Tier": [
+                "Bundesliga",
+                "/bundesliga/startseite/wettbewerb/L1"
+            ],
+            "Domestic Cup": [
+                "DFB-Pokal",
+                "/dfb-pokal/startseite/wettbewerb/DFB"
+            ],
+            "Domestic Super Cup": [
+                "DFL-Supercup",
+                "/dfl-supercup/startseite/wettbewerb/DFL"
+            ],
+            "League Cup": [
+                null,
+                null
+            ]
         }
     },
     "France": {
         "country_code": "50",
         "competitions": {
-            "First Tier": "Ligue 1",
-            "Domestic Cup": "Coupe de France",
-            "Domestic Super Cup": "Troph\u00e9e des Champions",
-            "League Cup": null
+            "First Tier": [
+                "Ligue 1",
+                "/ligue-1/startseite/wettbewerb/FR1"
+            ],
+            "Domestic Cup": [
+                "Coupe de France",
+                "/coupe-de-france/startseite/wettbewerb/FRC"
+            ],
+            "Domestic Super Cup": [
+                "Troph\u00e9e des Champions",
+                "/trophee-des-champions/startseite/wettbewerb/FRCH"
+            ],
+            "League Cup": [
+                null,
+                null
+            ]
         }
     }
 }
