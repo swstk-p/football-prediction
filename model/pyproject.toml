@@ -1,15 +1,16 @@
 [tool.poetry]
-name = "model"
+name = "scraper"
 version = "0.1.0"
 description = ""
 authors = ["Swastik Pandey <swastik.pandey@deerwalk.edu.np>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
 pandas = "^2.2.1"
 scrapy = "^2.11.1"
 
+[tool.poetry.scripts]
+scrape = "scripts.spider_script:run_spiders"
 
 [build-system]
 requires = ["poetry-core"]

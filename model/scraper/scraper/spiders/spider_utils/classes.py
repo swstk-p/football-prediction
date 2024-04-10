@@ -5,7 +5,7 @@ import os
 class BaseClass:
     def __init__(self):
         self.DATA_DIR = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../../../data")
+            os.path.join(os.path.dirname(__file__), "../../../../data")
         )
         self.countries = ["England", "Spain", "Italy", "Germany", "France"]
         self.competitions = [
@@ -27,7 +27,15 @@ class BaseClass:
         with open(file, "w", encoding="utf-8") as f:
             json.dump(json_content, f, indent=4)
 
-    def is_file_empty(self, file):
+    def is_file_empty(self, file) -> bool:
+        """determines if the file is empty
+
+        Args:
+            file (_type_): file path
+
+        Returns:
+            bool: true if it's empty or doesn't exist, else false
+        """
         if not os.path.isfile(file):
             return True
         else:
@@ -247,7 +255,7 @@ class CompetitionNames(BaseClass):
         return all_domestic_comps_parsed
 
 
-# FIXME: make sure club names are parsed only after competition info is parsed (look into async probably)
+# class to deal to all the clubs names in all leagues and seasons
 class ClubNames(BaseClass):
     def __init__(self):
         super().__init__()
