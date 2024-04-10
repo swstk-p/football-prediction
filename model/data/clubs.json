@@ -1,87 +1,499 @@
 {
-    "LaLiga": {
-        "2019": [
+    "Premier League": {
+        "2023": [
             [
-                "FC Barcelona",
-                "/fc-barcelona/startseite/verein/131/saison_id/2019"
+                "Manchester City",
+                "/manchester-city/startseite/verein/281/saison_id/2023"
             ],
             [
-                "Real Madrid",
-                "/real-madrid/startseite/verein/418/saison_id/2019"
+                "Arsenal FC",
+                "/fc-arsenal/startseite/verein/11/saison_id/2023"
             ],
             [
-                "Atl\u00e9tico de Madrid",
-                "/atletico-madrid/startseite/verein/13/saison_id/2019"
+                "Chelsea FC",
+                "/fc-chelsea/startseite/verein/631/saison_id/2023"
             ],
             [
-                "Valencia CF",
-                "/fc-valencia/startseite/verein/1049/saison_id/2019"
+                "Liverpool FC",
+                "/fc-liverpool/startseite/verein/31/saison_id/2023"
             ],
             [
-                "Real Sociedad",
-                "/real-sociedad-san-sebastian/startseite/verein/681/saison_id/2019"
+                "Tottenham Hotspur",
+                "/tottenham-hotspur/startseite/verein/148/saison_id/2023"
             ],
             [
-                "Sevilla FC",
-                "/fc-sevilla/startseite/verein/368/saison_id/2019"
+                "Manchester United",
+                "/manchester-united/startseite/verein/985/saison_id/2023"
             ],
             [
-                "Real Betis Balompi\u00e9",
-                "/real-betis-sevilla/startseite/verein/150/saison_id/2019"
+                "Aston Villa",
+                "/aston-villa/startseite/verein/405/saison_id/2023"
             ],
             [
-                "Athletic Bilbao",
-                "/athletic-bilbao/startseite/verein/621/saison_id/2019"
+                "Newcastle United",
+                "/newcastle-united/startseite/verein/762/saison_id/2023"
             ],
             [
-                "Villarreal CF",
-                "/fc-villarreal/startseite/verein/1050/saison_id/2019"
+                "Brighton & Hove Albion",
+                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2023"
             ],
             [
-                "Getafe CF",
-                "/fc-getafe/startseite/verein/3709/saison_id/2019"
+                "West Ham United",
+                "/west-ham-united/startseite/verein/379/saison_id/2023"
             ],
             [
-                "Celta de Vigo",
-                "/celta-vigo/startseite/verein/940/saison_id/2019"
+                "Brentford FC",
+                "/fc-brentford/startseite/verein/1148/saison_id/2023"
             ],
             [
-                "RCD Espanyol Barcelona",
-                "/espanyol-barcelona/startseite/verein/714/saison_id/2019"
+                "Crystal Palace",
+                "/crystal-palace/startseite/verein/873/saison_id/2023"
             ],
             [
-                "CD Legan\u00e9s",
-                "/cd-leganes/startseite/verein/1244/saison_id/2019"
+                "Nottingham Forest",
+                "/nottingham-forest/startseite/verein/703/saison_id/2023"
             ],
             [
-                "Deportivo Alav\u00e9s",
-                "/deportivo-alaves/startseite/verein/1108/saison_id/2019"
+                "AFC Bournemouth",
+                "/afc-bournemouth/startseite/verein/989/saison_id/2023"
             ],
             [
-                "Levante UD",
-                "/ud-levante/startseite/verein/3368/saison_id/2019"
+                "Everton FC",
+                "/fc-everton/startseite/verein/29/saison_id/2023"
             ],
             [
-                "Real Valladolid CF",
-                "/real-valladolid/startseite/verein/366/saison_id/2019"
+                "Wolverhampton Wanderers",
+                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2023"
             ],
             [
-                "RCD Mallorca",
-                "/rcd-mallorca/startseite/verein/237/saison_id/2019"
+                "Fulham FC",
+                "/fc-fulham/startseite/verein/931/saison_id/2023"
             ],
             [
-                "CA Osasuna",
-                "/ca-osasuna/startseite/verein/331/saison_id/2019"
+                "Burnley FC",
+                "/fc-burnley/startseite/verein/1132/saison_id/2023"
             ],
             [
-                "Granada CF",
-                "/fc-granada/startseite/verein/16795/saison_id/2019"
+                "Sheffield United",
+                "/sheffield-united/startseite/verein/350/saison_id/2023"
             ],
             [
-                "SD Eibar",
-                "/sd-eibar/startseite/verein/1533/saison_id/2019"
+                "Luton Town",
+                "/luton-town/startseite/verein/1031/saison_id/2023"
             ]
         ],
+        "2018": [
+            [
+                "Manchester City",
+                "/manchester-city/startseite/verein/281/saison_id/2018"
+            ],
+            [
+                "Liverpool FC",
+                "/fc-liverpool/startseite/verein/31/saison_id/2018"
+            ],
+            [
+                "Chelsea FC",
+                "/fc-chelsea/startseite/verein/631/saison_id/2018"
+            ],
+            [
+                "Tottenham Hotspur",
+                "/tottenham-hotspur/startseite/verein/148/saison_id/2018"
+            ],
+            [
+                "Manchester United",
+                "/manchester-united/startseite/verein/985/saison_id/2018"
+            ],
+            [
+                "Arsenal FC",
+                "/fc-arsenal/startseite/verein/11/saison_id/2018"
+            ],
+            [
+                "Everton FC",
+                "/fc-everton/startseite/verein/29/saison_id/2018"
+            ],
+            [
+                "Leicester City",
+                "/leicester-city/startseite/verein/1003/saison_id/2018"
+            ],
+            [
+                "West Ham United",
+                "/west-ham-united/startseite/verein/379/saison_id/2018"
+            ],
+            [
+                "AFC Bournemouth",
+                "/afc-bournemouth/startseite/verein/989/saison_id/2018"
+            ],
+            [
+                "Southampton FC",
+                "/fc-southampton/startseite/verein/180/saison_id/2018"
+            ],
+            [
+                "Wolverhampton Wanderers",
+                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2018"
+            ],
+            [
+                "Crystal Palace",
+                "/crystal-palace/startseite/verein/873/saison_id/2018"
+            ],
+            [
+                "Fulham FC",
+                "/fc-fulham/startseite/verein/931/saison_id/2018"
+            ],
+            [
+                "Newcastle United",
+                "/newcastle-united/startseite/verein/762/saison_id/2018"
+            ],
+            [
+                "Watford FC",
+                "/fc-watford/startseite/verein/1010/saison_id/2018"
+            ],
+            [
+                "Burnley FC",
+                "/fc-burnley/startseite/verein/1132/saison_id/2018"
+            ],
+            [
+                "Brighton & Hove Albion",
+                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2018"
+            ],
+            [
+                "Huddersfield Town",
+                "/huddersfield-town/startseite/verein/1110/saison_id/2018"
+            ],
+            [
+                "Cardiff City",
+                "/cardiff-city/startseite/verein/603/saison_id/2018"
+            ]
+        ],
+        "2022": [
+            [
+                "Manchester City",
+                "/manchester-city/startseite/verein/281/saison_id/2022"
+            ],
+            [
+                "Arsenal FC",
+                "/fc-arsenal/startseite/verein/11/saison_id/2022"
+            ],
+            [
+                "Chelsea FC",
+                "/fc-chelsea/startseite/verein/631/saison_id/2022"
+            ],
+            [
+                "Manchester United",
+                "/manchester-united/startseite/verein/985/saison_id/2022"
+            ],
+            [
+                "Liverpool FC",
+                "/fc-liverpool/startseite/verein/31/saison_id/2022"
+            ],
+            [
+                "Tottenham Hotspur",
+                "/tottenham-hotspur/startseite/verein/148/saison_id/2022"
+            ],
+            [
+                "Newcastle United",
+                "/newcastle-united/startseite/verein/762/saison_id/2022"
+            ],
+            [
+                "Brighton & Hove Albion",
+                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2022"
+            ],
+            [
+                "Aston Villa",
+                "/aston-villa/startseite/verein/405/saison_id/2022"
+            ],
+            [
+                "Wolverhampton Wanderers",
+                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2022"
+            ],
+            [
+                "Leicester City",
+                "/leicester-city/startseite/verein/1003/saison_id/2022"
+            ],
+            [
+                "West Ham United",
+                "/west-ham-united/startseite/verein/379/saison_id/2022"
+            ],
+            [
+                "Southampton FC",
+                "/fc-southampton/startseite/verein/180/saison_id/2022"
+            ],
+            [
+                "Everton FC",
+                "/fc-everton/startseite/verein/29/saison_id/2022"
+            ],
+            [
+                "Nottingham Forest",
+                "/nottingham-forest/startseite/verein/703/saison_id/2022"
+            ],
+            [
+                "Brentford FC",
+                "/fc-brentford/startseite/verein/1148/saison_id/2022"
+            ],
+            [
+                "Leeds United",
+                "/leeds-united/startseite/verein/399/saison_id/2022"
+            ],
+            [
+                "Crystal Palace",
+                "/crystal-palace/startseite/verein/873/saison_id/2022"
+            ],
+            [
+                "Fulham FC",
+                "/fc-fulham/startseite/verein/931/saison_id/2022"
+            ],
+            [
+                "AFC Bournemouth",
+                "/afc-bournemouth/startseite/verein/989/saison_id/2022"
+            ]
+        ],
+        "2020": [
+            [
+                "Manchester City",
+                "/manchester-city/startseite/verein/281/saison_id/2020"
+            ],
+            [
+                "Liverpool FC",
+                "/fc-liverpool/startseite/verein/31/saison_id/2020"
+            ],
+            [
+                "Chelsea FC",
+                "/fc-chelsea/startseite/verein/631/saison_id/2020"
+            ],
+            [
+                "Manchester United",
+                "/manchester-united/startseite/verein/985/saison_id/2020"
+            ],
+            [
+                "Tottenham Hotspur",
+                "/tottenham-hotspur/startseite/verein/148/saison_id/2020"
+            ],
+            [
+                "Arsenal FC",
+                "/fc-arsenal/startseite/verein/11/saison_id/2020"
+            ],
+            [
+                "Everton FC",
+                "/fc-everton/startseite/verein/29/saison_id/2020"
+            ],
+            [
+                "Leicester City",
+                "/leicester-city/startseite/verein/1003/saison_id/2020"
+            ],
+            [
+                "Wolverhampton Wanderers",
+                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2020"
+            ],
+            [
+                "Aston Villa",
+                "/aston-villa/startseite/verein/405/saison_id/2020"
+            ],
+            [
+                "West Ham United",
+                "/west-ham-united/startseite/verein/379/saison_id/2020"
+            ],
+            [
+                "Brighton & Hove Albion",
+                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2020"
+            ],
+            [
+                "Southampton FC",
+                "/fc-southampton/startseite/verein/180/saison_id/2020"
+            ],
+            [
+                "Newcastle United",
+                "/newcastle-united/startseite/verein/762/saison_id/2020"
+            ],
+            [
+                "Fulham FC",
+                "/fc-fulham/startseite/verein/931/saison_id/2020"
+            ],
+            [
+                "Leeds United",
+                "/leeds-united/startseite/verein/399/saison_id/2020"
+            ],
+            [
+                "Crystal Palace",
+                "/crystal-palace/startseite/verein/873/saison_id/2020"
+            ],
+            [
+                "Sheffield United",
+                "/sheffield-united/startseite/verein/350/saison_id/2020"
+            ],
+            [
+                "West Bromwich Albion",
+                "/west-bromwich-albion/startseite/verein/984/saison_id/2020"
+            ],
+            [
+                "Burnley FC",
+                "/fc-burnley/startseite/verein/1132/saison_id/2020"
+            ]
+        ],
+        "2019": [
+            [
+                "Manchester City",
+                "/manchester-city/startseite/verein/281/saison_id/2019"
+            ],
+            [
+                "Liverpool FC",
+                "/fc-liverpool/startseite/verein/31/saison_id/2019"
+            ],
+            [
+                "Tottenham Hotspur",
+                "/tottenham-hotspur/startseite/verein/148/saison_id/2019"
+            ],
+            [
+                "Chelsea FC",
+                "/fc-chelsea/startseite/verein/631/saison_id/2019"
+            ],
+            [
+                "Manchester United",
+                "/manchester-united/startseite/verein/985/saison_id/2019"
+            ],
+            [
+                "Arsenal FC",
+                "/fc-arsenal/startseite/verein/11/saison_id/2019"
+            ],
+            [
+                "Everton FC",
+                "/fc-everton/startseite/verein/29/saison_id/2019"
+            ],
+            [
+                "Leicester City",
+                "/leicester-city/startseite/verein/1003/saison_id/2019"
+            ],
+            [
+                "Wolverhampton Wanderers",
+                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2019"
+            ],
+            [
+                "West Ham United",
+                "/west-ham-united/startseite/verein/379/saison_id/2019"
+            ],
+            [
+                "AFC Bournemouth",
+                "/afc-bournemouth/startseite/verein/989/saison_id/2019"
+            ],
+            [
+                "Newcastle United",
+                "/newcastle-united/startseite/verein/762/saison_id/2019"
+            ],
+            [
+                "Aston Villa",
+                "/aston-villa/startseite/verein/405/saison_id/2019"
+            ],
+            [
+                "Southampton FC",
+                "/fc-southampton/startseite/verein/180/saison_id/2019"
+            ],
+            [
+                "Brighton & Hove Albion",
+                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2019"
+            ],
+            [
+                "Watford FC",
+                "/fc-watford/startseite/verein/1010/saison_id/2019"
+            ],
+            [
+                "Crystal Palace",
+                "/crystal-palace/startseite/verein/873/saison_id/2019"
+            ],
+            [
+                "Burnley FC",
+                "/fc-burnley/startseite/verein/1132/saison_id/2019"
+            ],
+            [
+                "Norwich City",
+                "/norwich-city/startseite/verein/1123/saison_id/2019"
+            ],
+            [
+                "Sheffield United",
+                "/sheffield-united/startseite/verein/350/saison_id/2019"
+            ]
+        ],
+        "2021": [
+            [
+                "Manchester City",
+                "/manchester-city/startseite/verein/281/saison_id/2021"
+            ],
+            [
+                "Liverpool FC",
+                "/fc-liverpool/startseite/verein/31/saison_id/2021"
+            ],
+            [
+                "Chelsea FC",
+                "/fc-chelsea/startseite/verein/631/saison_id/2021"
+            ],
+            [
+                "Manchester United",
+                "/manchester-united/startseite/verein/985/saison_id/2021"
+            ],
+            [
+                "Tottenham Hotspur",
+                "/tottenham-hotspur/startseite/verein/148/saison_id/2021"
+            ],
+            [
+                "Arsenal FC",
+                "/fc-arsenal/startseite/verein/11/saison_id/2021"
+            ],
+            [
+                "Leicester City",
+                "/leicester-city/startseite/verein/1003/saison_id/2021"
+            ],
+            [
+                "Aston Villa",
+                "/aston-villa/startseite/verein/405/saison_id/2021"
+            ],
+            [
+                "Everton FC",
+                "/fc-everton/startseite/verein/29/saison_id/2021"
+            ],
+            [
+                "Wolverhampton Wanderers",
+                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2021"
+            ],
+            [
+                "West Ham United",
+                "/west-ham-united/startseite/verein/379/saison_id/2021"
+            ],
+            [
+                "Brighton & Hove Albion",
+                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2021"
+            ],
+            [
+                "Newcastle United",
+                "/newcastle-united/startseite/verein/762/saison_id/2021"
+            ],
+            [
+                "Leeds United",
+                "/leeds-united/startseite/verein/399/saison_id/2021"
+            ],
+            [
+                "Southampton FC",
+                "/fc-southampton/startseite/verein/180/saison_id/2021"
+            ],
+            [
+                "Brentford FC",
+                "/fc-brentford/startseite/verein/1148/saison_id/2021"
+            ],
+            [
+                "Crystal Palace",
+                "/crystal-palace/startseite/verein/873/saison_id/2021"
+            ],
+            [
+                "Norwich City",
+                "/norwich-city/startseite/verein/1123/saison_id/2021"
+            ],
+            [
+                "Watford FC",
+                "/fc-watford/startseite/verein/1010/saison_id/2021"
+            ],
+            [
+                "Burnley FC",
+                "/fc-burnley/startseite/verein/1132/saison_id/2021"
+            ]
+        ]
+    },
+    "LaLiga": {
         "2018": [
             [
                 "FC Barcelona",
@@ -164,168 +576,86 @@
                 "/sd-huesca/startseite/verein/5358/saison_id/2018"
             ]
         ],
-        "2022": [
-            [
-                "Real Madrid",
-                "/real-madrid/startseite/verein/418/saison_id/2022"
-            ],
+        "2019": [
             [
                 "FC Barcelona",
-                "/fc-barcelona/startseite/verein/131/saison_id/2022"
+                "/fc-barcelona/startseite/verein/131/saison_id/2019"
+            ],
+            [
+                "Real Madrid",
+                "/real-madrid/startseite/verein/418/saison_id/2019"
             ],
             [
                 "Atl\u00e9tico de Madrid",
-                "/atletico-madrid/startseite/verein/13/saison_id/2022"
-            ],
-            [
-                "Real Sociedad",
-                "/real-sociedad-san-sebastian/startseite/verein/681/saison_id/2022"
-            ],
-            [
-                "Villarreal CF",
-                "/fc-villarreal/startseite/verein/1050/saison_id/2022"
+                "/atletico-madrid/startseite/verein/13/saison_id/2019"
             ],
             [
                 "Valencia CF",
-                "/fc-valencia/startseite/verein/1049/saison_id/2022"
-            ],
-            [
-                "Real Betis Balompi\u00e9",
-                "/real-betis-sevilla/startseite/verein/150/saison_id/2022"
-            ],
-            [
-                "Sevilla FC",
-                "/fc-sevilla/startseite/verein/368/saison_id/2022"
-            ],
-            [
-                "Athletic Bilbao",
-                "/athletic-bilbao/startseite/verein/621/saison_id/2022"
-            ],
-            [
-                "CA Osasuna",
-                "/ca-osasuna/startseite/verein/331/saison_id/2022"
-            ],
-            [
-                "Girona FC",
-                "/fc-girona/startseite/verein/12321/saison_id/2022"
-            ],
-            [
-                "Celta de Vigo",
-                "/celta-vigo/startseite/verein/940/saison_id/2022"
-            ],
-            [
-                "Getafe CF",
-                "/fc-getafe/startseite/verein/3709/saison_id/2022"
-            ],
-            [
-                "RCD Espanyol Barcelona",
-                "/espanyol-barcelona/startseite/verein/714/saison_id/2022"
-            ],
-            [
-                "UD Almer\u00eda",
-                "/ud-almeria/startseite/verein/3302/saison_id/2022"
-            ],
-            [
-                "RCD Mallorca",
-                "/rcd-mallorca/startseite/verein/237/saison_id/2022"
-            ],
-            [
-                "Rayo Vallecano",
-                "/rayo-vallecano/startseite/verein/367/saison_id/2022"
-            ],
-            [
-                "Real Valladolid CF",
-                "/real-valladolid/startseite/verein/366/saison_id/2022"
-            ],
-            [
-                "Elche CF",
-                "/fc-elche/startseite/verein/1531/saison_id/2022"
-            ],
-            [
-                "C\u00e1diz CF",
-                "/fc-cadiz/startseite/verein/2687/saison_id/2022"
-            ]
-        ],
-        "2021": [
-            [
-                "Real Madrid",
-                "/real-madrid/startseite/verein/418/saison_id/2021"
-            ],
-            [
-                "FC Barcelona",
-                "/fc-barcelona/startseite/verein/131/saison_id/2021"
-            ],
-            [
-                "Atl\u00e9tico de Madrid",
-                "/atletico-madrid/startseite/verein/13/saison_id/2021"
-            ],
-            [
-                "Villarreal CF",
-                "/fc-villarreal/startseite/verein/1050/saison_id/2021"
-            ],
-            [
-                "Sevilla FC",
-                "/fc-sevilla/startseite/verein/368/saison_id/2021"
+                "/fc-valencia/startseite/verein/1049/saison_id/2019"
             ],
             [
                 "Real Sociedad",
-                "/real-sociedad-san-sebastian/startseite/verein/681/saison_id/2021"
+                "/real-sociedad-san-sebastian/startseite/verein/681/saison_id/2019"
             ],
             [
-                "Valencia CF",
-                "/fc-valencia/startseite/verein/1049/saison_id/2021"
+                "Sevilla FC",
+                "/fc-sevilla/startseite/verein/368/saison_id/2019"
             ],
             [
                 "Real Betis Balompi\u00e9",
-                "/real-betis-sevilla/startseite/verein/150/saison_id/2021"
+                "/real-betis-sevilla/startseite/verein/150/saison_id/2019"
             ],
             [
                 "Athletic Bilbao",
-                "/athletic-bilbao/startseite/verein/621/saison_id/2021"
+                "/athletic-bilbao/startseite/verein/621/saison_id/2019"
+            ],
+            [
+                "Villarreal CF",
+                "/fc-villarreal/startseite/verein/1050/saison_id/2019"
             ],
             [
                 "Getafe CF",
-                "/fc-getafe/startseite/verein/3709/saison_id/2021"
-            ],
-            [
-                "RCD Espanyol Barcelona",
-                "/espanyol-barcelona/startseite/verein/714/saison_id/2021"
+                "/fc-getafe/startseite/verein/3709/saison_id/2019"
             ],
             [
                 "Celta de Vigo",
-                "/celta-vigo/startseite/verein/940/saison_id/2021"
+                "/celta-vigo/startseite/verein/940/saison_id/2019"
             ],
             [
-                "CA Osasuna",
-                "/ca-osasuna/startseite/verein/331/saison_id/2021"
+                "RCD Espanyol Barcelona",
+                "/espanyol-barcelona/startseite/verein/714/saison_id/2019"
             ],
             [
-                "Granada CF",
-                "/fc-granada/startseite/verein/16795/saison_id/2021"
-            ],
-            [
-                "Levante UD",
-                "/ud-levante/startseite/verein/3368/saison_id/2021"
-            ],
-            [
-                "RCD Mallorca",
-                "/rcd-mallorca/startseite/verein/237/saison_id/2021"
-            ],
-            [
-                "Elche CF",
-                "/fc-elche/startseite/verein/1531/saison_id/2021"
-            ],
-            [
-                "C\u00e1diz CF",
-                "/fc-cadiz/startseite/verein/2687/saison_id/2021"
-            ],
-            [
-                "Rayo Vallecano",
-                "/rayo-vallecano/startseite/verein/367/saison_id/2021"
+                "CD Legan\u00e9s",
+                "/cd-leganes/startseite/verein/1244/saison_id/2019"
             ],
             [
                 "Deportivo Alav\u00e9s",
-                "/deportivo-alaves/startseite/verein/1108/saison_id/2021"
+                "/deportivo-alaves/startseite/verein/1108/saison_id/2019"
+            ],
+            [
+                "Levante UD",
+                "/ud-levante/startseite/verein/3368/saison_id/2019"
+            ],
+            [
+                "Real Valladolid CF",
+                "/real-valladolid/startseite/verein/366/saison_id/2019"
+            ],
+            [
+                "RCD Mallorca",
+                "/rcd-mallorca/startseite/verein/237/saison_id/2019"
+            ],
+            [
+                "CA Osasuna",
+                "/ca-osasuna/startseite/verein/331/saison_id/2019"
+            ],
+            [
+                "Granada CF",
+                "/fc-granada/startseite/verein/16795/saison_id/2019"
+            ],
+            [
+                "SD Eibar",
+                "/sd-eibar/startseite/verein/1533/saison_id/2019"
             ]
         ],
         "2023": [
@@ -491,499 +821,169 @@
                 "Elche CF",
                 "/fc-elche/startseite/verein/1531/saison_id/2020"
             ]
-        ]
-    },
-    "Premier League": {
-        "2023": [
-            [
-                "Manchester City",
-                "/manchester-city/startseite/verein/281/saison_id/2023"
-            ],
-            [
-                "Arsenal FC",
-                "/fc-arsenal/startseite/verein/11/saison_id/2023"
-            ],
-            [
-                "Chelsea FC",
-                "/fc-chelsea/startseite/verein/631/saison_id/2023"
-            ],
-            [
-                "Liverpool FC",
-                "/fc-liverpool/startseite/verein/31/saison_id/2023"
-            ],
-            [
-                "Tottenham Hotspur",
-                "/tottenham-hotspur/startseite/verein/148/saison_id/2023"
-            ],
-            [
-                "Manchester United",
-                "/manchester-united/startseite/verein/985/saison_id/2023"
-            ],
-            [
-                "Aston Villa",
-                "/aston-villa/startseite/verein/405/saison_id/2023"
-            ],
-            [
-                "Newcastle United",
-                "/newcastle-united/startseite/verein/762/saison_id/2023"
-            ],
-            [
-                "Brighton & Hove Albion",
-                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2023"
-            ],
-            [
-                "West Ham United",
-                "/west-ham-united/startseite/verein/379/saison_id/2023"
-            ],
-            [
-                "Brentford FC",
-                "/fc-brentford/startseite/verein/1148/saison_id/2023"
-            ],
-            [
-                "Crystal Palace",
-                "/crystal-palace/startseite/verein/873/saison_id/2023"
-            ],
-            [
-                "Nottingham Forest",
-                "/nottingham-forest/startseite/verein/703/saison_id/2023"
-            ],
-            [
-                "AFC Bournemouth",
-                "/afc-bournemouth/startseite/verein/989/saison_id/2023"
-            ],
-            [
-                "Everton FC",
-                "/fc-everton/startseite/verein/29/saison_id/2023"
-            ],
-            [
-                "Wolverhampton Wanderers",
-                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2023"
-            ],
-            [
-                "Fulham FC",
-                "/fc-fulham/startseite/verein/931/saison_id/2023"
-            ],
-            [
-                "Burnley FC",
-                "/fc-burnley/startseite/verein/1132/saison_id/2023"
-            ],
-            [
-                "Sheffield United",
-                "/sheffield-united/startseite/verein/350/saison_id/2023"
-            ],
-            [
-                "Luton Town",
-                "/luton-town/startseite/verein/1031/saison_id/2023"
-            ]
         ],
         "2021": [
             [
-                "Manchester City",
-                "/manchester-city/startseite/verein/281/saison_id/2021"
+                "Real Madrid",
+                "/real-madrid/startseite/verein/418/saison_id/2021"
             ],
             [
-                "Liverpool FC",
-                "/fc-liverpool/startseite/verein/31/saison_id/2021"
+                "FC Barcelona",
+                "/fc-barcelona/startseite/verein/131/saison_id/2021"
             ],
             [
-                "Chelsea FC",
-                "/fc-chelsea/startseite/verein/631/saison_id/2021"
+                "Atl\u00e9tico de Madrid",
+                "/atletico-madrid/startseite/verein/13/saison_id/2021"
             ],
             [
-                "Manchester United",
-                "/manchester-united/startseite/verein/985/saison_id/2021"
+                "Villarreal CF",
+                "/fc-villarreal/startseite/verein/1050/saison_id/2021"
             ],
             [
-                "Tottenham Hotspur",
-                "/tottenham-hotspur/startseite/verein/148/saison_id/2021"
+                "Sevilla FC",
+                "/fc-sevilla/startseite/verein/368/saison_id/2021"
             ],
             [
-                "Arsenal FC",
-                "/fc-arsenal/startseite/verein/11/saison_id/2021"
+                "Real Sociedad",
+                "/real-sociedad-san-sebastian/startseite/verein/681/saison_id/2021"
             ],
             [
-                "Leicester City",
-                "/leicester-city/startseite/verein/1003/saison_id/2021"
+                "Valencia CF",
+                "/fc-valencia/startseite/verein/1049/saison_id/2021"
             ],
             [
-                "Aston Villa",
-                "/aston-villa/startseite/verein/405/saison_id/2021"
+                "Real Betis Balompi\u00e9",
+                "/real-betis-sevilla/startseite/verein/150/saison_id/2021"
             ],
             [
-                "Everton FC",
-                "/fc-everton/startseite/verein/29/saison_id/2021"
+                "Athletic Bilbao",
+                "/athletic-bilbao/startseite/verein/621/saison_id/2021"
             ],
             [
-                "Wolverhampton Wanderers",
-                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2021"
+                "Getafe CF",
+                "/fc-getafe/startseite/verein/3709/saison_id/2021"
             ],
             [
-                "West Ham United",
-                "/west-ham-united/startseite/verein/379/saison_id/2021"
+                "RCD Espanyol Barcelona",
+                "/espanyol-barcelona/startseite/verein/714/saison_id/2021"
             ],
             [
-                "Brighton & Hove Albion",
-                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2021"
+                "Celta de Vigo",
+                "/celta-vigo/startseite/verein/940/saison_id/2021"
             ],
             [
-                "Newcastle United",
-                "/newcastle-united/startseite/verein/762/saison_id/2021"
+                "CA Osasuna",
+                "/ca-osasuna/startseite/verein/331/saison_id/2021"
             ],
             [
-                "Leeds United",
-                "/leeds-united/startseite/verein/399/saison_id/2021"
+                "Granada CF",
+                "/fc-granada/startseite/verein/16795/saison_id/2021"
             ],
             [
-                "Southampton FC",
-                "/fc-southampton/startseite/verein/180/saison_id/2021"
+                "Levante UD",
+                "/ud-levante/startseite/verein/3368/saison_id/2021"
             ],
             [
-                "Brentford FC",
-                "/fc-brentford/startseite/verein/1148/saison_id/2021"
+                "RCD Mallorca",
+                "/rcd-mallorca/startseite/verein/237/saison_id/2021"
             ],
             [
-                "Crystal Palace",
-                "/crystal-palace/startseite/verein/873/saison_id/2021"
+                "Elche CF",
+                "/fc-elche/startseite/verein/1531/saison_id/2021"
             ],
             [
-                "Norwich City",
-                "/norwich-city/startseite/verein/1123/saison_id/2021"
+                "C\u00e1diz CF",
+                "/fc-cadiz/startseite/verein/2687/saison_id/2021"
             ],
             [
-                "Watford FC",
-                "/fc-watford/startseite/verein/1010/saison_id/2021"
+                "Rayo Vallecano",
+                "/rayo-vallecano/startseite/verein/367/saison_id/2021"
             ],
             [
-                "Burnley FC",
-                "/fc-burnley/startseite/verein/1132/saison_id/2021"
-            ]
-        ],
-        "2020": [
-            [
-                "Manchester City",
-                "/manchester-city/startseite/verein/281/saison_id/2020"
-            ],
-            [
-                "Liverpool FC",
-                "/fc-liverpool/startseite/verein/31/saison_id/2020"
-            ],
-            [
-                "Chelsea FC",
-                "/fc-chelsea/startseite/verein/631/saison_id/2020"
-            ],
-            [
-                "Manchester United",
-                "/manchester-united/startseite/verein/985/saison_id/2020"
-            ],
-            [
-                "Tottenham Hotspur",
-                "/tottenham-hotspur/startseite/verein/148/saison_id/2020"
-            ],
-            [
-                "Arsenal FC",
-                "/fc-arsenal/startseite/verein/11/saison_id/2020"
-            ],
-            [
-                "Everton FC",
-                "/fc-everton/startseite/verein/29/saison_id/2020"
-            ],
-            [
-                "Leicester City",
-                "/leicester-city/startseite/verein/1003/saison_id/2020"
-            ],
-            [
-                "Wolverhampton Wanderers",
-                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2020"
-            ],
-            [
-                "Aston Villa",
-                "/aston-villa/startseite/verein/405/saison_id/2020"
-            ],
-            [
-                "West Ham United",
-                "/west-ham-united/startseite/verein/379/saison_id/2020"
-            ],
-            [
-                "Brighton & Hove Albion",
-                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2020"
-            ],
-            [
-                "Southampton FC",
-                "/fc-southampton/startseite/verein/180/saison_id/2020"
-            ],
-            [
-                "Newcastle United",
-                "/newcastle-united/startseite/verein/762/saison_id/2020"
-            ],
-            [
-                "Fulham FC",
-                "/fc-fulham/startseite/verein/931/saison_id/2020"
-            ],
-            [
-                "Leeds United",
-                "/leeds-united/startseite/verein/399/saison_id/2020"
-            ],
-            [
-                "Crystal Palace",
-                "/crystal-palace/startseite/verein/873/saison_id/2020"
-            ],
-            [
-                "Sheffield United",
-                "/sheffield-united/startseite/verein/350/saison_id/2020"
-            ],
-            [
-                "West Bromwich Albion",
-                "/west-bromwich-albion/startseite/verein/984/saison_id/2020"
-            ],
-            [
-                "Burnley FC",
-                "/fc-burnley/startseite/verein/1132/saison_id/2020"
-            ]
-        ],
-        "2018": [
-            [
-                "Manchester City",
-                "/manchester-city/startseite/verein/281/saison_id/2018"
-            ],
-            [
-                "Liverpool FC",
-                "/fc-liverpool/startseite/verein/31/saison_id/2018"
-            ],
-            [
-                "Chelsea FC",
-                "/fc-chelsea/startseite/verein/631/saison_id/2018"
-            ],
-            [
-                "Tottenham Hotspur",
-                "/tottenham-hotspur/startseite/verein/148/saison_id/2018"
-            ],
-            [
-                "Manchester United",
-                "/manchester-united/startseite/verein/985/saison_id/2018"
-            ],
-            [
-                "Arsenal FC",
-                "/fc-arsenal/startseite/verein/11/saison_id/2018"
-            ],
-            [
-                "Everton FC",
-                "/fc-everton/startseite/verein/29/saison_id/2018"
-            ],
-            [
-                "Leicester City",
-                "/leicester-city/startseite/verein/1003/saison_id/2018"
-            ],
-            [
-                "West Ham United",
-                "/west-ham-united/startseite/verein/379/saison_id/2018"
-            ],
-            [
-                "AFC Bournemouth",
-                "/afc-bournemouth/startseite/verein/989/saison_id/2018"
-            ],
-            [
-                "Southampton FC",
-                "/fc-southampton/startseite/verein/180/saison_id/2018"
-            ],
-            [
-                "Wolverhampton Wanderers",
-                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2018"
-            ],
-            [
-                "Crystal Palace",
-                "/crystal-palace/startseite/verein/873/saison_id/2018"
-            ],
-            [
-                "Fulham FC",
-                "/fc-fulham/startseite/verein/931/saison_id/2018"
-            ],
-            [
-                "Newcastle United",
-                "/newcastle-united/startseite/verein/762/saison_id/2018"
-            ],
-            [
-                "Watford FC",
-                "/fc-watford/startseite/verein/1010/saison_id/2018"
-            ],
-            [
-                "Burnley FC",
-                "/fc-burnley/startseite/verein/1132/saison_id/2018"
-            ],
-            [
-                "Brighton & Hove Albion",
-                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2018"
-            ],
-            [
-                "Huddersfield Town",
-                "/huddersfield-town/startseite/verein/1110/saison_id/2018"
-            ],
-            [
-                "Cardiff City",
-                "/cardiff-city/startseite/verein/603/saison_id/2018"
-            ]
-        ],
-        "2019": [
-            [
-                "Manchester City",
-                "/manchester-city/startseite/verein/281/saison_id/2019"
-            ],
-            [
-                "Liverpool FC",
-                "/fc-liverpool/startseite/verein/31/saison_id/2019"
-            ],
-            [
-                "Tottenham Hotspur",
-                "/tottenham-hotspur/startseite/verein/148/saison_id/2019"
-            ],
-            [
-                "Chelsea FC",
-                "/fc-chelsea/startseite/verein/631/saison_id/2019"
-            ],
-            [
-                "Manchester United",
-                "/manchester-united/startseite/verein/985/saison_id/2019"
-            ],
-            [
-                "Arsenal FC",
-                "/fc-arsenal/startseite/verein/11/saison_id/2019"
-            ],
-            [
-                "Everton FC",
-                "/fc-everton/startseite/verein/29/saison_id/2019"
-            ],
-            [
-                "Leicester City",
-                "/leicester-city/startseite/verein/1003/saison_id/2019"
-            ],
-            [
-                "Wolverhampton Wanderers",
-                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2019"
-            ],
-            [
-                "West Ham United",
-                "/west-ham-united/startseite/verein/379/saison_id/2019"
-            ],
-            [
-                "AFC Bournemouth",
-                "/afc-bournemouth/startseite/verein/989/saison_id/2019"
-            ],
-            [
-                "Newcastle United",
-                "/newcastle-united/startseite/verein/762/saison_id/2019"
-            ],
-            [
-                "Aston Villa",
-                "/aston-villa/startseite/verein/405/saison_id/2019"
-            ],
-            [
-                "Southampton FC",
-                "/fc-southampton/startseite/verein/180/saison_id/2019"
-            ],
-            [
-                "Brighton & Hove Albion",
-                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2019"
-            ],
-            [
-                "Watford FC",
-                "/fc-watford/startseite/verein/1010/saison_id/2019"
-            ],
-            [
-                "Crystal Palace",
-                "/crystal-palace/startseite/verein/873/saison_id/2019"
-            ],
-            [
-                "Burnley FC",
-                "/fc-burnley/startseite/verein/1132/saison_id/2019"
-            ],
-            [
-                "Norwich City",
-                "/norwich-city/startseite/verein/1123/saison_id/2019"
-            ],
-            [
-                "Sheffield United",
-                "/sheffield-united/startseite/verein/350/saison_id/2019"
+                "Deportivo Alav\u00e9s",
+                "/deportivo-alaves/startseite/verein/1108/saison_id/2021"
             ]
         ],
         "2022": [
             [
-                "Manchester City",
-                "/manchester-city/startseite/verein/281/saison_id/2022"
+                "Real Madrid",
+                "/real-madrid/startseite/verein/418/saison_id/2022"
             ],
             [
-                "Arsenal FC",
-                "/fc-arsenal/startseite/verein/11/saison_id/2022"
+                "FC Barcelona",
+                "/fc-barcelona/startseite/verein/131/saison_id/2022"
             ],
             [
-                "Chelsea FC",
-                "/fc-chelsea/startseite/verein/631/saison_id/2022"
+                "Atl\u00e9tico de Madrid",
+                "/atletico-madrid/startseite/verein/13/saison_id/2022"
             ],
             [
-                "Manchester United",
-                "/manchester-united/startseite/verein/985/saison_id/2022"
+                "Real Sociedad",
+                "/real-sociedad-san-sebastian/startseite/verein/681/saison_id/2022"
             ],
             [
-                "Liverpool FC",
-                "/fc-liverpool/startseite/verein/31/saison_id/2022"
+                "Villarreal CF",
+                "/fc-villarreal/startseite/verein/1050/saison_id/2022"
             ],
             [
-                "Tottenham Hotspur",
-                "/tottenham-hotspur/startseite/verein/148/saison_id/2022"
+                "Valencia CF",
+                "/fc-valencia/startseite/verein/1049/saison_id/2022"
             ],
             [
-                "Newcastle United",
-                "/newcastle-united/startseite/verein/762/saison_id/2022"
+                "Real Betis Balompi\u00e9",
+                "/real-betis-sevilla/startseite/verein/150/saison_id/2022"
             ],
             [
-                "Brighton & Hove Albion",
-                "/brighton-amp-hove-albion/startseite/verein/1237/saison_id/2022"
+                "Sevilla FC",
+                "/fc-sevilla/startseite/verein/368/saison_id/2022"
             ],
             [
-                "Aston Villa",
-                "/aston-villa/startseite/verein/405/saison_id/2022"
+                "Athletic Bilbao",
+                "/athletic-bilbao/startseite/verein/621/saison_id/2022"
             ],
             [
-                "Wolverhampton Wanderers",
-                "/wolverhampton-wanderers/startseite/verein/543/saison_id/2022"
+                "CA Osasuna",
+                "/ca-osasuna/startseite/verein/331/saison_id/2022"
             ],
             [
-                "Leicester City",
-                "/leicester-city/startseite/verein/1003/saison_id/2022"
+                "Girona FC",
+                "/fc-girona/startseite/verein/12321/saison_id/2022"
             ],
             [
-                "West Ham United",
-                "/west-ham-united/startseite/verein/379/saison_id/2022"
+                "Celta de Vigo",
+                "/celta-vigo/startseite/verein/940/saison_id/2022"
             ],
             [
-                "Southampton FC",
-                "/fc-southampton/startseite/verein/180/saison_id/2022"
+                "Getafe CF",
+                "/fc-getafe/startseite/verein/3709/saison_id/2022"
             ],
             [
-                "Everton FC",
-                "/fc-everton/startseite/verein/29/saison_id/2022"
+                "RCD Espanyol Barcelona",
+                "/espanyol-barcelona/startseite/verein/714/saison_id/2022"
             ],
             [
-                "Nottingham Forest",
-                "/nottingham-forest/startseite/verein/703/saison_id/2022"
+                "UD Almer\u00eda",
+                "/ud-almeria/startseite/verein/3302/saison_id/2022"
             ],
             [
-                "Brentford FC",
-                "/fc-brentford/startseite/verein/1148/saison_id/2022"
+                "RCD Mallorca",
+                "/rcd-mallorca/startseite/verein/237/saison_id/2022"
             ],
             [
-                "Leeds United",
-                "/leeds-united/startseite/verein/399/saison_id/2022"
+                "Rayo Vallecano",
+                "/rayo-vallecano/startseite/verein/367/saison_id/2022"
             ],
             [
-                "Crystal Palace",
-                "/crystal-palace/startseite/verein/873/saison_id/2022"
+                "Real Valladolid CF",
+                "/real-valladolid/startseite/verein/366/saison_id/2022"
             ],
             [
-                "Fulham FC",
-                "/fc-fulham/startseite/verein/931/saison_id/2022"
+                "Elche CF",
+                "/fc-elche/startseite/verein/1531/saison_id/2022"
             ],
             [
-                "AFC Bournemouth",
-                "/afc-bournemouth/startseite/verein/989/saison_id/2022"
+                "C\u00e1diz CF",
+                "/fc-cadiz/startseite/verein/2687/saison_id/2022"
             ]
         ]
     },
@@ -1070,86 +1070,86 @@
                 "/hellas-verona/startseite/verein/276/saison_id/2023"
             ]
         ],
-        "2022": [
+        "2019": [
             [
-                "SSC Napoli",
-                "/ssc-neapel/startseite/verein/6195/saison_id/2022"
+                "Juventus FC",
+                "/juventus-turin/startseite/verein/506/saison_id/2019"
             ],
             [
                 "Inter Milan",
-                "/inter-mailand/startseite/verein/46/saison_id/2022"
+                "/inter-mailand/startseite/verein/46/saison_id/2019"
+            ],
+            [
+                "SSC Napoli",
+                "/ssc-neapel/startseite/verein/6195/saison_id/2019"
             ],
             [
                 "AC Milan",
-                "/ac-mailand/startseite/verein/5/saison_id/2022"
-            ],
-            [
-                "Juventus FC",
-                "/juventus-turin/startseite/verein/506/saison_id/2022"
+                "/ac-mailand/startseite/verein/5/saison_id/2019"
             ],
             [
                 "AS Roma",
-                "/as-rom/startseite/verein/12/saison_id/2022"
-            ],
-            [
-                "Atalanta BC",
-                "/atalanta-bergamo/startseite/verein/800/saison_id/2022"
+                "/as-rom/startseite/verein/12/saison_id/2019"
             ],
             [
                 "SS Lazio",
-                "/lazio-rom/startseite/verein/398/saison_id/2022"
+                "/lazio-rom/startseite/verein/398/saison_id/2019"
             ],
             [
                 "ACF Fiorentina",
-                "/ac-florenz/startseite/verein/430/saison_id/2022"
+                "/ac-florenz/startseite/verein/430/saison_id/2019"
+            ],
+            [
+                "Atalanta BC",
+                "/atalanta-bergamo/startseite/verein/800/saison_id/2019"
             ],
             [
                 "US Sassuolo",
-                "/us-sassuolo/startseite/verein/6574/saison_id/2022"
+                "/us-sassuolo/startseite/verein/6574/saison_id/2019"
+            ],
+            [
+                "Cagliari Calcio",
+                "/cagliari-calcio/startseite/verein/1390/saison_id/2019"
             ],
             [
                 "Torino FC",
-                "/fc-turin/startseite/verein/416/saison_id/2022"
+                "/fc-turin/startseite/verein/416/saison_id/2019"
             ],
             [
-                "Udinese Calcio",
-                "/udinese-calcio/startseite/verein/410/saison_id/2022"
-            ],
-            [
-                "Bologna FC 1909",
-                "/fc-bologna/startseite/verein/1025/saison_id/2022"
-            ],
-            [
-                "AC Monza",
-                "/ac-monza/startseite/verein/2919/saison_id/2022"
-            ],
-            [
-                "FC Empoli",
-                "/fc-empoli/startseite/verein/749/saison_id/2022"
-            ],
-            [
-                "Hellas Verona",
-                "/hellas-verona/startseite/verein/276/saison_id/2022"
-            ],
-            [
-                "US Salernitana 1919",
-                "/us-salernitana-1919/startseite/verein/380/saison_id/2022"
-            ],
-            [
-                "Spezia Calcio",
-                "/spezia-calcio/startseite/verein/3522/saison_id/2022"
-            ],
-            [
-                "US Lecce",
-                "/us-lecce/startseite/verein/1005/saison_id/2022"
-            ],
-            [
-                "US Cremonese",
-                "/us-cremonese/startseite/verein/2239/saison_id/2022"
+                "Genoa CFC",
+                "/genua-cfc/startseite/verein/252/saison_id/2019"
             ],
             [
                 "UC Sampdoria",
-                "/sampdoria-genua/startseite/verein/1038/saison_id/2022"
+                "/sampdoria-genua/startseite/verein/1038/saison_id/2019"
+            ],
+            [
+                "Bologna FC 1909",
+                "/fc-bologna/startseite/verein/1025/saison_id/2019"
+            ],
+            [
+                "Parma Calcio 1913",
+                "/parma-calcio-1913/startseite/verein/130/saison_id/2019"
+            ],
+            [
+                "Udinese Calcio",
+                "/udinese-calcio/startseite/verein/410/saison_id/2019"
+            ],
+            [
+                "Hellas Verona",
+                "/hellas-verona/startseite/verein/276/saison_id/2019"
+            ],
+            [
+                "Brescia Calcio",
+                "/brescia-calcio/startseite/verein/19/saison_id/2019"
+            ],
+            [
+                "SPAL",
+                "/spal/startseite/verein/2722/saison_id/2019"
+            ],
+            [
+                "US Lecce",
+                "/us-lecce/startseite/verein/1005/saison_id/2019"
             ]
         ],
         "2021": [
@@ -1232,6 +1232,88 @@
             [
                 "US Salernitana 1919",
                 "/us-salernitana-1919/startseite/verein/380/saison_id/2021"
+            ]
+        ],
+        "2022": [
+            [
+                "SSC Napoli",
+                "/ssc-neapel/startseite/verein/6195/saison_id/2022"
+            ],
+            [
+                "Inter Milan",
+                "/inter-mailand/startseite/verein/46/saison_id/2022"
+            ],
+            [
+                "AC Milan",
+                "/ac-mailand/startseite/verein/5/saison_id/2022"
+            ],
+            [
+                "Juventus FC",
+                "/juventus-turin/startseite/verein/506/saison_id/2022"
+            ],
+            [
+                "AS Roma",
+                "/as-rom/startseite/verein/12/saison_id/2022"
+            ],
+            [
+                "Atalanta BC",
+                "/atalanta-bergamo/startseite/verein/800/saison_id/2022"
+            ],
+            [
+                "SS Lazio",
+                "/lazio-rom/startseite/verein/398/saison_id/2022"
+            ],
+            [
+                "ACF Fiorentina",
+                "/ac-florenz/startseite/verein/430/saison_id/2022"
+            ],
+            [
+                "US Sassuolo",
+                "/us-sassuolo/startseite/verein/6574/saison_id/2022"
+            ],
+            [
+                "Torino FC",
+                "/fc-turin/startseite/verein/416/saison_id/2022"
+            ],
+            [
+                "Udinese Calcio",
+                "/udinese-calcio/startseite/verein/410/saison_id/2022"
+            ],
+            [
+                "Bologna FC 1909",
+                "/fc-bologna/startseite/verein/1025/saison_id/2022"
+            ],
+            [
+                "AC Monza",
+                "/ac-monza/startseite/verein/2919/saison_id/2022"
+            ],
+            [
+                "FC Empoli",
+                "/fc-empoli/startseite/verein/749/saison_id/2022"
+            ],
+            [
+                "Hellas Verona",
+                "/hellas-verona/startseite/verein/276/saison_id/2022"
+            ],
+            [
+                "US Salernitana 1919",
+                "/us-salernitana-1919/startseite/verein/380/saison_id/2022"
+            ],
+            [
+                "Spezia Calcio",
+                "/spezia-calcio/startseite/verein/3522/saison_id/2022"
+            ],
+            [
+                "US Lecce",
+                "/us-lecce/startseite/verein/1005/saison_id/2022"
+            ],
+            [
+                "US Cremonese",
+                "/us-cremonese/startseite/verein/2239/saison_id/2022"
+            ],
+            [
+                "UC Sampdoria",
+                "/sampdoria-genua/startseite/verein/1038/saison_id/2022"
             ]
         ],
         "2020": [
@@ -1397,163 +1479,81 @@
                 "Frosinone Calcio",
                 "/frosinone-calcio/startseite/verein/8970/saison_id/2018"
             ]
-        ],
-        "2019": [
-            [
-                "Juventus FC",
-                "/juventus-turin/startseite/verein/506/saison_id/2019"
-            ],
-            [
-                "Inter Milan",
-                "/inter-mailand/startseite/verein/46/saison_id/2019"
-            ],
-            [
-                "SSC Napoli",
-                "/ssc-neapel/startseite/verein/6195/saison_id/2019"
-            ],
-            [
-                "AC Milan",
-                "/ac-mailand/startseite/verein/5/saison_id/2019"
-            ],
-            [
-                "AS Roma",
-                "/as-rom/startseite/verein/12/saison_id/2019"
-            ],
-            [
-                "SS Lazio",
-                "/lazio-rom/startseite/verein/398/saison_id/2019"
-            ],
-            [
-                "ACF Fiorentina",
-                "/ac-florenz/startseite/verein/430/saison_id/2019"
-            ],
-            [
-                "Atalanta BC",
-                "/atalanta-bergamo/startseite/verein/800/saison_id/2019"
-            ],
-            [
-                "US Sassuolo",
-                "/us-sassuolo/startseite/verein/6574/saison_id/2019"
-            ],
-            [
-                "Cagliari Calcio",
-                "/cagliari-calcio/startseite/verein/1390/saison_id/2019"
-            ],
-            [
-                "Torino FC",
-                "/fc-turin/startseite/verein/416/saison_id/2019"
-            ],
-            [
-                "Genoa CFC",
-                "/genua-cfc/startseite/verein/252/saison_id/2019"
-            ],
-            [
-                "UC Sampdoria",
-                "/sampdoria-genua/startseite/verein/1038/saison_id/2019"
-            ],
-            [
-                "Bologna FC 1909",
-                "/fc-bologna/startseite/verein/1025/saison_id/2019"
-            ],
-            [
-                "Parma Calcio 1913",
-                "/parma-calcio-1913/startseite/verein/130/saison_id/2019"
-            ],
-            [
-                "Udinese Calcio",
-                "/udinese-calcio/startseite/verein/410/saison_id/2019"
-            ],
-            [
-                "Hellas Verona",
-                "/hellas-verona/startseite/verein/276/saison_id/2019"
-            ],
-            [
-                "Brescia Calcio",
-                "/brescia-calcio/startseite/verein/19/saison_id/2019"
-            ],
-            [
-                "SPAL",
-                "/spal/startseite/verein/2722/saison_id/2019"
-            ],
-            [
-                "US Lecce",
-                "/us-lecce/startseite/verein/1005/saison_id/2019"
-            ]
         ]
     },
     "Bundesliga": {
-        "2021": [
+        "2018": [
             [
                 "Bayern Munich",
-                "/fc-bayern-munchen/startseite/verein/27/saison_id/2021"
+                "/fc-bayern-munchen/startseite/verein/27/saison_id/2018"
             ],
             [
                 "Borussia Dortmund",
-                "/borussia-dortmund/startseite/verein/16/saison_id/2021"
+                "/borussia-dortmund/startseite/verein/16/saison_id/2018"
             ],
             [
                 "RB Leipzig",
-                "/rasenballsport-leipzig/startseite/verein/23826/saison_id/2021"
+                "/rasenballsport-leipzig/startseite/verein/23826/saison_id/2018"
             ],
             [
                 "Bayer 04 Leverkusen",
-                "/bayer-04-leverkusen/startseite/verein/15/saison_id/2021"
-            ],
-            [
-                "VfL Wolfsburg",
-                "/vfl-wolfsburg/startseite/verein/82/saison_id/2021"
-            ],
-            [
-                "Borussia M\u00f6nchengladbach",
-                "/borussia-monchengladbach/startseite/verein/18/saison_id/2021"
-            ],
-            [
-                "Eintracht Frankfurt",
-                "/eintracht-frankfurt/startseite/verein/24/saison_id/2021"
+                "/bayer-04-leverkusen/startseite/verein/15/saison_id/2018"
             ],
             [
                 "TSG 1899 Hoffenheim",
-                "/tsg-1899-hoffenheim/startseite/verein/533/saison_id/2021"
+                "/tsg-1899-hoffenheim/startseite/verein/533/saison_id/2018"
             ],
             [
-                "SC Freiburg",
-                "/sc-freiburg/startseite/verein/60/saison_id/2021"
+                "Eintracht Frankfurt",
+                "/eintracht-frankfurt/startseite/verein/24/saison_id/2018"
             ],
             [
-                "VfB Stuttgart",
-                "/vfb-stuttgart/startseite/verein/79/saison_id/2021"
+                "Borussia M\u00f6nchengladbach",
+                "/borussia-monchengladbach/startseite/verein/18/saison_id/2018"
+            ],
+            [
+                "VfL Wolfsburg",
+                "/vfl-wolfsburg/startseite/verein/82/saison_id/2018"
+            ],
+            [
+                "FC Schalke 04",
+                "/fc-schalke-04/startseite/verein/33/saison_id/2018"
             ],
             [
                 "Hertha BSC",
-                "/hertha-bsc/startseite/verein/44/saison_id/2021"
+                "/hertha-bsc/startseite/verein/44/saison_id/2018"
+            ],
+            [
+                "SV Werder Bremen",
+                "/sv-werder-bremen/startseite/verein/86/saison_id/2018"
             ],
             [
                 "1.FSV Mainz 05",
-                "/1-fsv-mainz-05/startseite/verein/39/saison_id/2021"
+                "/1-fsv-mainz-05/startseite/verein/39/saison_id/2018"
             ],
             [
-                "1.FC Union Berlin",
-                "/1-fc-union-berlin/startseite/verein/89/saison_id/2021"
-            ],
-            [
-                "1.FC K\u00f6ln",
-                "/1-fc-koln/startseite/verein/3/saison_id/2021"
+                "VfB Stuttgart",
+                "/vfb-stuttgart/startseite/verein/79/saison_id/2018"
             ],
             [
                 "FC Augsburg",
-                "/fc-augsburg/startseite/verein/167/saison_id/2021"
+                "/fc-augsburg/startseite/verein/167/saison_id/2018"
             ],
             [
-                "Arminia Bielefeld",
-                "/arminia-bielefeld/startseite/verein/10/saison_id/2021"
+                "SC Freiburg",
+                "/sc-freiburg/startseite/verein/60/saison_id/2018"
             ],
             [
-                "VfL Bochum",
-                "/vfl-bochum/startseite/verein/80/saison_id/2021"
+                "Fortuna D\u00fcsseldorf",
+                "/fortuna-dusseldorf/startseite/verein/38/saison_id/2018"
             ],
             [
-                "SpVgg Greuther F\u00fcrth",
-                "/spvgg-greuther-furth/startseite/verein/65/saison_id/2021"
+                "Hannover 96",
+                "/hannover-96/startseite/verein/42/saison_id/2018"
+            ],
+            [
+                "1.FC Nuremberg",
+                "/1-fc-nurnberg/startseite/verein/4/saison_id/2018"
             ]
         ],
         "2019": [
@@ -1630,78 +1630,78 @@
                 "/sc-paderborn-07/startseite/verein/127/saison_id/2019"
             ]
         ],
-        "2018": [
+        "2020": [
             [
                 "Bayern Munich",
-                "/fc-bayern-munchen/startseite/verein/27/saison_id/2018"
+                "/fc-bayern-munchen/startseite/verein/27/saison_id/2020"
             ],
             [
                 "Borussia Dortmund",
-                "/borussia-dortmund/startseite/verein/16/saison_id/2018"
+                "/borussia-dortmund/startseite/verein/16/saison_id/2020"
             ],
             [
                 "RB Leipzig",
-                "/rasenballsport-leipzig/startseite/verein/23826/saison_id/2018"
+                "/rasenballsport-leipzig/startseite/verein/23826/saison_id/2020"
             ],
             [
                 "Bayer 04 Leverkusen",
-                "/bayer-04-leverkusen/startseite/verein/15/saison_id/2018"
-            ],
-            [
-                "TSG 1899 Hoffenheim",
-                "/tsg-1899-hoffenheim/startseite/verein/533/saison_id/2018"
-            ],
-            [
-                "Eintracht Frankfurt",
-                "/eintracht-frankfurt/startseite/verein/24/saison_id/2018"
+                "/bayer-04-leverkusen/startseite/verein/15/saison_id/2020"
             ],
             [
                 "Borussia M\u00f6nchengladbach",
-                "/borussia-monchengladbach/startseite/verein/18/saison_id/2018"
+                "/borussia-monchengladbach/startseite/verein/18/saison_id/2020"
+            ],
+            [
+                "Eintracht Frankfurt",
+                "/eintracht-frankfurt/startseite/verein/24/saison_id/2020"
             ],
             [
                 "VfL Wolfsburg",
-                "/vfl-wolfsburg/startseite/verein/82/saison_id/2018"
-            ],
-            [
-                "FC Schalke 04",
-                "/fc-schalke-04/startseite/verein/33/saison_id/2018"
+                "/vfl-wolfsburg/startseite/verein/82/saison_id/2020"
             ],
             [
                 "Hertha BSC",
-                "/hertha-bsc/startseite/verein/44/saison_id/2018"
+                "/hertha-bsc/startseite/verein/44/saison_id/2020"
             ],
             [
-                "SV Werder Bremen",
-                "/sv-werder-bremen/startseite/verein/86/saison_id/2018"
-            ],
-            [
-                "1.FSV Mainz 05",
-                "/1-fsv-mainz-05/startseite/verein/39/saison_id/2018"
+                "TSG 1899 Hoffenheim",
+                "/tsg-1899-hoffenheim/startseite/verein/533/saison_id/2020"
             ],
             [
                 "VfB Stuttgart",
-                "/vfb-stuttgart/startseite/verein/79/saison_id/2018"
+                "/vfb-stuttgart/startseite/verein/79/saison_id/2020"
             ],
             [
-                "FC Augsburg",
-                "/fc-augsburg/startseite/verein/167/saison_id/2018"
+                "1.FSV Mainz 05",
+                "/1-fsv-mainz-05/startseite/verein/39/saison_id/2020"
             ],
             [
                 "SC Freiburg",
-                "/sc-freiburg/startseite/verein/60/saison_id/2018"
+                "/sc-freiburg/startseite/verein/60/saison_id/2020"
             ],
             [
-                "Fortuna D\u00fcsseldorf",
-                "/fortuna-dusseldorf/startseite/verein/38/saison_id/2018"
+                "FC Schalke 04",
+                "/fc-schalke-04/startseite/verein/33/saison_id/2020"
             ],
             [
-                "Hannover 96",
-                "/hannover-96/startseite/verein/42/saison_id/2018"
+                "1.FC K\u00f6ln",
+                "/1-fc-koln/startseite/verein/3/saison_id/2020"
             ],
             [
-                "1.FC Nuremberg",
-                "/1-fc-nurnberg/startseite/verein/4/saison_id/2018"
+                "SV Werder Bremen",
+                "/sv-werder-bremen/startseite/verein/86/saison_id/2020"
+            ],
+            [
+                "FC Augsburg",
+                "/fc-augsburg/startseite/verein/167/saison_id/2020"
+            ],
+            [
+                "1.FC Union Berlin",
+                "/1-fc-union-berlin/startseite/verein/89/saison_id/2020"
+            ],
+            [
+                "Arminia Bielefeld",
+                "/arminia-bielefeld/startseite/verein/10/saison_id/2020"
             ]
         ],
         "2022": [
@@ -1852,78 +1852,78 @@
                 "/sv-darmstadt-98/startseite/verein/105/saison_id/2023"
             ]
         ],
-        "2020": [
+        "2021": [
             [
                 "Bayern Munich",
-                "/fc-bayern-munchen/startseite/verein/27/saison_id/2020"
+                "/fc-bayern-munchen/startseite/verein/27/saison_id/2021"
             ],
             [
                 "Borussia Dortmund",
-                "/borussia-dortmund/startseite/verein/16/saison_id/2020"
+                "/borussia-dortmund/startseite/verein/16/saison_id/2021"
             ],
             [
                 "RB Leipzig",
-                "/rasenballsport-leipzig/startseite/verein/23826/saison_id/2020"
+                "/rasenballsport-leipzig/startseite/verein/23826/saison_id/2021"
             ],
             [
                 "Bayer 04 Leverkusen",
-                "/bayer-04-leverkusen/startseite/verein/15/saison_id/2020"
-            ],
-            [
-                "Borussia M\u00f6nchengladbach",
-                "/borussia-monchengladbach/startseite/verein/18/saison_id/2020"
-            ],
-            [
-                "Eintracht Frankfurt",
-                "/eintracht-frankfurt/startseite/verein/24/saison_id/2020"
+                "/bayer-04-leverkusen/startseite/verein/15/saison_id/2021"
             ],
             [
                 "VfL Wolfsburg",
-                "/vfl-wolfsburg/startseite/verein/82/saison_id/2020"
+                "/vfl-wolfsburg/startseite/verein/82/saison_id/2021"
             ],
             [
-                "Hertha BSC",
-                "/hertha-bsc/startseite/verein/44/saison_id/2020"
+                "Borussia M\u00f6nchengladbach",
+                "/borussia-monchengladbach/startseite/verein/18/saison_id/2021"
+            ],
+            [
+                "Eintracht Frankfurt",
+                "/eintracht-frankfurt/startseite/verein/24/saison_id/2021"
             ],
             [
                 "TSG 1899 Hoffenheim",
-                "/tsg-1899-hoffenheim/startseite/verein/533/saison_id/2020"
-            ],
-            [
-                "VfB Stuttgart",
-                "/vfb-stuttgart/startseite/verein/79/saison_id/2020"
-            ],
-            [
-                "1.FSV Mainz 05",
-                "/1-fsv-mainz-05/startseite/verein/39/saison_id/2020"
+                "/tsg-1899-hoffenheim/startseite/verein/533/saison_id/2021"
             ],
             [
                 "SC Freiburg",
-                "/sc-freiburg/startseite/verein/60/saison_id/2020"
+                "/sc-freiburg/startseite/verein/60/saison_id/2021"
             ],
             [
-                "FC Schalke 04",
-                "/fc-schalke-04/startseite/verein/33/saison_id/2020"
+                "VfB Stuttgart",
+                "/vfb-stuttgart/startseite/verein/79/saison_id/2021"
             ],
             [
-                "1.FC K\u00f6ln",
-                "/1-fc-koln/startseite/verein/3/saison_id/2020"
+                "Hertha BSC",
+                "/hertha-bsc/startseite/verein/44/saison_id/2021"
             ],
             [
-                "SV Werder Bremen",
-                "/sv-werder-bremen/startseite/verein/86/saison_id/2020"
-            ],
-            [
-                "FC Augsburg",
-                "/fc-augsburg/startseite/verein/167/saison_id/2020"
+                "1.FSV Mainz 05",
+                "/1-fsv-mainz-05/startseite/verein/39/saison_id/2021"
             ],
             [
                 "1.FC Union Berlin",
-                "/1-fc-union-berlin/startseite/verein/89/saison_id/2020"
+                "/1-fc-union-berlin/startseite/verein/89/saison_id/2021"
+            ],
+            [
+                "1.FC K\u00f6ln",
+                "/1-fc-koln/startseite/verein/3/saison_id/2021"
+            ],
+            [
+                "FC Augsburg",
+                "/fc-augsburg/startseite/verein/167/saison_id/2021"
             ],
             [
                 "Arminia Bielefeld",
-                "/arminia-bielefeld/startseite/verein/10/saison_id/2020"
+                "/arminia-bielefeld/startseite/verein/10/saison_id/2021"
+            ],
+            [
+                "VfL Bochum",
+                "/vfl-bochum/startseite/verein/80/saison_id/2021"
+            ],
+            [
+                "SpVgg Greuther F\u00fcrth",
+                "/spvgg-greuther-furth/startseite/verein/65/saison_id/2021"
             ]
         ]
     },
@@ -2000,252 +2000,6 @@
             [
                 "FC Metz",
                 "/fc-metz/startseite/verein/347/saison_id/2023"
-            ]
-        ],
-        "2019": [
-            [
-                "Paris Saint-Germain",
-                "/fc-paris-saint-germain/startseite/verein/583/saison_id/2019"
-            ],
-            [
-                "Olympique Lyon",
-                "/olympique-lyon/startseite/verein/1041/saison_id/2019"
-            ],
-            [
-                "AS Monaco",
-                "/as-monaco/startseite/verein/162/saison_id/2019"
-            ],
-            [
-                "LOSC Lille",
-                "/losc-lille/startseite/verein/1082/saison_id/2019"
-            ],
-            [
-                "Olympique Marseille",
-                "/olympique-marseille/startseite/verein/244/saison_id/2019"
-            ],
-            [
-                "OGC Nice",
-                "/ogc-nizza/startseite/verein/417/saison_id/2019"
-            ],
-            [
-                "Stade Rennais FC",
-                "/fc-stade-rennes/startseite/verein/273/saison_id/2019"
-            ],
-            [
-                "FC Girondins Bordeaux",
-                "/fc-girondins-bordeaux/startseite/verein/40/saison_id/2019"
-            ],
-            [
-                "FC Nantes",
-                "/fc-nantes/startseite/verein/995/saison_id/2019"
-            ],
-            [
-                "AS Saint-\u00c9tienne",
-                "/as-saint-etienne/startseite/verein/618/saison_id/2019"
-            ],
-            [
-                "RC Strasbourg Alsace",
-                "/rc-strassburg-alsace/startseite/verein/667/saison_id/2019"
-            ],
-            [
-                "Angers SCO",
-                "/sco-angers/startseite/verein/1420/saison_id/2019"
-            ],
-            [
-                "Montpellier HSC",
-                "/montpellier-hsc/startseite/verein/969/saison_id/2019"
-            ],
-            [
-                "Stade Reims",
-                "/stade-reims/startseite/verein/1421/saison_id/2019"
-            ],
-            [
-                "FC Toulouse",
-                "/fc-toulouse/startseite/verein/415/saison_id/2019"
-            ],
-            [
-                "Amiens SC",
-                "/amiens-sc/startseite/verein/1416/saison_id/2019"
-            ],
-            [
-                "FC Metz",
-                "/fc-metz/startseite/verein/347/saison_id/2019"
-            ],
-            [
-                "Dijon FCO",
-                "/dijon-fco/startseite/verein/2969/saison_id/2019"
-            ],
-            [
-                "N\u00eemes Olympique",
-                "/nimes-olympique/startseite/verein/1160/saison_id/2019"
-            ],
-            [
-                "Stade Brestois 29",
-                "/stade-brest-29/startseite/verein/3911/saison_id/2019"
-            ]
-        ],
-        "2020": [
-            [
-                "Paris Saint-Germain",
-                "/fc-paris-saint-germain/startseite/verein/583/saison_id/2020"
-            ],
-            [
-                "Olympique Lyon",
-                "/olympique-lyon/startseite/verein/1041/saison_id/2020"
-            ],
-            [
-                "AS Monaco",
-                "/as-monaco/startseite/verein/162/saison_id/2020"
-            ],
-            [
-                "LOSC Lille",
-                "/losc-lille/startseite/verein/1082/saison_id/2020"
-            ],
-            [
-                "Stade Rennais FC",
-                "/fc-stade-rennes/startseite/verein/273/saison_id/2020"
-            ],
-            [
-                "Olympique Marseille",
-                "/olympique-marseille/startseite/verein/244/saison_id/2020"
-            ],
-            [
-                "OGC Nice",
-                "/ogc-nizza/startseite/verein/417/saison_id/2020"
-            ],
-            [
-                "AS Saint-\u00c9tienne",
-                "/as-saint-etienne/startseite/verein/618/saison_id/2020"
-            ],
-            [
-                "Montpellier HSC",
-                "/montpellier-hsc/startseite/verein/969/saison_id/2020"
-            ],
-            [
-                "Angers SCO",
-                "/sco-angers/startseite/verein/1420/saison_id/2020"
-            ],
-            [
-                "RC Strasbourg Alsace",
-                "/rc-strassburg-alsace/startseite/verein/667/saison_id/2020"
-            ],
-            [
-                "FC Girondins Bordeaux",
-                "/fc-girondins-bordeaux/startseite/verein/40/saison_id/2020"
-            ],
-            [
-                "Stade Reims",
-                "/stade-reims/startseite/verein/1421/saison_id/2020"
-            ],
-            [
-                "RC Lens",
-                "/rc-lens/startseite/verein/826/saison_id/2020"
-            ],
-            [
-                "FC Metz",
-                "/fc-metz/startseite/verein/347/saison_id/2020"
-            ],
-            [
-                "Stade Brestois 29",
-                "/stade-brest-29/startseite/verein/3911/saison_id/2020"
-            ],
-            [
-                "FC Nantes",
-                "/fc-nantes/startseite/verein/995/saison_id/2020"
-            ],
-            [
-                "FC Lorient",
-                "/fc-lorient/startseite/verein/1158/saison_id/2020"
-            ],
-            [
-                "Dijon FCO",
-                "/dijon-fco/startseite/verein/2969/saison_id/2020"
-            ],
-            [
-                "N\u00eemes Olympique",
-                "/nimes-olympique/startseite/verein/1160/saison_id/2020"
-            ]
-        ],
-        "2022": [
-            [
-                "Paris Saint-Germain",
-                "/fc-paris-saint-germain/startseite/verein/583/saison_id/2022"
-            ],
-            [
-                "Stade Rennais FC",
-                "/fc-stade-rennes/startseite/verein/273/saison_id/2022"
-            ],
-            [
-                "AS Monaco",
-                "/as-monaco/startseite/verein/162/saison_id/2022"
-            ],
-            [
-                "Olympique Lyon",
-                "/olympique-lyon/startseite/verein/1041/saison_id/2022"
-            ],
-            [
-                "Olympique Marseille",
-                "/olympique-marseille/startseite/verein/244/saison_id/2022"
-            ],
-            [
-                "OGC Nice",
-                "/ogc-nizza/startseite/verein/417/saison_id/2022"
-            ],
-            [
-                "LOSC Lille",
-                "/losc-lille/startseite/verein/1082/saison_id/2022"
-            ],
-            [
-                "RC Lens",
-                "/rc-lens/startseite/verein/826/saison_id/2022"
-            ],
-            [
-                "FC Lorient",
-                "/fc-lorient/startseite/verein/1158/saison_id/2022"
-            ],
-            [
-                "Stade Reims",
-                "/stade-reims/startseite/verein/1421/saison_id/2022"
-            ],
-            [
-                "Montpellier HSC",
-                "/montpellier-hsc/startseite/verein/969/saison_id/2022"
-            ],
-            [
-                "RC Strasbourg Alsace",
-                "/rc-strassburg-alsace/startseite/verein/667/saison_id/2022"
-            ],
-            [
-                "FC Nantes",
-                "/fc-nantes/startseite/verein/995/saison_id/2022"
-            ],
-            [
-                "FC Toulouse",
-                "/fc-toulouse/startseite/verein/415/saison_id/2022"
-            ],
-            [
-                "Stade Brestois 29",
-                "/stade-brest-29/startseite/verein/3911/saison_id/2022"
-            ],
-            [
-                "ESTAC Troyes",
-                "/es-troyes-ac/startseite/verein/1095/saison_id/2022"
-            ],
-            [
-                "Angers SCO",
-                "/sco-angers/startseite/verein/1420/saison_id/2022"
-            ],
-            [
-                "AJ Auxerre",
-                "/aj-auxerre/startseite/verein/290/saison_id/2022"
-            ],
-            [
-                "Clermont Foot 63",
-                "/clermont-foot-63/startseite/verein/3524/saison_id/2022"
-            ],
-            [
-                "AC Ajaccio",
-                "/ac-ajaccio/startseite/verein/1147/saison_id/2022"
             ]
         ],
         "2018": [
@@ -2330,6 +2084,88 @@
                 "/dijon-fco/startseite/verein/2969/saison_id/2018"
             ]
         ],
+        "2020": [
+            [
+                "Paris Saint-Germain",
+                "/fc-paris-saint-germain/startseite/verein/583/saison_id/2020"
+            ],
+            [
+                "Olympique Lyon",
+                "/olympique-lyon/startseite/verein/1041/saison_id/2020"
+            ],
+            [
+                "AS Monaco",
+                "/as-monaco/startseite/verein/162/saison_id/2020"
+            ],
+            [
+                "LOSC Lille",
+                "/losc-lille/startseite/verein/1082/saison_id/2020"
+            ],
+            [
+                "Stade Rennais FC",
+                "/fc-stade-rennes/startseite/verein/273/saison_id/2020"
+            ],
+            [
+                "Olympique Marseille",
+                "/olympique-marseille/startseite/verein/244/saison_id/2020"
+            ],
+            [
+                "OGC Nice",
+                "/ogc-nizza/startseite/verein/417/saison_id/2020"
+            ],
+            [
+                "AS Saint-\u00c9tienne",
+                "/as-saint-etienne/startseite/verein/618/saison_id/2020"
+            ],
+            [
+                "Montpellier HSC",
+                "/montpellier-hsc/startseite/verein/969/saison_id/2020"
+            ],
+            [
+                "Angers SCO",
+                "/sco-angers/startseite/verein/1420/saison_id/2020"
+            ],
+            [
+                "RC Strasbourg Alsace",
+                "/rc-strassburg-alsace/startseite/verein/667/saison_id/2020"
+            ],
+            [
+                "FC Girondins Bordeaux",
+                "/fc-girondins-bordeaux/startseite/verein/40/saison_id/2020"
+            ],
+            [
+                "Stade Reims",
+                "/stade-reims/startseite/verein/1421/saison_id/2020"
+            ],
+            [
+                "RC Lens",
+                "/rc-lens/startseite/verein/826/saison_id/2020"
+            ],
+            [
+                "FC Metz",
+                "/fc-metz/startseite/verein/347/saison_id/2020"
+            ],
+            [
+                "Stade Brestois 29",
+                "/stade-brest-29/startseite/verein/3911/saison_id/2020"
+            ],
+            [
+                "FC Nantes",
+                "/fc-nantes/startseite/verein/995/saison_id/2020"
+            ],
+            [
+                "FC Lorient",
+                "/fc-lorient/startseite/verein/1158/saison_id/2020"
+            ],
+            [
+                "Dijon FCO",
+                "/dijon-fco/startseite/verein/2969/saison_id/2020"
+            ],
+            [
+                "N\u00eemes Olympique",
+                "/nimes-olympique/startseite/verein/1160/saison_id/2020"
+            ]
+        ],
         "2021": [
             [
                 "Paris Saint-Germain",
@@ -2410,6 +2246,170 @@
             [
                 "Clermont Foot 63",
                 "/clermont-foot-63/startseite/verein/3524/saison_id/2021"
+            ]
+        ],
+        "2019": [
+            [
+                "Paris Saint-Germain",
+                "/fc-paris-saint-germain/startseite/verein/583/saison_id/2019"
+            ],
+            [
+                "Olympique Lyon",
+                "/olympique-lyon/startseite/verein/1041/saison_id/2019"
+            ],
+            [
+                "AS Monaco",
+                "/as-monaco/startseite/verein/162/saison_id/2019"
+            ],
+            [
+                "LOSC Lille",
+                "/losc-lille/startseite/verein/1082/saison_id/2019"
+            ],
+            [
+                "Olympique Marseille",
+                "/olympique-marseille/startseite/verein/244/saison_id/2019"
+            ],
+            [
+                "OGC Nice",
+                "/ogc-nizza/startseite/verein/417/saison_id/2019"
+            ],
+            [
+                "Stade Rennais FC",
+                "/fc-stade-rennes/startseite/verein/273/saison_id/2019"
+            ],
+            [
+                "FC Girondins Bordeaux",
+                "/fc-girondins-bordeaux/startseite/verein/40/saison_id/2019"
+            ],
+            [
+                "FC Nantes",
+                "/fc-nantes/startseite/verein/995/saison_id/2019"
+            ],
+            [
+                "AS Saint-\u00c9tienne",
+                "/as-saint-etienne/startseite/verein/618/saison_id/2019"
+            ],
+            [
+                "RC Strasbourg Alsace",
+                "/rc-strassburg-alsace/startseite/verein/667/saison_id/2019"
+            ],
+            [
+                "Angers SCO",
+                "/sco-angers/startseite/verein/1420/saison_id/2019"
+            ],
+            [
+                "Montpellier HSC",
+                "/montpellier-hsc/startseite/verein/969/saison_id/2019"
+            ],
+            [
+                "Stade Reims",
+                "/stade-reims/startseite/verein/1421/saison_id/2019"
+            ],
+            [
+                "FC Toulouse",
+                "/fc-toulouse/startseite/verein/415/saison_id/2019"
+            ],
+            [
+                "Amiens SC",
+                "/amiens-sc/startseite/verein/1416/saison_id/2019"
+            ],
+            [
+                "FC Metz",
+                "/fc-metz/startseite/verein/347/saison_id/2019"
+            ],
+            [
+                "Dijon FCO",
+                "/dijon-fco/startseite/verein/2969/saison_id/2019"
+            ],
+            [
+                "N\u00eemes Olympique",
+                "/nimes-olympique/startseite/verein/1160/saison_id/2019"
+            ],
+            [
+                "Stade Brestois 29",
+                "/stade-brest-29/startseite/verein/3911/saison_id/2019"
+            ]
+        ],
+        "2022": [
+            [
+                "Paris Saint-Germain",
+                "/fc-paris-saint-germain/startseite/verein/583/saison_id/2022"
+            ],
+            [
+                "Stade Rennais FC",
+                "/fc-stade-rennes/startseite/verein/273/saison_id/2022"
+            ],
+            [
+                "AS Monaco",
+                "/as-monaco/startseite/verein/162/saison_id/2022"
+            ],
+            [
+                "Olympique Lyon",
+                "/olympique-lyon/startseite/verein/1041/saison_id/2022"
+            ],
+            [
+                "Olympique Marseille",
+                "/olympique-marseille/startseite/verein/244/saison_id/2022"
+            ],
+            [
+                "OGC Nice",
+                "/ogc-nizza/startseite/verein/417/saison_id/2022"
+            ],
+            [
+                "LOSC Lille",
+                "/losc-lille/startseite/verein/1082/saison_id/2022"
+            ],
+            [
+                "RC Lens",
+                "/rc-lens/startseite/verein/826/saison_id/2022"
+            ],
+            [
+                "FC Lorient",
+                "/fc-lorient/startseite/verein/1158/saison_id/2022"
+            ],
+            [
+                "Stade Reims",
+                "/stade-reims/startseite/verein/1421/saison_id/2022"
+            ],
+            [
+                "Montpellier HSC",
+                "/montpellier-hsc/startseite/verein/969/saison_id/2022"
+            ],
+            [
+                "RC Strasbourg Alsace",
+                "/rc-strassburg-alsace/startseite/verein/667/saison_id/2022"
+            ],
+            [
+                "FC Nantes",
+                "/fc-nantes/startseite/verein/995/saison_id/2022"
+            ],
+            [
+                "FC Toulouse",
+                "/fc-toulouse/startseite/verein/415/saison_id/2022"
+            ],
+            [
+                "Stade Brestois 29",
+                "/stade-brest-29/startseite/verein/3911/saison_id/2022"
+            ],
+            [
+                "ESTAC Troyes",
+                "/es-troyes-ac/startseite/verein/1095/saison_id/2022"
+            ],
+            [
+                "Angers SCO",
+                "/sco-angers/startseite/verein/1420/saison_id/2022"
+            ],
+            [
+                "AJ Auxerre",
+                "/aj-auxerre/startseite/verein/290/saison_id/2022"
+            ],
+            [
+                "Clermont Foot 63",
+                "/clermont-foot-63/startseite/verein/3524/saison_id/2022"
+            ],
+            [
+                "AC Ajaccio",
+                "/ac-ajaccio/startseite/verein/1147/saison_id/2022"
             ]
         ]
     }
