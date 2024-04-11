@@ -103,5 +103,25 @@
                 null
             ]
         }
+    },
+    "European": {
+        "competitions": {
+            "First Tier": [
+                "UEFA Champions League",
+                "/uefa-champions-league/startseite/pokalwettbewerb/CL"
+            ],
+            "Second Tier": [
+                "UEFA Europa League",
+                "/uefa-europa-league/startseite/pokalwettbewerb/EL"
+            ],
+            "Third Tier": [
+                "UEFA Europa Conference League",
+                "/uefa-europa-conference-league/startseite/pokalwettbewerb/UCOL"
+            ],
+            "Cup": [
+                "UEFA Super Cup",
+                "/uefa-super-cup/startseite/pokalwettbewerb/USC"
+            ]
+        }
     }
 }

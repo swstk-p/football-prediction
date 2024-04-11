@@ -24,7 +24,12 @@ class CompNameSpider(BaseSpider):
                     callback=self.parse_domestic_comp,
                     cb_kwargs={"country": country},
                 )
-        # TODO: scrape European competitions as well
+        have_all_intl_comps: bool = self.comp_names.have_all_intl_comps()
+        if not have_all_intl_comps:
+            yield scrapy.Request(
+                url="https://www.transfermarkt.com/wettbewerbe/europa",
+                callback=self.parse_intl_comp,
+            )
 
     def parse_domestic_comp(self, response, country):
         """Parses the competition names from the response and writes them
@@ -34,4 +39,13 @@ class CompNameSpider(BaseSpider):
             country (_type_): country name
         """
         comps = self.comp_names.parse_domestic_comp_names(response, country)
+        self.comp_names.write_to_json_file(comps)
+
+    def parse_intl_comp(self, response):
+        """Parses the intl (UEFA) competition names from the response and writes them
+
+        Args:
+            response (_type_): response object from spider
+        """
+        comps = self.comp_names.parse_intl_comp_names(response)
         self.comp_names.write_to_json_file(comps)

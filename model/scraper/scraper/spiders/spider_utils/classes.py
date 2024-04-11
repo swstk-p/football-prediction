@@ -1,6 +1,8 @@
 import json
 import os
 
+# TODO: write data onto db instead of json
+
 
 class BaseClass:
     def __init__(self):
@@ -158,6 +160,12 @@ class CompetitionNames(BaseClass):
     def __init__(self):
         super().__init__()
         self.FILE = os.path.join(self.DATA_DIR, "competitions.json")
+        self.intl_comps = {
+            "First Tier": "UEFA Champions League",
+            "Second Tier": "UEFA Europa League",
+            "Third Tier": "UEFA Europa Conference League",
+            "Cup": "UEFA Super Cup",
+        }
 
     def domestic_comp_callback(self, response, country):
         """callback func that handles parsing of competition names if needed
@@ -179,7 +187,7 @@ class CompetitionNames(BaseClass):
         super().write_to_json_file(self.FILE, json_content)
 
     def parse_domestic_comp_names(self, response, country):
-        """Parsed comp names for the country
+        """Parse comp names and urls for the country
 
         Args:
             response (_type_): spider response obj
@@ -200,13 +208,48 @@ class CompetitionNames(BaseClass):
                 for tier, row in row_xpaths.items()
             }
         }
-
         with open(self.FILE, "r", encoding="utf-8") as file:
             comps = json.load(
                 file
             )  # retaining previous info (we are sure the file exists because of country codes)
         comps[country]["competitions"] = rows[country]  # adding to retained info
         return comps
+
+    def parse_intl_comp_names(self, response):
+        """Parse comp names and urls for UEFA competitions
+
+        Args:
+            response (_type_): response object from spider
+
+        Returns:
+            _type_: updated data containing comps info to overwrite the file with
+        """
+        row_xpaths = self.get_intl_comps_xpath()
+        rows = {
+            "European": {
+                "competitions": {
+                    tier: (response.xpath(row[0]).get(), response.xpath(row[1]).get())
+                    for tier, row in row_xpaths.items()
+                }
+            }
+        }
+        with open(self.FILE, "r", encoding="utf-8") as file:
+            comps = json.load(file)
+        comps["European"] = rows["European"]
+        return comps
+
+    def get_intl_comps_xpath(self) -> dict:
+        """Get xpaths for elements containing UEFA competition titles and urls
+
+        Returns:
+            dict: {comp_tier: (xpath to comp title, xpath to comp url)}
+        """
+        xpaths = {}
+        for tier, name in self.intl_comps.items():
+            xpath_name = f'//div[@class="large-4 columns"]/div[@class="box"]/div[contains(text(), "Cups")]/../a[./@title="{name}"]/@title'
+            xpath_url = f'//div[@class="large-4 columns"]/div[@class="box"]/div[contains(text(), "Cups")]/../a[./@title="{name}"]/@href'
+            xpaths[tier] = (xpath_name, xpath_url)
+        return xpaths
 
     def get_domestic_comps_xpaths(self) -> dict:
         """Get xpaths for table rows containing competition titles and urls
@@ -253,6 +296,27 @@ class CompetitionNames(BaseClass):
                     ]
                 )
         return all_domestic_comps_parsed
+
+    def have_all_intl_comps(self) -> bool:
+        """Checks if all intl (UEFA) comps are parsed in the file
+
+        Returns:
+            bool: True if parsed else False
+        """
+        is_competitions_file: bool = os.path.isfile(self.FILE)
+        # to check if all comp names are parsed
+        all_intl_comps_parsed: bool = is_competitions_file
+        if is_competitions_file:
+            with open(self.FILE, "r", encoding="utf-8") as file:
+                comps = json.load(file)
+                all_intl_comps_parsed = all(
+                    [
+                        "European" in comps.keys()
+                        and sorted(comps["European"]["competitions"].keys())
+                        == sorted(self.intl_comps.keys())
+                    ]
+                )
+        return all_intl_comps_parsed
 
 
 # class to deal to all the clubs names in all leagues and seasons
