@@ -1,5 +1,6 @@
 import json
 import os
+import datetime
 
 # TODO: write data onto db instead of json
 
@@ -16,8 +17,15 @@ class BaseClass:
             "Domestic Super Cup",
             "League Cup",
         ]
-        # TODO: make seasons have all data of current season + past five seasons instead of hardcoding it
-        self.seasons = ["2018", "2019", "2020", "2021", "2022", "2023"]
+        self.current_year = datetime.datetime.now().year
+        self.seasons = sorted(
+            list(
+                set(
+                    ["2018", "2019", "2020", "2021", "2022", "2023"]
+                    + [str(self.current_year - i) for i in range(6, 0, -1)]
+                )
+            )
+        )
 
     def write_to_json_file(self, file, json_content):
         """Writes json data on to json file
