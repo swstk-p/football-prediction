@@ -8,6 +8,8 @@ authors = ["Swastik Pandey <swastik.pandey@deerwalk.edu.np>"]
 python = "^3.11"
 pandas = "^2.2.1"
 scrapy = "^2.11.1"
+pymongo = "^4.6.3"
+python-dotenv = "^1.0.1"
 
 [tool.poetry.scripts]
 scrape = "scripts.spider_script:run_spiders"

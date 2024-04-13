@@ -1,8 +1,12 @@
 import json
 import os
 import datetime
+import pymongo
+from dotenv import load_dotenv
+from pprint import pp
 
-# TODO: write data onto db instead of json
+# TODO 1: look into scrapy logging
+# TODO 2: write data onto db instead of json for competitions and club names
 
 
 class BaseClass:
@@ -10,6 +14,8 @@ class BaseClass:
         self.DATA_DIR = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "../../../../data")
         )
+        load_dotenv()
+        self.mongo_con = os.getenv("MONGODB_CLIENT", "mongodb://localhost:27017")
         self.countries = ["England", "Spain", "Italy", "Germany", "France"]
         self.competitions = [
             "First Tier",
@@ -26,6 +32,7 @@ class BaseClass:
                 )
             )
         )
+        self.db_name = "football"
 
     def write_to_json_file(self, file, json_content):
         """Writes json data on to json file
@@ -51,6 +58,20 @@ class BaseClass:
         else:
             return os.path.getsize(file) <= 0
 
+    def get_db(self, db_name: str = None):
+        """Returns db object
+
+        Args:
+            db_name (str, optional): Name of the required database. Defaults to None.
+
+        Returns:
+            _type_: db_object
+        """
+        if db_name is None:
+            db_name = self.db_name
+        mongo_client = pymongo.MongoClient(self.mongo_con)
+        return mongo_client[db_name]
+
 
 # class for dealing with country codes while obtaining data
 class CountryCodes(BaseClass):
@@ -73,7 +94,7 @@ class CountryCodes(BaseClass):
         xpath = xpath[:-4] + "]/../.."
         return xpath
 
-    def parse_country_codes(self, response) -> str:
+    def parse_country_codes(self, response) -> list:
         """Parses country code from website into a json string
 
         Args:
@@ -86,7 +107,7 @@ class CountryCodes(BaseClass):
         # gets table rows from the URL
         table_rows = response.xpath(xpath_rows)
         # dict to store country-wise competition info
-        competitions: dict = {}
+        competitions: list = []
         for row in table_rows:
             # country name
             country = row.xpath("td[2]/img/@alt").getall()[0]
@@ -99,29 +120,29 @@ class CountryCodes(BaseClass):
                 .split(".")[0]
             )
             # write code info to dict
-            competitions[country] = {"country_code": country_code}
+            competitions.append({"country": country, "country_code": country_code})
         return competitions
 
     def have_all_country_codes(self) -> bool:
-        """Checks whether all the county codes are parsed in the file
+        """Checks whether all the county codes are parsed in the collection
 
         Returns:
-            bool: True if all codes are passed else False
+            bool: True if all codes are parsed else False
         """
-        # check if req file exists
-        is_competitions_file: bool = os.path.isfile(self.FILE)
-        # to check if all country codes are parsed
-        all_country_code_parsed: bool = is_competitions_file
-        if is_competitions_file:
-            with open(self.FILE, "r", encoding="utf-8") as file:
-                comps = json.load(file)
-                all_country_code_parsed = all(
-                    [
-                        country in comps.keys()
-                        and "country_code" in comps[country].keys()
-                        for country in self.countries
-                    ]
-                )
+        db = self.get_db()
+        collection = db.competitions
+        # delete if a document lacking "country" key because the check condition below expects a "country" key;
+        collection.delete_many(filter={"country": {"$exists": False}})
+        cursor = collection.find(
+            filter={"country_code": {"$exists": True}}, projection={"_id": False}
+        )
+        all_country_code_parsed: bool = cursor.alive
+        if all_country_code_parsed:
+            countries: list = [c for c in cursor]
+            keys: list = [country["country"] for country in countries]
+            all_country_code_parsed = all(
+                [country in keys for country in self.countries]
+            )
         return all_country_code_parsed
 
     def write_to_json_file(self, json_content):
@@ -162,6 +183,52 @@ class CountryCodes(BaseClass):
             }
         return all_country_urls
 
+    def record_in_db(self, db_content: list):
+        """Records the data in db by completing incomplete data, or adding missing data
+
+        Args:
+            db_content (list): list of dictionaries in the format {country: code}
+        """
+        db = self.get_db()
+        collection = db.competitions
+        update_reqs = (
+            # only has country, no code
+            [
+                pymongo.UpdateOne(
+                    filter={
+                        "country": data["country"],
+                        "country_code": {"$exists": False},
+                    },
+                    update={"$set": data},
+                )
+                for data in db_content
+            ]
+            # only has code, no country
+            + [
+                pymongo.UpdateOne(
+                    filter={
+                        "country": {"$exists": False},
+                        "country_code": data["country_code"],
+                    },
+                    update={"$set": data},
+                )
+                for data in db_content
+            ]
+            # has no country, no code
+            + [
+                pymongo.UpdateOne(
+                    filter={
+                        "country": data["country"],
+                        "country_code": data["country_code"],
+                    },
+                    update={"$setOnInsert": data},
+                    upsert=True,
+                )
+                for data in db_content
+            ]
+        )
+        collection.bulk_write(update_reqs)
+
 
 # class for dealing with competition names while obtaining data
 class CompetitionNames(BaseClass):
@@ -174,16 +241,6 @@ class CompetitionNames(BaseClass):
             "Third Tier": "UEFA Europa Conference League",
             "Cup": "UEFA Super Cup",
         }
-
-    def domestic_comp_callback(self, response, country):
-        """callback func that handles parsing of competition names if needed
-
-        Args:
-            response (_type_): spider response obj
-            country (_type_): country for which comps are being parsed
-        """
-        comps = self.parse_domestic_comp_names(response, country)
-        self.write_to_json_file(comps)
 
     def write_to_json_file(self, json_content):
         """Use case specific write to json file method
@@ -371,17 +428,6 @@ class ClubNames(BaseClass):
             for season in self.seasons
         ]
         return league_urls
-
-    def all_club_names_callback(self, response, league, season):
-        """callback for league page URL request to parse all club names and urls
-
-        Args:
-            response (_type_): responses obj from spider
-            league (_type_): league name
-            season (_type_): season start year
-        """
-        clubs = self.parse_club_names(response, league, season)
-        self.write_to_json_file(clubs)
 
     def parse_club_names(self, response, league, season) -> dict:
         """Parses club names, urls and returns them

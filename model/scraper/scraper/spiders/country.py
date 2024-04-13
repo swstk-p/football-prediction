@@ -1,4 +1,5 @@
 from .base import BaseSpider, scrapy
+from pprint import pp
 
 
 class CountryCodeSpider(BaseSpider):
@@ -17,12 +18,16 @@ class CountryCodeSpider(BaseSpider):
         if not have_all_country_codes:
             url = "https://www.transfermarkt.com/wettbewerbe/europa"
             yield scrapy.Request(url=url, callback=self.parse)
+        else:
+            print("*********************************************************")
+            print("NOT SCRAPED BECAUSE ALL COUNTRY CODES PRESENT IN DATABASE")
+            print("*********************************************************")
 
     def parse(self, response):
-        """Parses the country codes and writes them
+        """Parses the country codes and records them
 
         Args:
             response (_type_): response object from spider
         """
         competitions = self.country_codes.parse_country_codes(response)
-        self.country_codes.write_to_json_file(competitions)
+        self.country_codes.record_in_db(competitions)
