@@ -53,7 +53,7 @@ class BaseClass:
         )
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
-        # removing logging to console
+        # removing logging to console by stopping the propagation to the root logger
         self.logger.propagate = False
 
     def write_to_json_file(self, file, json_content):
