@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from pprint import pp
 import logging
 
-# TODO 1: look into scrapy logging
+# TODO 1: look into logging
 # TODO 2: write data onto db instead of json for competitions and club names
 
 
@@ -183,40 +183,6 @@ class CountryCodes(BaseClass):
         super().write_to_json_file(self.FILE, json_content)
         self.logger.info("Written to json file.")
 
-    def get_country_url(self, country_code) -> str:
-        """Forms a country URL by appending country code
-
-        Args:
-            country_code (_type_): country code
-
-        Returns:
-            str: _description_
-        """
-        url: str = f"https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/{country_code}"
-        self.logger.debug(f"RETURNED: {url}")
-        self.logger.info("Returned country URL.")
-        return url
-
-    def get_all_country_urls(self) -> dict:
-        """returns a list of all countries URLs
-
-        Returns:
-            dict: {country: country_url}
-        """
-        with open(self.FILE, "r", encoding="utf-8") as file:
-            comp_json = json.load(file)
-            all_country_codes = {
-                country: comp_json[country]["country_code"]
-                for country in self.countries
-            }
-            all_country_urls = {
-                country: self.get_country_url(code)
-                for country, code in all_country_codes.items()
-            }
-        self.logger.debug(f"RETURNED: {all_country_urls}")
-        self.logger.info("Returned all country urls.")
-        return all_country_urls
-
     def record_in_db(self, db_content: list):
         """Records the data in db by completing incomplete data, or adding missing data
 
@@ -281,6 +247,8 @@ class CompetitionNames(BaseClass):
     def __init__(self):
         super().__init__()
         self.FILE = os.path.join(self.DATA_DIR, "competitions.json")
+        self.LOG_FILE = os.path.join(self.LOG_DIR, "competitions.log")
+        self.set_logger("competitions", self.LOG_FILE)
         self.intl_comps = {
             "First Tier": "UEFA Champions League",
             "Second Tier": "UEFA Europa League",
@@ -296,6 +264,7 @@ class CompetitionNames(BaseClass):
 
         """
         super().write_to_json_file(self.FILE, json_content)
+        self.logger.info("Written to json file.")
 
     def parse_domestic_comp_names(self, response, country):
         """Parse comp names and urls for the country
@@ -324,6 +293,8 @@ class CompetitionNames(BaseClass):
                 file
             )  # retaining previous info (we are sure the file exists because of country codes)
         comps[country]["competitions"] = rows[country]  # adding to retained info
+        self.logger.debug(f"RETURNED: {comps}")
+        self.logger.info("Parsed domestic competition names.")
         return comps
 
     def parse_intl_comp_names(self, response):
@@ -347,6 +318,8 @@ class CompetitionNames(BaseClass):
         with open(self.FILE, "r", encoding="utf-8") as file:
             comps = json.load(file)
         comps["European"] = rows["European"]
+        self.logger.debug(f"RETURNED: {comps}")
+        self.logger.info("Parsed intl competition names.")
         return comps
 
     def get_intl_comps_xpath(self) -> dict:
@@ -360,6 +333,8 @@ class CompetitionNames(BaseClass):
             xpath_name = f'//div[@class="large-4 columns"]/div[@class="box"]/div[contains(text(), "Cups")]/../a[./@title="{name}"]/@title'
             xpath_url = f'//div[@class="large-4 columns"]/div[@class="box"]/div[contains(text(), "Cups")]/../a[./@title="{name}"]/@href'
             xpaths[tier] = (xpath_name, xpath_url)
+        self.logger.debug(f"RETURNED: {xpaths}")
+        self.logger.info("Returned intl competition xpath.")
         return xpaths
 
     def get_domestic_comps_xpaths(self) -> dict:
@@ -382,6 +357,8 @@ class CompetitionNames(BaseClass):
                 + "//following-sibling::tr[1]/td[1]/table/tr/td[2]/a[1]/@href"
             )
             xpaths[comp] = (xpath_title, xpath_url)
+        self.logger.debug(f"RETURNED: {xpaths}")
+        self.logger.info("Returned domestic competition xpaths.")
         return xpaths
 
     def have_all_domestic_comps(self) -> bool:
@@ -406,6 +383,8 @@ class CompetitionNames(BaseClass):
                         for country in self.countries
                     ]
                 )
+        self.logger.debug(f"RETURNED: {all_domestic_comps_parsed}")
+        self.logger.info("Checked if all domestic competitions are recorded.")
         return all_domestic_comps_parsed
 
     def have_all_intl_comps(self) -> bool:
@@ -427,7 +406,43 @@ class CompetitionNames(BaseClass):
                         == sorted(self.intl_comps.keys())
                     ]
                 )
+        self.logger.debug(f"RETURNED: {all_intl_comps_parsed}")
+        self.logger.info("Checked if all intl competitions are recorded.")
         return all_intl_comps_parsed
+
+    def get_country_url(self, country_code) -> str:
+        """Forms a country URL by appending country code
+
+        Args:
+            country_code (_type_): country code
+
+        Returns:
+            str: _description_
+        """
+        url: str = f"https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/{country_code}"
+        self.logger.debug(f"RETURNED: {url}")
+        self.logger.info("Returned country URL.")
+        return url
+
+    def get_all_country_urls(self) -> dict:
+        """returns a list of all countries URLs
+
+        Returns:
+            dict: {country: country_url}
+        """
+        with open(self.FILE, "r", encoding="utf-8") as file:
+            comp_json = json.load(file)
+            all_country_codes = {
+                country: comp_json[country]["country_code"]
+                for country in self.countries
+            }
+            all_country_urls = {
+                country: self.get_country_url(code)
+                for country, code in all_country_codes.items()
+            }
+        self.logger.debug(f"RETURNED: {all_country_urls}")
+        self.logger.info("Returned all country urls.")
+        return all_country_urls
 
 
 # class to deal to all the clubs names in all leagues and seasons
@@ -436,6 +451,8 @@ class ClubNames(BaseClass):
         super().__init__()
         self.COMP_FILE = os.path.join(self.DATA_DIR, "competitions.json")
         self.CLUB_FILE = os.path.join(self.DATA_DIR, "clubs.json")
+        self.LOG_FILE = os.path.join(self.LOG_DIR, "club_names.log")
+        self.set_logger("club_names", self.LOG_FILE)
 
     def get_comp_url(self, country: str, comp: str, season: str) -> dict:
         """Provides the competition url based on country and competition
