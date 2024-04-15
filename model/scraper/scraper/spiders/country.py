@@ -18,10 +18,9 @@ class CountryCodeSpider(BaseSpider):
         if not have_all_country_codes:
             url = "https://www.transfermarkt.com/wettbewerbe/europa"
             yield scrapy.Request(url=url, callback=self.parse)
+            self.country_codes.logger.info("Scraping URL because all codes not found.")
         else:
-            print("*********************************************************")
-            print("NOT SCRAPED BECAUSE ALL COUNTRY CODES PRESENT IN DATABASE")
-            print("*********************************************************")
+            self.country_codes.logger.info("URL not scraped because all codes found.")
 
     def parse(self, response):
         """Parses the country codes and records them

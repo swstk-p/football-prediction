@@ -4,6 +4,7 @@ import datetime
 import pymongo
 from dotenv import load_dotenv
 from pprint import pp
+import logging
 
 # TODO 1: look into scrapy logging
 # TODO 2: write data onto db instead of json for competitions and club names
@@ -13,6 +14,9 @@ class BaseClass:
     def __init__(self):
         self.DATA_DIR = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "../../../../data")
+        )
+        self.LOG_DIR = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "../../../../logs/spiders")
         )
         load_dotenv()
         self.mongo_con = os.getenv("MONGODB_CLIENT", "mongodb://localhost:27017")
@@ -32,7 +36,24 @@ class BaseClass:
                 )
             )
         )
+        self.logger = None
         self.db_name = "football"
+
+    def set_logger(self, logger_name: str, file_path: str):
+        """Adds a logger to the class
+
+        Args:
+            logger_name (str): Name of the logger
+            file_path (str): Name/path of the file
+        """
+        self.logger = logging.getLogger(logger_name)
+        self.logger.setLevel(logging.INFO)
+        handler = logging.FileHandler(file_path, mode="w", encoding="utf-8")
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(module)s module - %(funcName)s - %(message)s"
+        )
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
 
     def write_to_json_file(self, file, json_content):
         """Writes json data on to json file
@@ -78,6 +99,8 @@ class CountryCodes(BaseClass):
     def __init__(self):
         super().__init__()
         self.FILE = os.path.join(self.DATA_DIR, "competitions.json")
+        self.LOG_FILE = os.path.join(self.LOG_DIR, "country_codes.log")
+        self.set_logger("country", self.LOG_FILE)
 
     def get_req_table_rows_xpath(self) -> str:
         """Gives xpath for our country rows in the table
@@ -92,6 +115,8 @@ class CountryCodes(BaseClass):
         for country in self.countries:
             xpath += f'contains(@alt, "{country}") or '
         xpath = xpath[:-4] + "]/../.."
+        self.logger.debug(f"xpath: {xpath}")
+        self.logger.info("Returned xpath.")
         return xpath
 
     def parse_country_codes(self, response) -> list:
@@ -121,6 +146,8 @@ class CountryCodes(BaseClass):
             )
             # write code info to dict
             competitions.append({"country": country, "country_code": country_code})
+        self.logger.debug(f"RETURNED: {competitions}")
+        self.logger.info("Parsed country codes.")
         return competitions
 
     def have_all_country_codes(self) -> bool:
@@ -143,6 +170,8 @@ class CountryCodes(BaseClass):
             all_country_code_parsed = all(
                 [country in keys for country in self.countries]
             )
+        self.logger.debug(f"RETURNED: {all_country_code_parsed}")
+        self.logger.info("Checked if all the country codes are recorded.")
         return all_country_code_parsed
 
     def write_to_json_file(self, json_content):
@@ -152,6 +181,7 @@ class CountryCodes(BaseClass):
             json_content (_type_): json content to write
         """
         super().write_to_json_file(self.FILE, json_content)
+        self.logger.info("Written to json file.")
 
     def get_country_url(self, country_code) -> str:
         """Forms a country URL by appending country code
@@ -163,6 +193,8 @@ class CountryCodes(BaseClass):
             str: _description_
         """
         url: str = f"https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/{country_code}"
+        self.logger.debug(f"RETURNED: {url}")
+        self.logger.info("Returned country URL.")
         return url
 
     def get_all_country_urls(self) -> dict:
@@ -181,6 +213,8 @@ class CountryCodes(BaseClass):
                 country: self.get_country_url(code)
                 for country, code in all_country_codes.items()
             }
+        self.logger.debug(f"RETURNED: {all_country_urls}")
+        self.logger.info("Returned all country urls.")
         return all_country_urls
 
     def record_in_db(self, db_content: list):
@@ -200,6 +234,17 @@ class CountryCodes(BaseClass):
                         "country_code": {"$exists": False},
                     },
                     update={"$set": data},
+                )
+                for data in db_content
+            ]
+            # stored code doesn't match parsed code
+            + [
+                pymongo.UpdateOne(
+                    filter={
+                        "country": data["country"],
+                        "country_code": {"$ne": False},
+                    },
+                    update={"$set": {"country_code": data["country_code"]}},
                 )
                 for data in db_content
             ]
@@ -228,6 +273,7 @@ class CountryCodes(BaseClass):
             ]
         )
         collection.bulk_write(update_reqs)
+        self.logger.info("Recorded in database.")
 
 
 # class for dealing with competition names while obtaining data
