@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 from pprint import pp
 import logging
 
-# TODO 1: look into logging
 # TODO 2: write data onto db instead of json for competitions and club names
 
 
@@ -54,6 +53,8 @@ class BaseClass:
         )
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
+        # removing logging to console
+        self.logger.propagate = False
 
     def write_to_json_file(self, file, json_content):
         """Writes json data on to json file
@@ -477,6 +478,10 @@ class ClubNames(BaseClass):
                 "league": comps_info[country]["competitions"][comp][0],
                 "season": season,
             }
+        self.logger.debug(f"RETURNED: {url_info}")
+        self.logger.info(
+            f"Returned {country}'s {comp} competition's url for {season} season."
+        )
         return url_info
 
     def get_all_seasons_leagues_url(self) -> list[str]:
@@ -490,6 +495,8 @@ class ClubNames(BaseClass):
             for country in self.countries
             for season in self.seasons
         ]
+        self.logger.debug(f"RETURNED: {league_urls}")
+        self.logger.info("Returned the urls of all leagues for all the seasons.")
         return league_urls
 
     def parse_club_names(self, response, league, season) -> dict:
@@ -525,6 +532,8 @@ class ClubNames(BaseClass):
                     ]  # adding on to retained info
                 else:
                     clubs[league] = rows[league]  # adding on to retained info
+        self.logger.debug(f"RETURNED: {clubs}")
+        self.logger.info("Parsed club names.")
         return clubs
 
     def get_all_clubs_row_xpath(self) -> str:
@@ -534,6 +543,8 @@ class ClubNames(BaseClass):
             str: _description_
         """
         xpath = '(//table[@class="items"])[1]/tbody/tr/td[2]/a[1]'
+        self.logger.debug(f"RETURNED: {xpath}")
+        self.logger.info("Returned xpath for all club names.")
         return xpath
 
     def write_to_json_file(self, json_content):
@@ -542,6 +553,7 @@ class ClubNames(BaseClass):
         Args:
             json_content (_type_): json content to write
         """
+        self.logger.info("Written to json file.")
         super().write_to_json_file(self.CLUB_FILE, json_content)
 
     def have_all_leagues_seasons_club_names(self) -> bool:
@@ -567,4 +579,8 @@ class ClubNames(BaseClass):
                         for league in leagues
                     ]
                 )
+        self.logger.debug(f"RETURNED: {all_club_names_parsed}")
+        self.logger.info(
+            "Check if all club names in all leagues for all seasons are recorded."
+        )
         return all_club_names_parsed

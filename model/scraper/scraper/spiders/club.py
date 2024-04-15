@@ -29,6 +29,9 @@ class ClubNameSpider(BaseSpider):
 
         all_clubs_urls_info = self.club_names.get_all_seasons_leagues_url()
         for url_info in all_clubs_urls_info:
+            self.club_names.logger.info(
+                f"Scraping url for {url_info['league']}'s {url_info['season']} season."
+            )
             yield scrapy.Request(
                 url=url_info["url"],
                 callback=self.parse,
@@ -47,7 +50,3 @@ class ClubNameSpider(BaseSpider):
             season (_type_): season
         """
         clubs = self.club_names.parse_club_names(response, league, season)
-        # self.club_names.write_to_json_file(clubs)
-        # print("***********************************************************")
-        # pp(f"club_name: {clubs}", width=1)
-        # print("***********************************************************")
