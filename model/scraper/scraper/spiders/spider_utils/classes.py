@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from pprint import pp
 import logging
 
-# TODO 2: write data onto db instead of json for competitions and club names
+# TODO 2: write data onto db instead of json for club names
 
 
 class BaseClass:
@@ -164,9 +164,9 @@ class CountryCodes(BaseClass):
         cursor = collection.find(
             filter={"country_code": {"$exists": True}}, projection={"_id": False}
         )
-        all_country_code_parsed: bool = cursor.alive
+        countries: list = [c for c in cursor]
+        all_country_code_parsed: bool = len(countries) > 0
         if all_country_code_parsed:
-            countries: list = [c for c in cursor]
             keys: list = [country["country"] for country in countries]
             all_country_code_parsed = all(
                 [country in keys for country in self.countries]
@@ -188,7 +188,7 @@ class CountryCodes(BaseClass):
         """Records the data in db by completing incomplete data, or adding missing data
 
         Args:
-            db_content (list): list of dictionaries in the format {country: code}
+            db_content (list): list of dictionaries in the format [{country: code},]
         """
         db = self.get_db()
         collection = db.competitions
@@ -267,7 +267,7 @@ class CompetitionNames(BaseClass):
         super().write_to_json_file(self.FILE, json_content)
         self.logger.info("Written to json file.")
 
-    def parse_domestic_comp_names(self, response, country):
+    def parse_domestic_comp_names(self, response, country) -> dict:
         """Parse comp names and urls for the country
 
         Args:
@@ -275,50 +275,51 @@ class CompetitionNames(BaseClass):
             country (_type_): country name
 
         Returns:
-            _type_: updated data containing comps info for a country to overwrite the file with
+            dict: {country: country_name, competitions:competitions_dict}
         """
         row_xpaths = (
             self.get_domestic_comps_xpaths()
         )  # row_xpaths = {tier: [title, url]}
         rows = {
             country: {
-                tier: (
-                    response.xpath(row[0]).get(),
-                    response.xpath(row[1]).get(),
-                )
+                tier: {
+                    "name": response.xpath(row[0]).get(),
+                    "url": response.xpath(row[1]).get(),
+                }
                 for tier, row in row_xpaths.items()
             }
         }
-        with open(self.FILE, "r", encoding="utf-8") as file:
-            comps = json.load(
-                file
-            )  # retaining previous info (we are sure the file exists because of country codes)
-        comps[country]["competitions"] = rows[country]  # adding to retained info
+        comps: dict = {}
+        comps["country"] = country
+        comps["competitions"] = rows[country]
         self.logger.debug(f"RETURNED: {comps}")
         self.logger.info("Parsed domestic competition names.")
         return comps
 
-    def parse_intl_comp_names(self, response):
+    def parse_intl_comp_names(self, response) -> dict:
         """Parse comp names and urls for UEFA competitions
 
         Args:
             response (_type_): response object from spider
 
         Returns:
-            _type_: updated data containing comps info to overwrite the file with
+            dict: {country: country_name, competitions: competitions_dict}
         """
         row_xpaths = self.get_intl_comps_xpath()
         rows = {
             "European": {
                 "competitions": {
-                    tier: (response.xpath(row[0]).get(), response.xpath(row[1]).get())
+                    tier: {
+                        "name": response.xpath(row[0]).get(),
+                        "url": response.xpath(row[1]).get(),
+                    }
                     for tier, row in row_xpaths.items()
                 }
             }
         }
-        with open(self.FILE, "r", encoding="utf-8") as file:
-            comps = json.load(file)
-        comps["European"] = rows["European"]
+        comps: dict = {}
+        comps["country"] = "Europe"
+        comps["competitions"] = rows["European"]["competitions"]
         self.logger.debug(f"RETURNED: {comps}")
         self.logger.info("Parsed intl competition names.")
         return comps
@@ -363,50 +364,64 @@ class CompetitionNames(BaseClass):
         return xpaths
 
     def have_all_domestic_comps(self) -> bool:
-        """Checks if all domestic comps are parsed in the file
+        """Checks if all domestic comps are parsed in the database
 
         Returns:
             bool: True if parsed else False
         """
-        # check if req file exists
-        is_competitions_file: bool = os.path.isfile(self.FILE)
-        # to check if all comp names are parsed
-        all_domestic_comps_parsed: bool = is_competitions_file
-        if is_competitions_file:
-            with open(self.FILE, "r", encoding="utf-8") as file:
-                comps = json.load(file)
-                all_domestic_comps_parsed = all(
-                    [
-                        "competitions"
-                        in comps[country].keys()  # competition info exists
-                        and sorted(comps[country]["competitions"].keys())
-                        == sorted(self.competitions)  # every competition info exists
-                        for country in self.countries
-                    ]
-                )
+        db = self.get_db()
+        collection = db.competitions
+        cursor = collection.find(filter={"country_code": {"$exists": True}})
+        docs = [c for c in cursor]
+        all_domestic_comps_parsed: bool = len(docs) > 0
+        if all_domestic_comps_parsed:
+            # check all countries are present, all countries have competitions, all tiers are in the competition
+            countries: list = [c["country"] for c in docs]
+            countries_exist: list = [c in countries for c in self.countries]
+            tiers_exist: list = []
+            for c in docs:
+                if "competitions" in c.keys():
+                    tiers_exist.append(
+                        all(
+                            [
+                                tier in c["competitions"].keys()
+                                for tier in self.competitions
+                            ]
+                        )
+                    )
+                else:
+                    tiers_exist.append(False)
+            all_domestic_comps_parsed = all(countries_exist + tiers_exist)
         self.logger.debug(f"RETURNED: {all_domestic_comps_parsed}")
         self.logger.info("Checked if all domestic competitions are recorded.")
         return all_domestic_comps_parsed
 
     def have_all_intl_comps(self) -> bool:
-        """Checks if all intl (UEFA) comps are parsed in the file
+        """Checks if all intl (UEFA) comps are parsed in the database
 
         Returns:
             bool: True if parsed else False
         """
-        is_competitions_file: bool = os.path.isfile(self.FILE)
-        # to check if all comp names are parsed
-        all_intl_comps_parsed: bool = is_competitions_file
-        if is_competitions_file:
-            with open(self.FILE, "r", encoding="utf-8") as file:
-                comps = json.load(file)
-                all_intl_comps_parsed = all(
-                    [
-                        "European" in comps.keys()
-                        and sorted(comps["European"]["competitions"].keys())
-                        == sorted(self.intl_comps.keys())
-                    ]
-                )
+        db = self.get_db()
+        collection = db.competitions
+        cursor = collection.find(filter={"country": "Europe"})
+        docs: list = [c for c in cursor]
+        all_intl_comps_parsed: bool = len(docs) > 0
+        if all_intl_comps_parsed:
+            tiers_exist: list = []
+            for doc in docs:
+                if "competitions" in doc.keys():
+                    tiers_exist.append(
+                        all(
+                            [
+                                tier in doc["competitions"].keys()
+                                for tier in self.intl_comps.keys()
+                            ]
+                        )
+                    )
+                else:
+                    tiers_exist.append(False)
+            all_intl_comps_parsed = all(tiers_exist)
         self.logger.debug(f"RETURNED: {all_intl_comps_parsed}")
         self.logger.info("Checked if all intl competitions are recorded.")
         return all_intl_comps_parsed
@@ -431,19 +446,69 @@ class CompetitionNames(BaseClass):
         Returns:
             dict: {country: country_url}
         """
-        with open(self.FILE, "r", encoding="utf-8") as file:
-            comp_json = json.load(file)
-            all_country_codes = {
-                country: comp_json[country]["country_code"]
-                for country in self.countries
-            }
-            all_country_urls = {
-                country: self.get_country_url(code)
-                for country, code in all_country_codes.items()
-            }
+        # with open(self.FILE, "r", encoding="utf-8") as file:
+        #     comp_json = json.load(file)
+        #     all_country_codes = {
+        #         country: comp_json[country]["country_code"]
+        #         for country in self.countries
+        #     }
+        #     all_country_urls = {
+        #         country: self.get_country_url(code)
+        #         for country, code in all_country_codes.items()
+        #     }
+        db = self.get_db()
+        all_country_urls: dict = {}
+        collection = db.competitions
+        for country in collection.find({"country_code": {"$exists": True}}):
+            all_country_urls[country["country"]] = self.get_country_url(
+                country["country_code"]
+            )
+
         self.logger.debug(f"RETURNED: {all_country_urls}")
         self.logger.info("Returned all country urls.")
         return all_country_urls
+
+    def record_in_db(self, db_content: dict):
+        """Updates database to contain competition information
+
+        Args:
+            db_content (dict): dict in format of {"country":country_name, "competitions":competitions_dict}
+        """
+        db = self.get_db()
+        collection = db.competitions
+        if db_content["country"] == "Europe":
+            collection.update_many(
+                filter={"country": db_content["country"]},
+                update={
+                    "$setOnInsert": db_content,
+                },
+                upsert=True,
+            )
+            collection.update_many(
+                filter={"country": db_content["country"]},
+                update={
+                    "$set": db_content,
+                },
+            )
+        else:
+            collection.update_many(
+                filter={
+                    "$and": [
+                        {"country": db_content["country"]},
+                        {
+                            "$or": [
+                                {"competitions": {"$exists": False}},
+                                {"competitions": {"$ne": db_content["competitions"]}},
+                            ]
+                        },
+                    ]
+                },
+                update={
+                    "$set": {"competitions": db_content["competitions"]},
+                },
+            )
+
+        self.logger.info("Recorded in database.")
 
 
 # class to deal to all the clubs names in all leagues and seasons
