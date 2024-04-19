@@ -87,7 +87,6 @@ ROBOTSTXT_OBEY = True
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"
 
-# TODO 3: verify that the default reactor works for scraping sequentially, CHECK ALERTED COMMENT BELOW
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"  #! this is the default reactor, it may affect the sequential nature of spider, ONLY CHECK AFTER FIXING DB OPERATIONS

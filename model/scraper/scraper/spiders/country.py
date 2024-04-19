@@ -7,6 +7,7 @@ class CountryCodeSpider(BaseSpider):
 
     def __init__(self):
         super().__init__()
+        self.country_codes = self.get_country_code_obj()
 
     def start_requests(self):
         """Checks if all the country codes are already available and sends a request if they aren't

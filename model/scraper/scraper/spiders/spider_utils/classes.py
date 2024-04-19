@@ -35,6 +35,7 @@ class BaseClass:
         )
         self.logger = None
         self.db_name = "football"
+        # BaseClass.set_logger("spiders", None)
 
     def set_logger(self, logger_name: str, file_path: str):
         """Adds a logger to the class
@@ -45,7 +46,10 @@ class BaseClass:
         """
         self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(logging.INFO)
-        handler = logging.FileHandler(file_path, mode="w", encoding="utf-8")
+        for handler in self.logger.handlers[:]:
+            self.logger.removeHandler(handler)
+        log_file = os.path.join(self.LOG_DIR, file_path)
+        handler = logging.FileHandler(log_file, mode="w", encoding="utf-8")
         formatter = logging.Formatter(
             "%(asctime)s - %(name)s - %(levelname)s - %(module)s module - %(funcName)s - %(message)s"
         )
@@ -629,6 +633,7 @@ class ClubNames(BaseClass):
                     update={
                         "$setOnInsert": {
                             "name": club["name"],
+                            "code": club["url"].split("/")[-3],
                             "urls": {season: club["url"]},
                         }
                     },
@@ -711,3 +716,10 @@ class ClubNames(BaseClass):
         self.logger.debug(f"RETURNED: {all_club_names_parsed}")
         self.logger.info("Checked if all the clubs for all seasons are parsed.")
         return all_club_names_parsed
+
+
+class Fixtures(BaseClass):
+    def __init__(self):
+        super().__init__()
+        self.LOG_FILE = os.path.join(self.LOG_DIR, "fixtures.log")
+        self.set_logger("fixtures", self.LOG_FILE)

@@ -7,6 +7,7 @@ class ClubNameSpider(BaseSpider):
 
     def __init__(self):
         super().__init__()
+        self.club_names = self.get_club_name_obj()
 
     def start_requests(self):
         """Checks if teams for all the leagues in all seasons are available; if not then generates url for each league each season and sends request
@@ -23,7 +24,7 @@ class ClubNameSpider(BaseSpider):
                 )
                 yield scrapy.Request(
                     url=url_info["url"],
-                    callback=self.club_names.all_club_names_callback,
+                    callback=self.parse,
                     cb_kwargs={
                         "league": url_info["league"],
                         "season": url_info["season"],

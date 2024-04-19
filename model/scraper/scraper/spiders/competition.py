@@ -7,6 +7,7 @@ class CompNameSpider(BaseSpider):
 
     def __init__(self):
         super().__init__()
+        self.comp_names = self.get_comp_name_obj()
 
     def start_requests(self):
         """Checks if all the competitions are available; if not then generates urls from country codes and sends requests
