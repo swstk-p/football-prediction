@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 from pprint import pp
 import logging
 
-# TODO 2: write data onto db instead of json for club names
-
 
 class BaseClass:
     def __init__(self):
@@ -530,19 +528,20 @@ class ClubNames(BaseClass):
         Returns:
             str: {url:url of that competition, league:league name, season:season start year}
         """
-        with open(self.COMP_FILE, "r+", encoding="utf-8") as file:
-            comps_info = json.load(file)
-            url: str = (
-                "https://www.transfermarkt.com"
-                + comps_info[country]["competitions"][comp][1]
-                + "/plus/?saison_id="
-                + season
-            )
-            url_info = {
-                "url": url,
-                "league": comps_info[country]["competitions"][comp][0],
-                "season": season,
-            }
+        db = self.get_db()
+        collection = db.competitions
+        doc = collection.find_one({"country": country})
+        url: str = (
+            "https://www.transfermarkt.com"
+            + doc["competitions"][comp]["url"]
+            + "/plus/?saison_id="
+            + season
+        )
+        url_info = {
+            "url": url,
+            "league": doc["competitions"][comp]["name"],
+            "season": season,
+        }
         self.logger.debug(f"RETURNED: {url_info}")
         self.logger.info(
             f"Returned {country}'s {comp} competition's url for {season} season."
@@ -573,30 +572,22 @@ class ClubNames(BaseClass):
             season (_type_): start year of season
 
         Returns:
-            dict: {league:{season:[(club name, club page url)]}}
+            dict: {league:league_name, season: season_start, clubs: [{name: club_name, url: club_url}]}
         """
         all_clubs_rows_xpath = self.get_all_clubs_row_xpath()
         rows = response.xpath(all_clubs_rows_xpath)
         rows = {
-            league: {
-                season: [
-                    (row.xpath("text()").get(), row.xpath("@href[1]").get())
-                    for row in rows
-                ]
-            }
+            "league": league,
+            "season": season,
+            "clubs": [
+                {
+                    "name": row.xpath("text()").get(),
+                    "url": row.xpath("@href[1]").get(),
+                }
+                for row in rows
+            ],
         }
-
-        if self.is_file_empty(self.CLUB_FILE):
-            clubs = rows  # no need to retain previous info
-        else:
-            with open(self.CLUB_FILE, "r", encoding="utf-8") as file:
-                clubs = json.load(file)  # retaining previous info from file
-                if league in clubs.keys():
-                    clubs[league][season] = rows[league][
-                        season
-                    ]  # adding on to retained info
-                else:
-                    clubs[league] = rows[league]  # adding on to retained info
+        clubs = rows
         self.logger.debug(f"RETURNED: {clubs}")
         self.logger.info("Parsed club names.")
         return clubs
@@ -621,31 +612,102 @@ class ClubNames(BaseClass):
         self.logger.info("Written to json file.")
         super().write_to_json_file(self.CLUB_FILE, json_content)
 
-    def have_all_leagues_seasons_club_names(self) -> bool:
-        # check if req file exists
-        is_club_names_file: bool = os.path.isfile(self.CLUB_FILE)
-        # to check if all club names are parsed
-        all_club_names_parsed: bool = is_club_names_file
-        if is_club_names_file:
-            with open(self.COMP_FILE, "r", encoding="utf-8") as file:
-                comps = json.load(file)
-                leagues = [
-                    comps[country]["competitions"]["First Tier"][0]
-                    for country in self.countries
-                ]
-            with open(self.CLUB_FILE, "r", encoding="utf-8") as file:
-                clubs = json.load(file)
-                all_club_names_parsed = all(
-                    [
-                        sorted(clubs.keys())
-                        == sorted(leagues)  # every club's info exists
-                        and sorted(clubs[league].keys())
-                        == sorted(self.seasons)  # every year's info exists
-                        for league in leagues
-                    ]
+    def record_in_db(self, data):
+        self.record_club_info_in_db(
+            season=data["season"], data=data["clubs"]
+        )  # storing all club info in a single database
+        self.record_league_clubs_in_db(data)
+
+    def record_club_info_in_db(self, season: str, data: list):
+        db = self.get_db()
+        collection = db.all_clubs
+        write_reqs = (
+            # if club name doesn't exist, then insert
+            [
+                pymongo.UpdateOne(
+                    filter={"name": club["name"]},
+                    update={
+                        "$setOnInsert": {
+                            "name": club["name"],
+                            "urls": {season: club["url"]},
+                        }
+                    },
+                    upsert=True,
                 )
-        self.logger.debug(f"RETURNED: {all_club_names_parsed}")
-        self.logger.info(
-            "Check if all club names in all leagues for all seasons are recorded."
+                for club in data
+            ]
+            # if club name exists then update
+            + [
+                pymongo.UpdateOne(
+                    filter={"name": club["name"]},
+                    update={"$set": {f"urls.{season}": club["url"]}},
+                )
+                for club in data
+            ]
         )
+        collection.bulk_write(write_reqs)
+        self.logger.info("Recorded club names and urls in database.")
+
+    def record_league_clubs_in_db(self, data):
+        db = self.get_db()
+        all_clubs = db.all_clubs
+        clubs = [
+            all_clubs.find_one(filter={"name": club["name"]}) for club in data["clubs"]
+        ]
+        club_ids = [club["_id"] for club in clubs]
+        collection = db.all_leagues
+        write_reqs = (
+            # if no document of that league is found
+            [
+                pymongo.UpdateOne(
+                    filter={"name": data["league"]},
+                    update={
+                        "$setOnInsert": {
+                            "name": data["league"],
+                            f"clubs.{data['season']}": club_ids,
+                        }
+                    },
+                    upsert=True,
+                )
+            ]
+            # if the document of that league is found
+            + [
+                pymongo.UpdateOne(
+                    filter={"name": data["league"]},
+                    update={"$set": {f"clubs.{data['season']}": club_ids}},
+                )
+            ]
+        )
+        collection.bulk_write(write_reqs)
+        self.logger.info(
+            f"Recorded the clubs in {data['league']} for {data['season']} season."
+        )
+
+    def have_all_leagues_seasons_club_names(self) -> bool:
+        """Checks if club names for all the leagues in all seasons are stored in the database.
+
+        Returns:
+            bool: True if all club names for all seasons found in the record, else False.
+        """
+        db = self.get_db()
+        collection = db.all_leagues
+        docs = [c for c in collection.find(projection={"_id": False})]
+        all_club_names_parsed: bool = len(docs) > 0
+        if all_club_names_parsed:
+            seasons_exist: list = []
+            for doc in docs:
+                seasons_parsed: list = doc["clubs"].keys()
+                seasons_exist.append(
+                    all([season in seasons_parsed for season in self.seasons])
+                )
+            leagues_parsed: list = [doc["name"] for doc in docs]
+            league_names = [
+                c["competitions"]["First Tier"]["name"]
+                for c in db.competitions.find(projection={"_id": False})
+                if not c["country"] == "Europe"
+            ]
+            leagues_exist = [league in leagues_parsed for league in league_names]
+            all_club_names_parsed = all(leagues_exist + seasons_exist)
+        self.logger.debug(f"RETURNED: {all_club_names_parsed}")
+        self.logger.info("Checked if all the clubs for all seasons are parsed.")
         return all_club_names_parsed

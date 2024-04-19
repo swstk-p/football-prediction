@@ -30,7 +30,7 @@ class CompNameSpider(BaseSpider):
                 )
         else:
             self.comp_names.logger.info(
-                "Domestic competition names not scraped because they were found in the database"
+                "Domestic competition names not scraped because they were found in the database."
             )
         have_all_intl_comps: bool = self.comp_names.have_all_intl_comps()
         if not have_all_intl_comps:
@@ -41,7 +41,7 @@ class CompNameSpider(BaseSpider):
             )
         else:
             self.comp_names.logger.info(
-                "Intl competition names not scraped because they were found in the database"
+                "Intl competition names not scraped because they were found in the database."
             )
 
     def parse_domestic_comp(self, response, country):
