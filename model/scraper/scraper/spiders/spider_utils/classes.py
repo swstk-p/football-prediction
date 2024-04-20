@@ -616,13 +616,24 @@ class ClubNames(BaseClass):
         self.logger.info("Written to json file.")
         super().write_to_json_file(self.CLUB_FILE, json_content)
 
-    def record_in_db(self, data):
+    def record_in_db(self, data: dict):
+        """Records all the clubs info as well as season wise club names for all the leagues.
+
+        Args:
+            data (dict): Dict containing info about the season wise club list for all the leagues.
+        """
         self.record_club_info_in_db(
             season=data["season"], data=data["clubs"]
         )  # storing all club info in a single database
         self.record_league_clubs_in_db(data)
 
     def record_club_info_in_db(self, season: str, data: list):
+        """Records all the clubs within a single collection in the database
+
+        Args:
+            season (str): Season start year
+            data (list): List conatining dicts of clubs and their season wise urls.
+        """
         db = self.get_db()
         collection = db.all_clubs
         write_reqs = (
@@ -653,13 +664,18 @@ class ClubNames(BaseClass):
         collection.bulk_write(write_reqs)
         self.logger.info("Recorded club names and urls in database.")
 
-    def record_league_clubs_in_db(self, data):
+    def record_league_clubs_in_db(self, data: dict):
+        """Records all clubs in a league in a respective season in the database.
+
+        Args:
+            data (dict): dict containing info of league name, season, and all the clubs.
+        """
         db = self.get_db()
         all_clubs = db.all_clubs
         clubs = [
             all_clubs.find_one(filter={"name": club["name"]}) for club in data["clubs"]
         ]
-        club_ids = [club["_id"] for club in clubs]
+        club_names = [club["name"] for club in clubs]
         collection = db.all_leagues
         write_reqs = (
             # if no document of that league is found
@@ -669,7 +685,7 @@ class ClubNames(BaseClass):
                     update={
                         "$setOnInsert": {
                             "name": data["league"],
-                            f"clubs.{data['season']}": club_ids,
+                            f"clubs.{data['season']}": club_names,
                         }
                     },
                     upsert=True,
@@ -679,7 +695,7 @@ class ClubNames(BaseClass):
             + [
                 pymongo.UpdateOne(
                     filter={"name": data["league"]},
-                    update={"$set": {f"clubs.{data['season']}": club_ids}},
+                    update={"$set": {f"clubs.{data['season']}": club_names}},
                 )
             ]
         )
@@ -723,3 +739,43 @@ class Fixtures(BaseClass):
         super().__init__()
         self.LOG_FILE = os.path.join(self.LOG_DIR, "fixtures.log")
         self.set_logger("fixtures", self.LOG_FILE)
+
+    def get_club_fixture_url(self, club_name: str, season: str) -> str:
+        """Given a club name and its season, returns the url for the fixtures of the club in that season.
+
+        Args:
+            club_name (str): Name of the club
+            season (str): Start year of season
+
+        Returns:
+            str: required url
+        """
+        db = self.get_db()
+        collection = db.all_clubs
+        doc = collection.find_one(filter={"name": club_name})
+        url_club_name = doc["urls"][season].split("/")[-6]
+        club_code = doc["code"]
+        url = f"https://www.transfermarkt.com/{url_club_name}/spielplandatum/verein/{club_code}/plus/0?saison_id={season}"
+        self.logger.debug(f"RETURNED: {url}")
+        self.logger.info(f"Returned fixture url for {club_name}'s {season} season")
+        return url
+
+    def get_all_club_all_season_fixture_urls(self) -> list[dict]:
+        """Returns the url for the fixtures of all the clubs in all seasons from the database.
+
+        Returns:
+            list[dict]: [{league_name: [urls]},]
+        """
+        db = self.get_db()
+        collection = db.all_leagues
+        docs = [c for c in collection.find(projection={"_id": False})]
+        urls: dict = {}
+        for doc in docs:
+            urls[doc["name"]] = []
+            for season, clubs in doc["clubs"].items():
+                urls[doc["name"]] += [
+                    self.get_club_fixture_url(club, season) for club in clubs
+                ]
+        self.logger.debug(f"RETURNED: {urls}")
+        self.logger.info("Returned the urls for all the fixtures.")
+        return urls

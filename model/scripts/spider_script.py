@@ -6,6 +6,7 @@ def run_spiders():
     subprocess.run(["scrapy", "crawl", "country_code"])
     subprocess.run(["scrapy", "crawl", "comp_name"])
     subprocess.run(["scrapy", "crawl", "club_name"])
+    subprocess.run(["scrapy", "crawl", "fixture"])
 
 
 if __name__ == "__main__":
