@@ -20,4 +20,4 @@ class FixtureSpider(BaseSpider):
                 )
 
     def parse(self, response, team):
-        self.fixtures.parse_fixtures_info(response, team)
+        self.fixtures.parse_all_fixtures_info(response, team)

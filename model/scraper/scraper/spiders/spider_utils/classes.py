@@ -734,6 +734,9 @@ class ClubNames(BaseClass):
         return all_club_names_parsed
 
 
+# TODO1: create mechanism to record all fixtures according to whether they've been played or not
+# TODO2: create mechanism to determine if all the fixtures till current season have been parsed and stored
+# TODO3: create mechanism to update the upcoming fixtures by parsing them from current season only
 class Fixtures(BaseClass):
     def __init__(self):
         super().__init__()
@@ -760,11 +763,11 @@ class Fixtures(BaseClass):
         self.logger.info(f"Returned fixture url for {club_name}'s {season} season")
         return url
 
-    def get_all_club_all_season_fixture_urls(self) -> list[dict]:
+    def get_all_club_all_season_fixture_urls(self) -> dict:
         """Returns the url for the fixtures of all the clubs in all seasons from the database.
 
         Returns:
-            list[dict]: [{league_name: [urls]},]
+            dict: {league_name:[{'team':club_name, 'url':club_fixture_url}]}
         """
         db = self.get_db()
         collection = db.all_leagues
@@ -782,22 +785,37 @@ class Fixtures(BaseClass):
         return urls
 
     def get_all_fixtures_xpath(self):
+        """Generates xpath for the fixtures listed in a table.
+
+        Returns:
+            str: xpath
+        """
         xpath_fixtures = "(//table[not(@class='auflistung')])[1]/tbody/tr[@style]"
         return xpath_fixtures
 
-    def parse_fixtures_info(self, response, team):
+    def parse_all_fixtures_info(self, response, team) -> dict:
+        """Parses info from all the rows within a fixture table.
+
+        Args:
+            response (_type_): response obj from the spider
+            team (str): Name of the team whose fixture is being parsed
+
+        Returns:
+            dict: Returns fixture info dict in the format of {'team':team, 'fixtures':[{fixture}]}
+        """
         rows_xpath = self.get_all_fixtures_xpath()
         fixture_info = {}
         fixture_info["team"] = team
+        fixture_info["fixtures"] = []
         fixture_rows = response.xpath(rows_xpath)
         for row in fixture_rows:
+            fixture = {}
             fix_date = row.xpath("td[2]/text()").get()
             # checking if postponed
             if fix_date.strip().lower() == "unknown":
                 continue
-            # checking if future match
-            # TODO 1: handle so that future/postponed matches are stored accordingly
-            if (
+            # if not upcoming match
+            if not (
                 datetime.date(
                     int("20" + fix_date.split(".")[3].strip()),
                     int(fix_date.split(".")[2].strip()),
@@ -805,35 +823,55 @@ class Fixtures(BaseClass):
                 )
                 >= datetime.date.today()
             ):
-                continue
-            fixture_info["competition"] = row.xpath(
-                "preceding-sibling::tr[not(@style)][1]/td/a/@title"
-            ).get()
-            fixture_info["date"] = (
-                f"{fix_date.split('.')[1].strip()}:{fix_date.split('.')[2].strip()}:{fix_date.split('.')[3].strip()}"
-            )
-            fixture_info["day"] = fix_date.split(".")[0].strip()
-            fixture_info["time"] = row.xpath("td[3]/text()").get().strip()
-            fixture_info["venue"] = row.xpath("td[4]/text()").get().strip()
-            fixture_info["matchday_rank"] = (
-                None
-                if row.xpath("td[5]/span/text()").get() is None
-                else row.xpath("td[5]/span/text()").get().strip()
-            )
-            fixture_info["opponent_team"] = row.xpath("td[7]/a/@title").get()
-            fixture_info["opponent_matchday_rank"] = (
-                None
-                if row.xpath("td[7]/span/text()").get() is None
-                else row.xpath("td[7]/span/text()").get().strip()
-            )
-            fixture_info["goals_scored"] = (
-                row.xpath("td[10]/a/span/text()").get().strip().split(":")[0]
-                if fixture_info["venue"].lower() == "h"
-                else row.xpath("td[10]/a/span/text()").get().strip().split(":")[1]
-            )
-            fixture_info["goals_conceded"] = (
-                row.xpath("td[10]/a/span/text()").get().strip().split(":")[1]
-                if fixture_info["venue"].lower() == "h"
-                else row.xpath("td[10]/a/span/text()").get().strip().split(":")[0]
-            )
-            self.logger.debug(f"FIXTURE_INFO: {fixture_info}")
+                fixture["match_status"] = "PLAYED"
+                fixture["competition"] = row.xpath(
+                    "preceding-sibling::tr[not(@style)][1]/td/a/@title"
+                ).get()
+                fixture["date"] = (
+                    f"{fix_date.split('.')[1].strip()}:{fix_date.split('.')[2].strip()}:{fix_date.split('.')[3].strip()}"
+                )
+                fixture["day"] = fix_date.split(".")[0].strip()
+                fixture["time"] = row.xpath("td[3]/text()").get().strip()
+                fixture["venue"] = row.xpath("td[4]/text()").get().strip()
+                fixture["matchday_rank"] = (
+                    "N/A"
+                    if row.xpath("td[5]/span/text()").get() is None
+                    else row.xpath("td[5]/span/text()").get().strip()
+                )
+                fixture["opponent_team"] = row.xpath("td[7]/a/@title").get()
+                fixture["opponent_matchday_rank"] = (
+                    "N/A"
+                    if row.xpath("td[7]/span/text()").get() is None
+                    else row.xpath("td[7]/span/text()").get().strip()
+                )
+                fixture["goals_scored"] = (
+                    row.xpath("td[10]/a/span/text()").get().strip().split(":")[0]
+                    if fixture["venue"].lower() == "h"
+                    else row.xpath("td[10]/a/span/text()").get().strip().split(":")[1]
+                )
+                fixture["goals_conceded"] = (
+                    row.xpath("td[10]/a/span/text()").get().strip().split(":")[1]
+                    if fixture["venue"].lower() == "h"
+                    else row.xpath("td[10]/a/span/text()").get().strip().split(":")[0]
+                )
+            else:
+                fixture["match_status"] = "UPCOMING"
+                fixture["competition"] = row.xpath(
+                    "preceding-sibling::tr[not(@style)][1]/td/a/@title"
+                ).get()
+                fixture["date"] = (
+                    f"{fix_date.split('.')[1].strip()}:{fix_date.split('.')[2].strip()}:{fix_date.split('.')[3].strip()}"
+                )
+                fixture["day"] = fix_date.split(".")[0].strip()
+                fixture["time"] = row.xpath("td[3]/text()").get().strip()
+                fixture["venue"] = row.xpath("td[4]/text()").get().strip()
+                fixture["matchday_rank"] = "TBD"
+                fixture["opponent_team"] = row.xpath("td[7]/a/@title").get()
+                fixture["opponent_matchday_rank"] = "TBD"
+                fixture["goals_scored"] = "TBD"
+                fixture["goals_conceded"] = "TBD"
+            fixture_info["fixtures"].append(fixture)
+
+        self.logger.debug(f"RETURNED: {fixture_info}")
+        self.logger.info(f"Returned fixtures of {team}.")
+        return fixture_info
