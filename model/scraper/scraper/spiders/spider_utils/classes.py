@@ -774,7 +774,8 @@ class Fixtures(BaseClass):
             urls[doc["name"]] = []
             for season, clubs in doc["clubs"].items():
                 urls[doc["name"]] += [
-                    self.get_club_fixture_url(club, season) for club in clubs
+                    {"team": club, "url": self.get_club_fixture_url(club, season)}
+                    for club in clubs
                 ]
         self.logger.debug(f"RETURNED: {urls}")
         self.logger.info("Returned the urls for all the fixtures.")
@@ -782,25 +783,34 @@ class Fixtures(BaseClass):
 
     def get_all_fixtures_xpath(self):
         xpath_fixtures = "(//table[not(@class='auflistung')])[1]/tbody/tr[@style]"
-        xpath_comps = (
-            f"{xpath_fixtures}/preceding-sibling::tr[not(@style)][1]/td/a/@title"
-        )
-        return {"comp_xpath": xpath_comps, "fixtures_xpath": xpath_fixtures}
+        return xpath_fixtures
 
-    def parse_fixtures_info(self, response):
+    def parse_fixtures_info(self, response, team):
         rows_xpath = self.get_all_fixtures_xpath()
         fixture_info = {}
-        fixture_info["competition"] = response.xpath(rows_xpath["comp_xpath"]).get()
-        fixture_rows = response.xpath(rows_xpath["fixtures_xpath"])
-        # TODO1: figure out and parse the non-opponent club
-        # TODO2: parse until the match day date exceeds the current day
-        # TODO3: verify that the competitions are accurate to fixtures
+        fixture_info["team"] = team
+        fixture_rows = response.xpath(rows_xpath)
         for row in fixture_rows:
             fix_date = row.xpath("td[2]/text()").get()
+            # checking if postponed
+            if fix_date.strip().lower() == "unknown":
+                continue
+            # checking if future match
+            # TODO 1: handle so that future/postponed matches are stored accordingly
+            if (
+                datetime.date(
+                    int("20" + fix_date.split(".")[3].strip()),
+                    int(fix_date.split(".")[2].strip()),
+                    int(fix_date.split(".")[1].strip()),
+                )
+                >= datetime.date.today()
+            ):
+                continue
+            fixture_info["competition"] = row.xpath(
+                "preceding-sibling::tr[not(@style)][1]/td/a/@title"
+            ).get()
             fixture_info["date"] = (
-                fix_date.split(".")[1].strip()
-                + fix_date.split(".")[2].strip()
-                + fix_date.split(".")[3].strip()
+                f"{fix_date.split('.')[1].strip()}:{fix_date.split('.')[2].strip()}:{fix_date.split('.')[3].strip()}"
             )
             fixture_info["day"] = fix_date.split(".")[0].strip()
             fixture_info["time"] = row.xpath("td[3]/text()").get().strip()

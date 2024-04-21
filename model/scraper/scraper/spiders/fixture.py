@@ -14,9 +14,10 @@ class FixtureSpider(BaseSpider):
             self.fixtures.logger.info(f"Scraping fixture urls for {league}.")
             for fixture in fixtures:
                 yield scrapy.Request(
-                    url=fixture,
+                    url=fixture["url"],
                     callback=self.parse,
+                    cb_kwargs={"team": fixture["team"]},
                 )
 
-    def parse(self, response):
-        self.fixtures.parse_fixtures_info(response)
+    def parse(self, response, team):
+        self.fixtures.parse_fixtures_info(response, team)
