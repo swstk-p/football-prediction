@@ -45,7 +45,7 @@ class BaseClass:
             file_path (str): Name/path of the file
         """
         self.logger = logging.getLogger(logger_name)
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
         for handler in self.logger.handlers[:]:
             self.logger.removeHandler(handler)
         log_file = os.path.join(self.LOG_DIR, file_path)
@@ -734,7 +734,6 @@ class ClubNames(BaseClass):
         return all_club_names_parsed
 
 
-# TODO1: create mechanism to record all fixtures according to whether they've been played or not
 # TODO2: create mechanism to determine if all the fixtures till current season have been parsed and stored
 # TODO3: create mechanism to update the upcoming fixtures by parsing them from current season only
 class Fixtures(BaseClass):
@@ -767,7 +766,7 @@ class Fixtures(BaseClass):
         """Returns the url for the fixtures of all the clubs in all seasons from the database.
 
         Returns:
-            dict: {league_name:[{'team':club_name, 'url':club_fixture_url}]}
+            dict: {league_name:[{'team':club_name, season: season_start_year 'url':club_fixture_url}]}
         """
         db = self.get_db()
         collection = db.all_leagues
@@ -777,7 +776,11 @@ class Fixtures(BaseClass):
             urls[doc["name"]] = []
             for season, clubs in doc["clubs"].items():
                 urls[doc["name"]] += [
-                    {"team": club, "url": self.get_club_fixture_url(club, season)}
+                    {
+                        "team": club,
+                        "season": season,
+                        "url": self.get_club_fixture_url(club, season),
+                    }
                     for club in clubs
                 ]
         self.logger.debug(f"RETURNED: {urls}")
@@ -793,7 +796,7 @@ class Fixtures(BaseClass):
         xpath_fixtures = "(//table[not(@class='auflistung')])[1]/tbody/tr[@style]"
         return xpath_fixtures
 
-    def parse_all_fixtures_info(self, response, team) -> dict:
+    def parse_all_fixtures_info(self, response, team, season) -> dict:
         """Parses info from all the rows within a fixture table.
 
         Args:
@@ -806,6 +809,7 @@ class Fixtures(BaseClass):
         rows_xpath = self.get_all_fixtures_xpath()
         fixture_info = {}
         fixture_info["team"] = team
+        fixture_info["season"] = season
         fixture_info["fixtures"] = []
         fixture_rows = response.xpath(rows_xpath)
         for row in fixture_rows:
@@ -827,8 +831,12 @@ class Fixtures(BaseClass):
                 fixture["competition"] = row.xpath(
                     "preceding-sibling::tr[not(@style)][1]/td/a/@title"
                 ).get()
-                fixture["date"] = (
-                    f"{fix_date.split('.')[1].strip()}:{fix_date.split('.')[2].strip()}:{fix_date.split('.')[3].strip()}"
+                fixture["date"] = str(
+                    datetime.date(
+                        int("20" + fix_date.split(".")[3].strip()),
+                        int(fix_date.split(".")[2].strip()),
+                        int(fix_date.split(".")[1].strip()),
+                    )
                 )
                 fixture["day"] = fix_date.split(".")[0].strip()
                 fixture["time"] = row.xpath("td[3]/text()").get().strip()
@@ -854,13 +862,34 @@ class Fixtures(BaseClass):
                     if fixture["venue"].lower() == "h"
                     else row.xpath("td[10]/a/span/text()").get().strip().split(":")[0]
                 )
+                fixture["result"] = (
+                    "Won"
+                    if row.xpath("td[10]/a/span/@class").get().strip().lower()
+                    == "greentext"
+                    else "Lost"
+                    if row.xpath("td[10]/a/span/@class").get().strip().lower()
+                    == "redtext"
+                    else "draw"
+                )
+                pens = (
+                    row.xpath("td[10]/a/span/span/text()").get().strip().lower()
+                    if row.xpath("td[10]/a/span/span").get() is not None
+                    else None
+                )
+                fixture["on_pens"] = (
+                    False if pens is None else False if not "on pens" == pens else True
+                )
             else:
                 fixture["match_status"] = "UPCOMING"
                 fixture["competition"] = row.xpath(
                     "preceding-sibling::tr[not(@style)][1]/td/a/@title"
                 ).get()
-                fixture["date"] = (
-                    f"{fix_date.split('.')[1].strip()}:{fix_date.split('.')[2].strip()}:{fix_date.split('.')[3].strip()}"
+                fixture["date"] = str(
+                    datetime.date(
+                        int("20" + fix_date.split(".")[3].strip()),
+                        int(fix_date.split(".")[2].strip()),
+                        int(fix_date.split(".")[1].strip()),
+                    )
                 )
                 fixture["day"] = fix_date.split(".")[0].strip()
                 fixture["time"] = row.xpath("td[3]/text()").get().strip()
@@ -875,3 +904,161 @@ class Fixtures(BaseClass):
         self.logger.debug(f"RETURNED: {fixture_info}")
         self.logger.info(f"Returned fixtures of {team}.")
         return fixture_info
+
+    def record_fixtures_in_db(self, fixture_info):
+        """Records fixture_info in database
+
+        Args:
+            fixture_info (dict): parsed fixture info
+        """
+        db = self.get_db()
+        played = db.played_fixtures
+        upcoming = db.upcoming_fixtures
+        for fixture in fixture_info["fixtures"]:
+            if fixture["match_status"] == "PLAYED":
+                # insert if doc not found
+                played.update_one(
+                    filter={
+                        "club": fixture_info["team"],
+                    },
+                    update={
+                        "$setOnInsert": {
+                            "club": fixture_info["team"],
+                            f"seasons.{fixture_info['season']}.{fixture['competition']}": [
+                                {
+                                    "date": fixture["date"],
+                                    "day": fixture["day"],
+                                    "time": fixture["time"],
+                                    "venue": fixture["venue"],
+                                    "matchday_rank": fixture["matchday_rank"],
+                                    "opponent": fixture["opponent_team"],
+                                    "opponent_matchday_rank": fixture[
+                                        "opponent_matchday_rank"
+                                    ],
+                                    "goals_scored": fixture["goals_scored"],
+                                    "goals_conceded": fixture["goals_conceded"],
+                                    "result": fixture["result"],
+                                    "on_pens": fixture["on_pens"],
+                                }
+                            ],
+                        }
+                    },
+                    upsert=True,
+                )
+                # update if doc found
+                played.update_one(
+                    filter={
+                        "club": fixture_info["team"],
+                        f"seasons.{fixture_info['season']}.{fixture['competition']}": {
+                            "$nin": [
+                                {
+                                    "date": fixture["date"],
+                                    "day": fixture["day"],
+                                    "time": fixture["time"],
+                                    "venue": fixture["venue"],
+                                    "matchday_rank": fixture["matchday_rank"],
+                                    "opponent": fixture["opponent_team"],
+                                    "opponent_matchday_rank": fixture[
+                                        "opponent_matchday_rank"
+                                    ],
+                                    "goals_scored": fixture["goals_scored"],
+                                    "goals_conceded": fixture["goals_conceded"],
+                                    "result": fixture["result"],
+                                    "on_pens": fixture["on_pens"],
+                                }
+                            ]
+                        },
+                    },
+                    update={
+                        "$push": {
+                            f"seasons.{fixture_info['season']}.{fixture['competition']}": {
+                                "date": fixture["date"],
+                                "day": fixture["day"],
+                                "time": fixture["time"],
+                                "venue": fixture["venue"],
+                                "matchday_rank": fixture["matchday_rank"],
+                                "opponent": fixture["opponent_team"],
+                                "opponent_matchday_rank": fixture[
+                                    "opponent_matchday_rank"
+                                ],
+                                "goals_scored": fixture["goals_scored"],
+                                "goals_conceded": fixture["goals_conceded"],
+                                "result": fixture["result"],
+                                "on_pens": fixture["on_pens"],
+                            }
+                        }
+                    },
+                )
+                # delete the same fixture from upcoming if applicable
+                upcoming.update_one(
+                    filter={"club": fixture_info["team"]},
+                    update={
+                        "$pull": {
+                            f"seasons.{fixture_info['season']}.{fixture['competition']}": {
+                                "date": fixture["date"],
+                                "day": fixture["day"],
+                                "time": fixture["time"],
+                                "venue": fixture["venue"],
+                                "opponent": fixture["opponent_team"],
+                            }
+                        }
+                    },
+                )
+                col = "played_fixtures"
+                self.logger.info(
+                    f"Recorded {fixture_info['team']} fixture in {col} collection."
+                )
+
+            elif fixture["match_status"] == "UPCOMING":
+                # insert if no document match
+                upcoming.update_one(
+                    filter={"club": fixture_info["team"]},
+                    update={
+                        "$setOnInsert": {
+                            "club": fixture_info["team"],
+                            f"seasons.{fixture_info['season']}.{fixture['competition']}": [
+                                {
+                                    "date": fixture["date"],
+                                    "day": fixture["day"],
+                                    "time": fixture["time"],
+                                    "venue": fixture["venue"],
+                                    "opponent": fixture["opponent_team"],
+                                }
+                            ],
+                        }
+                    },
+                    upsert=True,
+                )
+                # update if document match
+                upcoming.update_one(
+                    filter={
+                        "club": fixture_info["team"],
+                        f"seasons.{fixture_info['season']}.{fixture['competition']}": {
+                            "$nin": [
+                                {
+                                    "date": fixture["date"],
+                                    "day": fixture["day"],
+                                    "time": fixture["time"],
+                                    "venue": fixture["venue"],
+                                    "opponent": fixture["opponent_team"],
+                                }
+                            ]
+                        },
+                    },
+                    update={
+                        "$push": {
+                            f"seasons.{fixture_info['season']}.{fixture['competition']}": {
+                                "date": fixture["date"],
+                                "day": fixture["day"],
+                                "time": fixture["time"],
+                                "venue": fixture["venue"],
+                                "opponent": fixture["opponent_team"],
+                            }
+                        }
+                    },
+                )
+                col = "upcoming_fixtures"
+                self.logger.info(
+                    f"Recorded {fixture_info['team']} fixture in {col} collection."
+                )
+                # no need to delete from played_fixtures because upcoming match won't be stored there

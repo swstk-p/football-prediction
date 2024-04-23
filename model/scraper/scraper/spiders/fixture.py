@@ -16,8 +16,9 @@ class FixtureSpider(BaseSpider):
                 yield scrapy.Request(
                     url=fixture["url"],
                     callback=self.parse,
-                    cb_kwargs={"team": fixture["team"]},
+                    cb_kwargs={"team": fixture["team"], "season": fixture["season"]},
                 )
 
-    def parse(self, response, team):
-        self.fixtures.parse_all_fixtures_info(response, team)
+    def parse(self, response, team, season):
+        fixture_info = self.fixtures.parse_all_fixtures_info(response, team, season)
+        self.fixtures.record_fixtures_in_db(fixture_info)
