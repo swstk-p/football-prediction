@@ -734,8 +734,8 @@ class ClubNames(BaseClass):
         return all_club_names_parsed
 
 
-# TODO2: create mechanism to determine if all the fixtures till current season have been parsed and stored
 # TODO3: create mechanism to update the upcoming fixtures by parsing them from current season only
+# TODO4: create mechanism to cleanup up empty docs in upcoming_fixtures
 class Fixtures(BaseClass):
     def __init__(self):
         super().__init__()
@@ -1062,3 +1062,43 @@ class Fixtures(BaseClass):
                     f"Recorded {fixture_info['team']} fixture in {col} collection."
                 )
                 # no need to delete from played_fixtures because upcoming match won't be stored there
+
+    def have_all_fixtures(self) -> bool:
+        """Checks if all the fixtures of all the clubs for relevant seasons are parsed.
+
+        Returns:
+            bool: True if all fixtures are passed else False
+        """
+        # we'll only check in played fixtures because the upcoming fixtures are supposed to be parsed regularly
+        db = self.get_db()
+        played = db.played_fixtures
+        upcoming = db.upcoming_fixtures
+        played_docs = [doc for doc in played.find(projection={"_id": False})]
+        have_all_fixtures_parsed: bool = len(played_docs) > 0
+        if have_all_fixtures_parsed:
+            played_docs_count = len(played_docs)
+            all_clubs_count = len(
+                [doc for doc in db.all_clubs.find(projection={"_id": False})]
+            )
+            all_upcoming_fixtures_count = len(
+                [doc for doc in upcoming.find(projection={"_id": False})]
+            )
+            current_season = self.seasons[-1]
+            clubs_out_of_current_season_count = len(
+                [
+                    doc
+                    for doc in played.find(
+                        filter={f"seasons.{current_season}": {"$exists": False}}
+                    )
+                ]
+            )
+            have_all_fixtures_parsed = (played_docs_count == all_clubs_count) and (
+                played_docs_count - clubs_out_of_current_season_count
+                == all_upcoming_fixtures_count
+            )
+            self.logger.debug(f"RETURNED: {have_all_fixtures_parsed}")
+            self.logger.info(
+                "Checked if all the fixtures of all the clubs are recorded in the database."
+            )
+        return have_all_fixtures_parsed
+
