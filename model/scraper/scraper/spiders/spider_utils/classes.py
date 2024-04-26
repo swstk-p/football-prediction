@@ -735,7 +735,7 @@ class ClubNames(BaseClass):
 
 
 # TODO3: create mechanism to update the upcoming fixtures by parsing them from current season only
-# TODO4: create mechanism to cleanup up empty docs in upcoming_fixtures
+# TODO5: create mechanism to update the current season of leagues i.e. what's the current season that's running
 class Fixtures(BaseClass):
     def __init__(self):
         super().__init__()
@@ -1102,3 +1102,55 @@ class Fixtures(BaseClass):
             )
         return have_all_fixtures_parsed
 
+    def cleanup_upcoming_empty_docs(self):
+        """Scans through the collection upcoming_fixtures to unset empty fields and delete documents with no upcoming features"""
+        db = self.get_db()
+        collection = db.upcoming_fixtures
+        docs: list = [doc for doc in collection.find(projection={"_id": False})]
+        cleaned_fields = 0
+        cleaned_docs = 0
+        for doc in docs:
+            seasons = doc["seasons"]
+            if len(seasons) > 0:
+                for season_year, season in seasons.items():
+                    if len(season) > 0:
+                        for comp_name, fixtures in season.items():
+                            # unsetting competition fields if empty
+                            if len(fixtures) < 1 or fixtures is None:
+                                collection.update_one(
+                                    filter={"club": doc["club"]},
+                                    update={
+                                        "$unset": {
+                                            f"seasons.{season_year}.{comp_name}": ""
+                                        }
+                                    },
+                                )
+                                self.logger.info(
+                                    f"Unset the field: seasons.{season_year}.{comp_name} of club {doc['club']}."
+                                )
+                                cleaned_fields += 1
+                                season.pop(comp_name)
+                    # unsetting seasons if empty
+                    if len(season) < 1:
+                        collection.update_one(
+                            filter={"club": doc["club"]},
+                            update={"$unset": {f"seasons.{season_year}": ""}},
+                        )
+                        self.logger.info(
+                            f"Unset the field: seasons.{season_year} of club {doc['club']}."
+                        )
+                        cleaned_fields += 1
+                        seasons.pop(season_year)
+            # deleting doc if no seasons
+            if len(seasons) < 1:
+                collection.delete_one(filter={"club": doc["club"]})
+                self.logger.info(
+                    f"Deleted {doc['club']} club's document from the upcoming_fixtures collection."
+                )
+                cleaned_docs += 1
+        self.logger.info(
+            "Checked the upcoming_fixtures collection and cleaned documents if applicable."
+        )
+        self.logger.info(
+            f"Cleaned fields: {cleaned_fields}. Deleted docs: {cleaned_docs}"
+        )
