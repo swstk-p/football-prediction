@@ -734,7 +734,7 @@ class ClubNames(BaseClass):
         return all_club_names_parsed
 
 
-# TODO3: create mechanism to update the upcoming fixtures by parsing them from current season only
+# TODO1: in spider_script.py, make sure to classify one-time spiders and regular spiders
 # TODO5: create mechanism to update the current season of leagues i.e. what's the current season that's running
 class Fixtures(BaseClass):
     def __init__(self):
@@ -794,6 +794,8 @@ class Fixtures(BaseClass):
             str: xpath
         """
         xpath_fixtures = "(//table[not(@class='auflistung')])[1]/tbody/tr[@style]"
+        self.logger.debug(f"RETURNED: {xpath_fixtures}")
+        self.logger.info("Returned the xpath for all the fixtures in the table.")
         return xpath_fixtures
 
     def parse_all_fixtures_info(self, response, team, season) -> dict:
@@ -916,7 +918,7 @@ class Fixtures(BaseClass):
         upcoming = db.upcoming_fixtures
         for fixture in fixture_info["fixtures"]:
             if fixture["match_status"] == "PLAYED":
-                # insert if doc not found
+                # insert doc if doc not found
                 played.update_one(
                     filter={
                         "club": fixture_info["team"],
@@ -945,7 +947,7 @@ class Fixtures(BaseClass):
                     },
                     upsert=True,
                 )
-                # update if doc found
+                # push fixture if doc found
                 played.update_one(
                     filter={
                         "club": fixture_info["team"],
@@ -1010,7 +1012,7 @@ class Fixtures(BaseClass):
                 )
 
             elif fixture["match_status"] == "UPCOMING":
-                # insert if no document match
+                # insert new document if no document match
                 upcoming.update_one(
                     filter={"club": fixture_info["team"]},
                     update={
@@ -1029,7 +1031,7 @@ class Fixtures(BaseClass):
                     },
                     upsert=True,
                 )
-                # update if document match
+                # push new fixture if document match
                 upcoming.update_one(
                     filter={
                         "club": fixture_info["team"],
@@ -1096,10 +1098,10 @@ class Fixtures(BaseClass):
                 played_docs_count - clubs_out_of_current_season_count
                 == all_upcoming_fixtures_count
             )
-            self.logger.debug(f"RETURNED: {have_all_fixtures_parsed}")
-            self.logger.info(
-                "Checked if all the fixtures of all the clubs are recorded in the database."
-            )
+        self.logger.debug(f"RETURNED: {have_all_fixtures_parsed}")
+        self.logger.info(
+            "Checked if all the fixtures of all the clubs are recorded in the database."
+        )
         return have_all_fixtures_parsed
 
     def cleanup_upcoming_empty_docs(self):
@@ -1153,4 +1155,47 @@ class Fixtures(BaseClass):
         )
         self.logger.info(
             f"Cleaned fields: {cleaned_fields}. Deleted docs: {cleaned_docs}"
+        )
+
+    def get_all_club_current_season_urls(self) -> dict:
+        """Fetches the urls for all the clubs for the current season
+
+        Returns:
+            dict: dict: {league_name:[{'team':club_name, season: season_start_year 'url':club_fixture_url}]}
+        """
+        db = self.get_db()
+        collection = db.all_leagues
+        docs = [c for c in collection.find(projection={"_id": False})]
+        current_season = self.seasons[-1]
+        urls: dict = {}
+        for doc in docs:
+            urls[doc["name"]] = []
+            for club in doc["clubs"][current_season]:
+                urls[doc["name"]] += [
+                    {
+                        "team": club,
+                        "season": current_season,
+                        "url": self.get_club_fixture_url(club, current_season),
+                    }
+                ]
+        self.logger.debug(f"RETURNED: {urls}")
+        self.logger.info(
+            "Returned the urls for all the fixtures of the current season."
+        )
+        return urls
+
+    def reset_current_season_fixtures(self):
+        """Resets the data stored about current season fixtures."""
+        db = self.get_db()
+        played = db.played_fixtures
+        upcoming = db.upcoming_fixtures
+        current_season = self.seasons[-1]
+        played.update_many(
+            filter={}, update={"$unset": {f"seasons.{current_season}": ""}}
+        )
+        upcoming.update_many(
+            filter={}, update={"$unset": {f"seasons.{current_season}": ""}}
+        )
+        self.logger.info(
+            "Reset current season fixtures for both played_fixtures collection and upcoming_fixtures collection."
         )
