@@ -33,6 +33,7 @@ class BaseClass:
                 )
             )
         )
+        self.seasonss: dict = {}
         self.logger = None
         self.db_name = "football"
         # BaseClass.set_logger("spiders", None)
@@ -95,6 +96,21 @@ class BaseClass:
             db_name = self.db_name
         mongo_client = pymongo.MongoClient(self.mongo_con)
         return mongo_client[db_name]
+
+    def set_seasons_per_league(self):
+        """Creates a dict of season list for each country."""
+        db = self.get_db()
+        collection = db.competitions
+        docs = [
+            doc
+            for doc in collection.find(
+                filter={"current_season": {"$exists": True}}, projection={"_id": False}
+            )
+        ]
+        if len(docs) > 0:
+            self.seasonss = {doc["country"]: doc["current_season"] for doc in docs}
+        else:
+            self.seasonss = {country: self.seasons.copy() for country in self.countries}
 
 
 # class for dealing with country codes while obtaining data
@@ -289,11 +305,15 @@ class CompetitionNames(BaseClass):
                     "url": response.xpath(row[1]).get(),
                 }
                 for tier, row in row_xpaths.items()
+                if not tier == "current_season"
             }
         }
         comps: dict = {}
         comps["country"] = country
         comps["competitions"] = rows[country]
+        comps["current_season"] = (
+            response.xpath(row_xpaths["current_season"]).get().strip()
+        )
         self.logger.debug(f"RETURNED: {comps}")
         self.logger.info("Parsed domestic competition names.")
         return comps
@@ -345,7 +365,7 @@ class CompetitionNames(BaseClass):
         """Get xpaths for table rows containing competition titles and urls
 
         Returns:
-            dict: {comp_tier:[xpath to comp title, xpath to comp url]}
+            dict: {comp_tier:[xpath to comp title, xpath to comp url], 'current_season':xpath to current season}
         """
         xpaths = {}
         for comp in self.competitions:
@@ -361,6 +381,8 @@ class CompetitionNames(BaseClass):
                 + "//following-sibling::tr[1]/td[1]/table/tr/td[2]/a[1]/@href"
             )
             xpaths[comp] = (xpath_title, xpath_url)
+        xpath_season = "(//table[@class='auflistung'])[1]/tbody/tr/td[2]/div/select/option[@selected='selected']/@value"
+        xpaths["current_season"] = xpath_season
         self.logger.debug(f"RETURNED: {xpaths}")
         self.logger.info("Returned domestic competition xpaths.")
         return xpaths
@@ -506,7 +528,10 @@ class CompetitionNames(BaseClass):
                     ]
                 },
                 update={
-                    "$set": {"competitions": db_content["competitions"]},
+                    "$set": {
+                        "competitions": db_content["competitions"],
+                        "current_season": db_content["current_season"],
+                    },
                 },
             )
 
@@ -734,8 +759,9 @@ class ClubNames(BaseClass):
         return all_club_names_parsed
 
 
-# TODO1: in spider_script.py, make sure to classify one-time spiders and regular spiders
-# TODO5: create mechanism to update the current season of leagues i.e. what's the current season that's running
+# TODO1: parse qualifying european competitions as well
+# TODO2: create mechanism to update the current season of leagues i.e. what's the current season that's running (possibly in competition spider)
+# TODO3: need to substitute seasons base class attr to dict
 class Fixtures(BaseClass):
     def __init__(self):
         super().__init__()
