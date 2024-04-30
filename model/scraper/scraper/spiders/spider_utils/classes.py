@@ -270,8 +270,11 @@ class CompetitionNames(BaseClass):
         self.set_logger("competitions", self.LOG_FILE)
         self.intl_comps = {
             "First Tier": "UEFA Champions League",
+            "First Tier Qualifying": "UEFA Champions League Qualifying",
             "Second Tier": "UEFA Europa League",
+            "Second Tier Qualifying": "Europa League Qualifying",
             "Third Tier": "UEFA Europa Conference League",
+            "Third Tier Qualifying": "UEFA Europa Conference League Qualifiers",
             "Cup": "UEFA Super Cup",
         }
 
@@ -537,6 +540,24 @@ class CompetitionNames(BaseClass):
 
         self.logger.info("Recorded in database.")
 
+    def update_current_seasons_in_db(self, response, country):
+        """Updates the current season of country in the database.
+
+        Args:
+            response (_type_): Response object from spider
+            country (_type_): Country name in string
+        """
+        season_xpath = self.get_domestic_comps_xpaths()["current_season"]
+        current_season = response.xpath(season_xpath).get().strip()
+        db = self.get_db()
+        collection = db.competitions
+        collection.update_one(
+            filter={"country": country},
+            update={"$set": {"current_season": current_season}},
+        )
+        self.logger.debug(f"Updated {country}'s current season as {current_season}.")
+        self.logger.info(f"Updated {country}'s current season")
+
 
 # class to deal to all the clubs names in all leagues and seasons
 class ClubNames(BaseClass):
@@ -759,8 +780,6 @@ class ClubNames(BaseClass):
         return all_club_names_parsed
 
 
-# TODO1: parse qualifying european competitions as well
-# TODO2: create mechanism to update the current season of leagues i.e. what's the current season that's running (possibly in competition spider)
 # TODO3: need to substitute seasons base class attr to dict
 class Fixtures(BaseClass):
     def __init__(self):
