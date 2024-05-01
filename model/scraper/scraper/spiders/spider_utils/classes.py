@@ -25,15 +25,7 @@ class BaseClass:
             "League Cup",
         ]
         self.current_year = datetime.datetime.now().year
-        self.seasons = sorted(
-            list(
-                set(
-                    ["2018", "2019", "2020", "2021", "2022", "2023"]
-                    + [str(self.current_year - i) for i in range(6, 0, -1)]
-                )
-            )
-        )
-        self.seasonss: dict = {}
+        self.seasons: dict = {}
         self.logger = None
         self.db_name = "football"
         # BaseClass.set_logger("spiders", None)
@@ -58,6 +50,7 @@ class BaseClass:
         self.logger.addHandler(handler)
         # removing logging to console by stopping the propagation to the root logger
         self.logger.propagate = False
+        self.set_seasons_per_league()
 
     def write_to_json_file(self, file, json_content):
         """Writes json data on to json file
@@ -108,9 +101,32 @@ class BaseClass:
             )
         ]
         if len(docs) > 0:
-            self.seasonss = {doc["country"]: doc["current_season"] for doc in docs}
+            self.seasons = {
+                doc["country"]: sorted(
+                    list(
+                        set(
+                            ["2018", "2019", "2020", "2021", "2022", "2023"]
+                            + [
+                                str(int(doc["current_season"]) - i)
+                                for i in range(6, 0, -1)
+                            ]
+                        )
+                    )
+                )
+                for doc in docs
+            }
         else:
-            self.seasonss = {country: self.seasons.copy() for country in self.countries}
+            self.seasons = {
+                country: sorted(
+                    list(
+                        set(
+                            ["2018", "2019", "2020", "2021", "2022", "2023"]
+                            + [str(self.current_year - i) for i in range(6, 0, -1)]
+                        )
+                    )
+                )
+                for country in self.countries
+            }
 
 
 # class for dealing with country codes while obtaining data
@@ -567,6 +583,7 @@ class ClubNames(BaseClass):
         self.CLUB_FILE = os.path.join(self.DATA_DIR, "clubs.json")
         self.LOG_FILE = os.path.join(self.LOG_DIR, "club_names.log")
         self.set_logger("club_names", self.LOG_FILE)
+        self.logger.debug(f"SELF.SEASONS: {self.seasons}")
 
     def get_comp_url(self, country: str, comp: str, season: str) -> dict:
         """Provides the competition url based on country and competition
@@ -607,7 +624,7 @@ class ClubNames(BaseClass):
         league_urls = [
             self.get_comp_url(country, "First Tier", season)
             for country in self.countries
-            for season in self.seasons
+            for season in self.seasons[country]
         ]
         self.logger.debug(f"RETURNED: {league_urls}")
         self.logger.info("Returned the urls of all leagues for all the seasons.")
@@ -764,8 +781,16 @@ class ClubNames(BaseClass):
             seasons_exist: list = []
             for doc in docs:
                 seasons_parsed: list = doc["clubs"].keys()
+                doc_country = db.competitions.find_one(
+                    filter={"competitions.First Tier.name": doc["name"]}
+                )["country"]
                 seasons_exist.append(
-                    all([season in seasons_parsed for season in self.seasons])
+                    all(
+                        [
+                            season in seasons_parsed
+                            for season in self.seasons[doc_country]
+                        ]
+                    )
                 )
             leagues_parsed: list = [doc["name"] for doc in docs]
             league_names = [
@@ -780,7 +805,6 @@ class ClubNames(BaseClass):
         return all_club_names_parsed
 
 
-# TODO3: need to substitute seasons base class attr to dict
 class Fixtures(BaseClass):
     def __init__(self):
         super().__init__()
@@ -1130,18 +1154,31 @@ class Fixtures(BaseClass):
             all_upcoming_fixtures_count = len(
                 [doc for doc in upcoming.find(projection={"_id": False})]
             )
-            current_season = self.seasons[-1]
-            clubs_out_of_current_season_count = len(
-                [
-                    doc
-                    for doc in played.find(
-                        filter={f"seasons.{current_season}": {"$exists": False}}
-                    )
-                ]
-            )
+            clubs_out_of_current_season_count: int = 0
+            for doc in played_docs:
+                # doc_season = list(doc["seasons"].keys())[0]
+                all_seasons: list = []
+                for _, v in self.seasons.items():
+                    all_seasons += v
+                all_seasons = set(all_seasons)
+                queries = [{f"clubs.{season}": doc["club"]} for season in all_seasons]
+                doc_league = db.all_leagues.find_one(filter={"$or": queries})["name"]
+                doc_country_current_season = db.competitions.find_one(
+                    filter={"competitions.First Tier.name": doc_league}
+                )["current_season"]
+                if doc_country_current_season not in doc["seasons"].keys():
+                    clubs_out_of_current_season_count += 1
             have_all_fixtures_parsed = (played_docs_count == all_clubs_count) and (
                 played_docs_count - clubs_out_of_current_season_count
                 == all_upcoming_fixtures_count
+            )
+            self.logger.debug(f"PLAYED DOCS COUNT: {played_docs_count}")
+            self.logger.debug(f"ALL CLUBS COUNT: {all_clubs_count}")
+            self.logger.debug(
+                f"CLUBS OUT OF CURRENT SEASON COUNT: {clubs_out_of_current_season_count}"
+            )
+            self.logger.debug(
+                f"ALL UPCOMING FIXTURES COUNT: {all_upcoming_fixtures_count}"
             )
         self.logger.debug(f"RETURNED: {have_all_fixtures_parsed}")
         self.logger.info(
@@ -1211,10 +1248,13 @@ class Fixtures(BaseClass):
         db = self.get_db()
         collection = db.all_leagues
         docs = [c for c in collection.find(projection={"_id": False})]
-        current_season = self.seasons[-1]
         urls: dict = {}
         for doc in docs:
             urls[doc["name"]] = []
+            current_season = db.competitions.find_one(
+                filter={"competitions.First Tier.name": doc["name"]}
+            )["current_season"]
+
             for club in doc["clubs"][current_season]:
                 urls[doc["name"]] += [
                     {
@@ -1234,13 +1274,40 @@ class Fixtures(BaseClass):
         db = self.get_db()
         played = db.played_fixtures
         upcoming = db.upcoming_fixtures
-        current_season = self.seasons[-1]
-        played.update_many(
-            filter={}, update={"$unset": {f"seasons.{current_season}": ""}}
-        )
-        upcoming.update_many(
-            filter={}, update={"$unset": {f"seasons.{current_season}": ""}}
-        )
+        # resetting played_fixtures for current season
+        played_docs = [doc for doc in played.find(projection={"_id": False})]
+        for doc in played_docs:
+            doc_season = list(doc["seasons"].keys())[0]
+            doc_league = db.all_leagues.find_one(
+                filter={f"clubs.{doc_season}": doc["club"]}
+            )["name"]
+            doc_current_season = db.competitions.find_one(
+                filter={"competitions.First Tier.name": doc_league}
+            )["current_season"]
+            if doc_current_season in doc["seasons"].keys():
+                played.update_one(
+                    filter={"club": doc["club"]},
+                    update={"$unset": {f"seasons.{doc_current_season}": ""}},
+                )
+        # resetting upcoming_fixtures for current season
+        upcoming_docs = [doc for doc in upcoming.find(projection={"_id": False})]
+        for doc in upcoming_docs:
+            doc_season = list(doc["seasons"].keys())[0]
+            doc_league = db.all_leagues.find_one(
+                filter={f"clubs.{doc_season}": doc["club"]}
+            )["name"]
+            doc_current_season = db.competitions.find_one(
+                filter={"competitions.First Tier.name": doc_league}
+            )["current_season"]
+            if doc_current_season in doc["seasons"].keys():
+                upcoming.update_one(
+                    filter={"club": doc["club"]},
+                    update={"$unset": {f"seasons.{doc_current_season}": ""}},
+                )
         self.logger.info(
             "Reset current season fixtures for both played_fixtures collection and upcoming_fixtures collection."
         )
+
+
+# TODO (Sure): injuries, transfers, suspensions
+# TODO (Optional): squad age
