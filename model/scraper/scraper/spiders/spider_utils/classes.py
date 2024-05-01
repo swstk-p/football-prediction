@@ -1156,7 +1156,6 @@ class Fixtures(BaseClass):
             )
             clubs_out_of_current_season_count: int = 0
             for doc in played_docs:
-                # doc_season = list(doc["seasons"].keys())[0]
                 all_seasons: list = []
                 for _, v in self.seasons.items():
                     all_seasons += v
@@ -1277,10 +1276,12 @@ class Fixtures(BaseClass):
         # resetting played_fixtures for current season
         played_docs = [doc for doc in played.find(projection={"_id": False})]
         for doc in played_docs:
-            doc_season = list(doc["seasons"].keys())[0]
-            doc_league = db.all_leagues.find_one(
-                filter={f"clubs.{doc_season}": doc["club"]}
-            )["name"]
+            all_seasons: list = []
+            for _, v in self.seasons.items():
+                all_seasons += v
+            all_seasons = set(all_seasons)
+            queries = [{f"clubs.{season}": doc["club"]} for season in all_seasons]
+            doc_league = db.all_leagues.find_one(filter={"$or": queries})["name"]
             doc_current_season = db.competitions.find_one(
                 filter={"competitions.First Tier.name": doc_league}
             )["current_season"]
@@ -1292,10 +1293,12 @@ class Fixtures(BaseClass):
         # resetting upcoming_fixtures for current season
         upcoming_docs = [doc for doc in upcoming.find(projection={"_id": False})]
         for doc in upcoming_docs:
-            doc_season = list(doc["seasons"].keys())[0]
-            doc_league = db.all_leagues.find_one(
-                filter={f"clubs.{doc_season}": doc["club"]}
-            )["name"]
+            all_seasons: list = []
+            for _, v in self.seasons.items():
+                all_seasons += v
+            all_seasons = set(all_seasons)
+            queries = [{f"clubs.{season}": doc["club"]} for season in all_seasons]
+            doc_league = db.all_leagues.find_one(filter={"$or": queries})["name"]
             doc_current_season = db.competitions.find_one(
                 filter={"competitions.First Tier.name": doc_league}
             )["current_season"]
