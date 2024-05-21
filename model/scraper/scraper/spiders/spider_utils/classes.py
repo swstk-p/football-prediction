@@ -1317,8 +1317,13 @@ class Injuries(BaseClass):
         super().__init__()
         self.LOG_FILE = os.path.join(self.LOG_DIR, "injuries.log")
         self.set_logger("injuries", self.LOG_FILE)
-        
-    
+
+    def get_fixtures_wo_injuries(self) -> list[dict]:
+        db = self.get_db()
+        played = db.played_fixtures
+
+    # needed for injuries: fixture_id of fixture
+    # needed for fixture: date (YYYY-MM_DD), team_id
 
 
 # TODO (Sure): injuries, transfers, suspensions
