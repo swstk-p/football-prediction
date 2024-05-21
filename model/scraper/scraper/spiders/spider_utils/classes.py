@@ -1312,5 +1312,14 @@ class Fixtures(BaseClass):
         )
 
 
+class Injuries(BaseClass):
+    def __init__(self):
+        super().__init__()
+        self.LOG_FILE = os.path.join(self.LOG_DIR, "injuries.log")
+        self.set_logger("injuries", self.LOG_FILE)
+        
+    
+
+
 # TODO (Sure): injuries, transfers, suspensions
 # TODO (Optional): squad age

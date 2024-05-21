@@ -1,7 +1,13 @@
 import scrapy
 
 # from spider_utils.classes import CountryCodes, CompetitionNames, ClubNames
-from .spider_utils.classes import CountryCodes, CompetitionNames, ClubNames, Fixtures
+from .spider_utils.classes import (
+    CountryCodes,
+    CompetitionNames,
+    ClubNames,
+    Fixtures,
+    Injuries,
+)
 
 
 class BaseSpider(scrapy.Spider):
@@ -41,3 +47,11 @@ class BaseSpider(scrapy.Spider):
             Fixtures: an object of class Fixtures
         """
         return Fixtures()
+
+    def get_injury_obj() -> Injuries:
+        """Returns an object to deal with parsing injuries.
+
+        Returns:
+            Injuries: an object of class Injuries
+        """
+        return Injuries()
