@@ -1318,13 +1318,70 @@ class Injuries(BaseClass):
         self.LOG_FILE = os.path.join(self.LOG_DIR, "injuries.log")
         self.set_logger("injuries", self.LOG_FILE)
 
-    def get_fixtures_wo_injuries(self) -> list[dict]:
+    def check_if_fixture_injuries_parsed(self, team: str, date: str) -> bool:
+        """Checks if the injuries are parsed for a fixture, given a team and a date
+
+        Args:
+            team (str): the name of a team playing in a fixture
+            date (str): the date of the fixture
+
+        Returns:
+            bool: True if injuries parsed else False.
+        """
         db = self.get_db()
-        played = db.played_fixtures
+        collection = db.injuries
+        doc = collection.find_one(
+            filter={
+                "club": team,
+                "$or": [
+                    {
+                        f"played.{date}": {"$exists": True}
+                    },  # check if the injuries is parsed under played fixtures
+                    {
+                        f"upcoming:{date}": {"$exists": True}
+                    },  # check if the injuries is parsed under upcoming fixtures
+                ],
+            }
+        )
+
+        injuries_parsed: bool = True if doc is not None else False
+
+        self.logger.debug(f"RETURNED: {injuries_parsed}")
+        self.logger.info(f"Checked if injuries parsed for {team}'s fixture in {date}.")
+        return injuries_parsed
+
+    def parse_missing_injuries_played(self):
+        db = self.get_db()
+        collection = db.played_fixtures
+        docs = collection.find(projection={"_id": False})
+        for doc in docs:
+            team_name = doc["club"]
+            for season, season_info in doc["seasons"].items():
+                # 2017, {comp:[fixtures]}
+                for comp_name, fixtures in season_info.items():
+                    # UCL, [fixtures]
+                    for fixture in fixtures:
+                        date = fixture["date"]
+                        if not self.check_if_fixture_injuries_parsed(team_name, date):
+                            self.logger.info(
+                                f"Injuries not parsed for {team_name}'s fixture on {date}."
+                            )
+                        else:
+                            self.logger.info(
+                                f"Injuries parsed for {team_name}'s fixture on {date}."
+                            )
+
+        self.logger.info("Checked if all played fixtures have missing players.")
 
     # needed for injuries: fixture_id of fixture
     # needed for fixture: date (YYYY-MM_DD), team_id
 
 
+# create separate injury collection (club: played/upcoming: seasons: comps: fixture-wise injuries)
+# played injuries will be obtained from API
+# upcoming injuries will be obtained from webpages
+# only upcoming injuries will be reset, played injuries will remain intact
+# a method to check whether a given fixture (date, club) has injuries parsed
+# TODO1: check which teams have injury sections in wikipedia
 # TODO (Sure): injuries, transfers, suspensions
 # TODO (Optional): squad age

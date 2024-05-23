@@ -48,7 +48,7 @@ class BaseSpider(scrapy.Spider):
         """
         return Fixtures()
 
-    def get_injury_obj() -> Injuries:
+    def get_injury_obj(self) -> Injuries:
         """Returns an object to deal with parsing injuries.
 
         Returns:
