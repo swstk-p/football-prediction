@@ -9,4 +9,6 @@ class InjurySpider(BaseSpider):
         self.injuries = self.get_injury_obj()
 
     def start_requests(self):
-        self.injuries.parse_missing_injuries_played()
+        missing_api_team_id: list = self.injuries.get_missing_api_team_id()
+        for team in missing_api_team_id:
+            yield scrapy.Request(url=f"v3.football.api-sports.io/injuries?")
