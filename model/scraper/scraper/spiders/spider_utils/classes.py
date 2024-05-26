@@ -1411,9 +1411,9 @@ class Injuries(BaseClass):
                 missing_api_team_id.append(team_name)
 
         self.logger.debug(f"RETURNED: {missing_api_team_id}")
-        self.logger.info(f"Returned a list of teams that have missing API team_id.")
+        self.logger.info("Returned a list of teams that have missing API team_id.")
         # TODO0: remove limit
-        return [missing_api_team_id[0]]
+        return missing_api_team_id
 
     # needed for injuries: date (YYYY-MM_DD), team_id
 
