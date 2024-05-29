@@ -1,10 +1,14 @@
 import json
 import os
 import datetime
+import time
 import pymongo
 from dotenv import load_dotenv
 from pprint import pp
 import logging
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 
 class BaseClass:
@@ -127,6 +131,12 @@ class BaseClass:
                 )
                 for country in self.countries
             }
+
+    def init_selenium_web_driver(self):
+        chrome_options = Options()
+        chrome_options.add_experimental_option("detach", True)
+        driver = webdriver.Chrome(options=chrome_options)
+        return driver
 
 
 # class for dealing with country codes while obtaining data
@@ -1415,6 +1425,26 @@ class Injuries(BaseClass):
         # TODO0: remove limit
         return missing_api_team_id
 
+    def parse_team_id(self):
+        # opening login page
+        driver = self.init_selenium_web_driver()
+        url = "https://dashboard.api-football.com/login"
+        driver.get(url)
+        # clicking captcha
+        captcha = driver.find_element(By.XPATH, "//iframe[@title='reCAPTCHA']")
+        self.logger.debug(f"CAPTCHA CAUGHT: {captcha.is_displayed()}")
+        captcha.click()
+        time.sleep(2)
+        # credential filling
+        email_input = driver.find_element(By.XPATH, "//input[@name='email']")
+        pw_input = driver.find_element(By.XPATH, "//input[@name='pass']")
+        email_input.send_keys(os.getenv("LOGIN_EMAIL"))
+        pw_input.send_keys(os.getenv("LOGIN_PW"))
+        # clicking on sign in
+        submit_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+        self.logger.debug(f"SUBMIT CAUGHT: {submit_button.is_displayed()}")
+        submit_button.click()
+
     # needed for injuries: date (YYYY-MM_DD), team_id
 
 
@@ -1423,6 +1453,6 @@ class Injuries(BaseClass):
 # upcoming injuries will be obtained from webpages
 # only upcoming injuries will be reset, played injuries will remain intact
 # a method to check whether a given fixture (date, club) has injuries parsed
-# TODO1: get team_id from API
+# TODO1: scrape team_id from API documentation dashboard
 # TODO (Sure): injuries, transfers, suspensions
 # TODO (Optional): squad age
