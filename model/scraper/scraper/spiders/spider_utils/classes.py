@@ -1433,7 +1433,6 @@ class Injuries(BaseClass):
         driver.maximize_window()
         # clicking captcha
         captcha = driver.find_element(By.XPATH, "//iframe[@title='reCAPTCHA']")
-        self.logger.debug(f"CAPTCHA CAUGHT: {captcha.is_displayed()}")
         time.sleep(2)
         captcha.click()
         time.sleep(2)
@@ -1444,7 +1443,6 @@ class Injuries(BaseClass):
         pw_input.send_keys(os.getenv("LOGIN_PW"))
         # clicking on sign in
         submit_button = driver.find_element(By.XPATH, "//button[@type='submit']")
-        self.logger.debug(f"SUBMIT CAUGHT: {submit_button.is_displayed()}")
         submit_button.click()
         # go to ids url
         driver.get("https://dashboard.api-football.com/soccer/ids/teams/England")
@@ -1453,6 +1451,12 @@ class Injuries(BaseClass):
             "//div[@id='dataTable_wrapper']/div[1]/div[1]/div/label/select/option[@value='100']",
         )
         table_length_select.click()
+        # access the table with ids
+        id_table_rows = driver.find_elements(
+            By.XPATH,
+            "//table[@id='dataTable']/tbody/tr",
+        )
+        self.logger.debug(f"No. of rows: {len(id_table_rows)}")
 
     # needed for injuries: date (YYYY-MM_DD), team_id
 
