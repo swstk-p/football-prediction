@@ -1430,9 +1430,11 @@ class Injuries(BaseClass):
         driver = self.init_selenium_web_driver()
         url = "https://dashboard.api-football.com/login"
         driver.get(url)
+        driver.maximize_window()
         # clicking captcha
         captcha = driver.find_element(By.XPATH, "//iframe[@title='reCAPTCHA']")
         self.logger.debug(f"CAPTCHA CAUGHT: {captcha.is_displayed()}")
+        time.sleep(2)
         captcha.click()
         time.sleep(2)
         # credential filling
@@ -1444,6 +1446,13 @@ class Injuries(BaseClass):
         submit_button = driver.find_element(By.XPATH, "//button[@type='submit']")
         self.logger.debug(f"SUBMIT CAUGHT: {submit_button.is_displayed()}")
         submit_button.click()
+        # go to ids url
+        driver.get("https://dashboard.api-football.com/soccer/ids/teams/England")
+        table_length_select = driver.find_element(
+            By.XPATH,
+            "//div[@id='dataTable_wrapper']/div[1]/div[1]/div/label/select/option[@value='100']",
+        )
+        table_length_select.click()
 
     # needed for injuries: date (YYYY-MM_DD), team_id
 
